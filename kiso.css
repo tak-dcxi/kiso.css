@@ -84,14 +84,26 @@
 // MARK: Sections
 // ------------------------------------------------------ */
 :where(h1, h2, h3, h4, h5, h6) {
+  /* Prevent the last line from ending with a single word */
+  text-wrap: pretty;
+}
+
+:where(h1) {
+  /**
+  * Adjusts user agent (UA) styles for `h1` elements within sectioning content.
+  * This addresses DevTools warnings that appear when `h1` elements nested within sectioning content lack `font-size` and `margin` properties.
+  * @see https://html.spec.whatwg.org/#sections-and-headings
+  */
+  margin-block: 0.67em;
+  font-size: 2em;
+}
+
+:where(h2, h3, h4, h5, h6) {
   /* Reset default block margins */
   margin-block: unset;
 
   /* Reset default font size */
   font-size: unset;
-
-  /* Prevent the last line from ending with a single word */
-  text-wrap: pretty;
 }
 
 :where(search) {
@@ -295,6 +307,9 @@
 //  MARK: Tabular data
 // ====================================================== */
 :where(table) {
+  /* Set the border color to the current color */
+  border: 1px solid;
+
   /* Collapse borders for a more refined table design */
   border-collapse: collapse;
 }
@@ -307,6 +322,9 @@
 :where(td, th) {
   /* Remove default padding from table cells and headers */
   padding: unset;
+
+  /* Set the border color to the current color */
+  border: 1px solid;
 
   /* Align table cell content to the top */
   vertical-align: top;
