@@ -1,4 +1,4 @@
-/*! kiso.css v1.0.3 | MIT License | https://github.com/tak-dcxi/kiso.css */
+/*! kiso.css v1.0.4 | MIT License | https://github.com/tak-dcxi/kiso.css */
 
 /* ======================================================
 //  MARK: Universal
@@ -101,9 +101,6 @@
 :where(h2, h3, h4, h5, h6) {
   /* Reset default block margins */
   margin-block: unset;
-
-  /* Reset default font size */
-  font-size: unset;
 }
 
 :where(search) {
@@ -409,9 +406,6 @@
 
 :where(button, [type="button"], [type="submit"], [type="reset"]),
 ::file-selector-button {
-  /* Prevent the occurrence of bottom whitespace */
-  vertical-align: bottom;
-
   /* Optimize touch interaction for buttons */
   touch-action: manipulation;
 }
