@@ -1,17 +1,18 @@
 # kiso.css
 
-kiso.css は、日本国内のモダンなウェブ開発のための包括的でありながら軽量なリセット CSS ライブラリです。  
-ブラウザのデフォルトスタイルを標準化し、より一貫性のある開発体験を提供します。
+kiso.css is a comprehensive yet lightweight reset CSS library for modern web development.
 
-## 特徴
+It standardizes browser default styles to provide a more consistent development experience.
 
-- 🎯 **モダン CSS**: 最新の HTML や CSS の仕様へ対応
-- ♿ **アクセシビリティ重視**: WCAG 準拠のスタイルと強制カラーモードのサポート
-- 🌏 **多言語対応**: 日本語や RTL 言語への特別な配慮
-- 🪶 **軽量かつ最低限のリセット**: 不要な装飾のスタイルを排除し、必要最小限のリセットのみを提供
-- 🔧 **カスタマイズ可能**: `:where()`セレクタにより詳細度をゼロにしているため、簡単に上書きが可能です
+## Features
 
-## インストール
+- 🎯 **Modern CSS**: Supports the latest HTML and CSS specifications.
+- ♿ **Accessibility-Focused**: WCAG-compliant styles and support for forced color modes.
+- 🌏 **Multilingual Support**: Special consideration for Japanese, English, and RTL languages.
+- 🪶 **Lightweight and Minimal Reset**: Provides only the essential minimum reset by eliminating unnecessary decorative styles.
+- 🔧 **Customizable**: Easily overridable as the `:where()` selector keeps specificity at zero.
+
+## Installation
 
 ### npm
 
@@ -22,74 +23,77 @@ npm install kiso.css
 ### CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css/kiso.css" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"
+/>
 ```
 
-### 直接ダウンロード
+### Direct Download
 
-[kiso.css](./kiso.css)をダウンロードして、プロジェクトに含めてください。
+Download [kiso.css](https://www.google.com/search?q=./kiso.css) and include it in your project.
 
-## 使用方法
+## Usage
 
-CSS ファイルの最初に kiso.css をインポートしてください：
+Import kiso.css at the top of your CSS file:
 
 ```css
 @import "kiso.css";
 
-/* あなたのスタイルをここに記述 */
+/* Your styles go here */
 ```
 
-HTML の`<head>`内で読み込む場合：
+Or include it in the `<head>` of your HTML:
 
 ```html
 <link rel="stylesheet" href="path/to/kiso.css" />
 <link rel="stylesheet" href="your-styles.css" />
 ```
 
-## 主な機能
+## Main Features
 
-### ユニバーサルリセット
+### Universal Reset
 
-- `box-sizing` を `border-box` に設定
-- 最小サイズの制約を適用してオーバーフローを防止
-- デフォルトのボーダーをリセット
+- Sets `box-sizing` to `border-box`.
+- Applies minimum size constraints to prevent overflow.
+- Resets default borders.
 
-### タイポグラフィ
+### Typography
 
-- 日本語コンテンツに適したフォントスタイルや折り返しの調整
-- モノスペースフォントの標準化
-- その他、`text-autospace` などの最新 CSS への対応
+- Adjusts font styles and wrapping suitable for both English and Japanese content.
+- Standardizes monospace fonts.
+- Supports modern CSS properties like `text-autospace`.
 
-### フォーム要素
+### Form Elements
 
-- 一貫性のあるスタイリングのためのリセット
-- アクセシブルなフォーカススタイル
-- タッチデバイスの最適化
+- Resets for consistent styling.
+- Accessible focus styles.
+- Optimization for touch devices.
 
-### アクセシビリティ
+### Accessibility
 
-- 強制カラーモードのサポート
-- 適切なフォーカス管理
-- スクリーンリーダー対応の考慮
+- Support for forced color modes.
+- Proper focus management.
+- Considerations for screen reader compatibility.
 
-### レスポンシブ画像
+### Responsive Images
 
-- 画像、動画、その他の埋め込みコンテンツの自動サイズ調整
-- オーバーフローの防止
+- Automatic size adjustment for images, videos, and other embedded content.
+- Prevents overflow.
 
-## ブラウザサポート
+## Browser Support
 
-kiso.css は、CSS Nesting をサポートしている以下のバージョンのブラウザで利用できます。
+kiso.css is compatible with the following browser versions that support CSS Nesting.
 
 - Google Chrome / Edge 120+
 - Firefox 117+
 - Safari 16.5+
 - iOS Safari 16.5+
 
-## ライセンス
+## License
 
-[MIT License](./LICENSE)
+[MIT License](https://www.google.com/search?q=./LICENSE)
 
-## 名前の由来
+## Origin of the Name
 
-このライブラリが、あなたのウェブプロジェクトの堅固な「基礎」となることを願っています。
+"Kiso" (基礎) means "foundation" in Japanese. We hope this library becomes the solid "foundation" for your web projects.
