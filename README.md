@@ -31,7 +31,7 @@ npm install kiso.css
 
 ### Direct Download
 
-Download [kiso.css](https://www.google.com/search?q=./kiso.css) and include it in your project.
+Download [kiso.css](https://github.com/tak-dcxi/kiso.css/blob/main/kiso.css) and include it in your project.
 
 ## Usage
 
