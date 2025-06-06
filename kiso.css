@@ -476,17 +476,6 @@
   padding: unset;
 }
 
-:where(dialog) {
-  /* Display the dialog element as fixed */
-  position: fixed;
-
-  /* Center the dialog element on the screen */
-  inset: 0;
-
-  /* Center the dialog element on the screen */
-  margin: auto;
-}
-
 :where(dialog:not([open], [popover]), [popover]:not(:popover-open)) {
   /* Hide dialog and popover elements when not open */
   display: none !important;
