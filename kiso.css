@@ -26,6 +26,9 @@
 //  MARK: Document and Body Elements
 // ====================================================== */
 :where(:root) {
+  /* Set the default font family to sans-serif */
+  font-family: sans-serif;
+
   /* Standardize font style */
   font-style: unset;
 
