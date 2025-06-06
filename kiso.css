@@ -389,7 +389,7 @@
   text-autospace: no-autospace;
 }
 
-:where(button),
+:where(button, [type="button"], [type="submit"], [type="reset"]),
 ::file-selector-button {
   /* Prevent the occurrence of bottom whitespace */
   vertical-align: bottom;
@@ -407,6 +407,9 @@
     button,
     label[for],
     select,
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
     [role="tab"],
     [role="button"],
     [role="option"]
