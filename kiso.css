@@ -1,0 +1,532 @@
+/* ======================================================
+//	MARK: Universal
+// ====================================================== */
+*,
+::before,
+::after {
+  /* パディングとボーダーを要素の寸法に含める */
+  box-sizing: border-box;
+
+  /*
+  * インラインレベル要素がコンテナの境界を超えるのを防ぐ
+  * @see https://ishadeed.com/article/min-max-css/
+  */
+  min-inline-size: 0;
+
+  /* デフォルトのボーダーを削除 */
+  border-width: 0;
+
+  /* ボーダー追加を容易にするためのデフォルトのボーダースタイルを設定 */
+  border-style: solid;
+}
+
+/* ======================================================
+//	MARK: Document and Body Elements
+// ====================================================== */
+:where(:root) {
+  /* フォントスタイルを標準化 */
+  font-style: unset;
+
+  /* フォントウェイトを標準化 */
+  font-weight: 400;
+
+  /*
+  * アクセシビリティの観点から、段落内の行間は少なくともテキストサイズの1.5倍を指定します
+  * @see https://waic.jp/translations/WCAG21/#visual-presentation
+  */
+  line-height: 1.5;
+
+  /* 左から右、右から左の言語に対応するため、テキストを要素の先頭に合わせる */
+  text-align: start;
+
+  /* 約物が隣り合わせのときにスペースを削除し、行頭のスペースも削除する */
+  text-spacing-trim: trim-start;
+
+  /* 日本語のなどの文字と英数字の間に通常のスペースよりも小さいスペースを入れる */
+  text-autospace: normal;
+
+  /* 禁則処理を厳格に適用する */
+  line-break: strict;
+
+  /* 単語が行ボックス内に収まらない場合に途中で折り返す */
+  overflow-wrap: anywhere;
+
+  /* モバイルブラウザがテキストサイズを自動的に拡大するのを防止 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /* スクロールバーの有無によるガタガタを防止 */
+  scrollbar-gutter: stable;
+
+  /* モバイルデバイスでの見た目を改善するためにタップ時のハイライトカラーを削除 */
+  -webkit-tap-highlight-color: transparent;
+
+  &:where(:lang(en)) {
+    /*
+    * 英語では最後の行に一つだけ配置された単語を widows and orphans と呼び、テキストが読みにくくなるとして避けるべき対象とされている
+    * そのため、`lang="en"`の場合は最後の行が一つの単語だけで終わることを防ぐ
+    */
+    text-wrap: pretty;
+  }
+}
+
+:where(body) {
+  /* body要素が少なくともビューポートのブロックサイズの100%を占めるようにする */
+  min-block-size: 100dvb;
+
+  /* デフォルトのマージンをリセット */
+  margin: unset;
+}
+
+/* ======================================================
+// MARK: Sections
+// ------------------------------------------------------ */
+:where(h1, h2, h3, h4, h5, h6) {
+  /* デフォルトのマージンをリセット */
+  margin-block: unset;
+
+  /* デフォルトのフォントサイズをリセット */
+  font-size: unset;
+
+  /* 最後の行が一つの単語だけで終わることを防ぐ */
+  text-wrap: pretty;
+}
+
+:where(search) {
+  /* `search`要素を一貫して表示 */
+  display: block flow;
+}
+
+/* ======================================================
+//  MARK: Grouping content
+// ====================================================== */
+:where(p, blockquote, figure, pre, address, ul, ol, dl) {
+  /* デフォルトのマージンブロックをリセット */
+  margin-block: unset;
+}
+
+:where(blockquote, figure) {
+  /* デフォルトのインラインマージンをリセット */
+  margin-inline: unset;
+}
+
+:where(address:lang(ja)) {
+  /* 日本語固有の要素に対するフォントスタイルをリセット */
+  font-style: unset;
+}
+
+:where(ul, ol) {
+  /* デフォルトのpadding-inline-startを削除 */
+  padding-inline-start: unset;
+
+  /* Safariでは「list-style: none」を使用するとスクリーンリーダーでリストが読み上げられないため、アクセシビリティに影響を与えずにマーカーを非表示にするために「list-style-type: ""」を使用 */
+  list-style-type: "";
+}
+
+:where(dt) {
+  /* 定義用語を太字にする */
+  font-weight: 700;
+}
+
+:where(dd) {
+  /* デフォルトのインデントを削除 */
+  margin-inline-start: unset;
+}
+
+:where(hr) {
+  /* <hr>要素の上部ボーダーの太さを1pxに設定 */
+  border-block-start-width: 1px;
+}
+
+:where(pre) {
+  /* 継承されないようにし、ずれないことを保証する */
+  text-spacing-trim: space-all;
+
+  /* 等幅フォントでずれるようになるため `no-autospace` を設定 */
+  text-autospace: no-autospace;
+
+  /* タブのサイズを2に設定 */
+  tab-size: 2;
+
+  /* 印刷時には折り返しを行う */
+  @media print {
+    white-space: pre-wrap;
+  }
+}
+
+/* ======================================================
+//	MARK: Text-level semantics
+// ====================================================== */
+:where(b, strong) {
+  /* 強調のために太字要素の重みを強化 */
+  font-weight: 700;
+}
+
+:where(em:lang(ja)) {
+  /* 日本語コンテンツでの強調要素の重みを強化 */
+  font-weight: 700;
+}
+
+:where(:is(i, cite, em, dfn, var):lang(ja)) {
+  /* 日本語固有の要素に対するフォントスタイルをリセット */
+  font-style: unset;
+}
+
+:where(small) {
+  /* フォントサイズを1em（親要素と同じ）に設定 */
+  font-size: 1em;
+
+  /* フォントの太さを継承 */
+  font-weight: inherit;
+}
+
+:where(code, kbd, samp) {
+  /*
+  * Tailwindをリファレンスとしたモノスペースフォントを設定
+  * @see https://tailwindcss.com/docs/font-family
+  * 'serif'の指定はChromeの13px問題への対策
+  */
+  font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas,
+    "Liberation Mono", "Courier New", serif;
+
+  /* 異なるデバイス間で一貫した表示を確保するためにフォントサイズをリセット */
+  font-size: unset;
+}
+
+:where(var) {
+  /* <var>要素のフォントファミリーをserifに設定し、技術的なコンテンツで変数名の印刷上の区別を強化 */
+  font-family: serif;
+
+  /* 日本語コンテンツでの<var>要素のフォントファミリーをリセット */
+  &:where(:lang(ja)) {
+    font-family: unset;
+  }
+}
+
+:where(abbr[title]) {
+  /* 下線を表示 */
+  text-decoration-line: underline;
+
+  /* 下線を点線に設定 */
+  text-decoration-style: dotted;
+
+  /* マウスオーバー時にツールチップを表示 */
+  cursor: help;
+}
+
+:where(mark) {
+  /* 強制カラーモードではmark要素の色が変化せず問題となる可能性があります。強制カラーモード下ではシステムカラーを使用 */
+  @media (forced-colors: active) {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+:where(time) {
+  /* タイポグラフィでは日付表記に空白は入らないため `no-autospace` を設定 */
+  text-autospace: no-autospace;
+}
+
+/* ======================================================
+//	MARK: Links
+// ====================================================== */
+:where(a:any-link) {
+  /* デフォルトの背景色を削除 */
+  background-color: unset;
+
+  /* テキストの色をデフォルトまたは継承された値にリセット */
+  color: unset;
+
+  /* リンクから下線を削除 */
+  text-decoration-line: unset;
+
+  /* テキスト装飾の太さを1pxに設定 */
+  text-decoration-thickness: 1px;
+
+  /* より良い読みやすさのために下線が下降部をスキップするように調整 */
+  text-decoration-skip-ink: auto;
+}
+
+/* ======================================================
+//	MARK: Embedded content
+// ====================================================== */
+:where(img, picture, svg, video, canvas, audio, iframe, embed, object) {
+  /* コンテンツに基づいてブロックサイズを自動調整 */
+  block-size: auto;
+
+  /* オーバーフローを防ぐためにインラインの最大サイズを制限 */
+  max-inline-size: 100%;
+
+  /* オーバーフローを防ぐためにブロックの最大サイズを制限 */
+  max-block-size: 100%;
+
+  /* テキストの下に配置 */
+  vertical-align: bottom;
+}
+
+:where(svg) {
+  /* 強制カラーモードではsvgの要素の色が変化せず問題となる可能性がある。強制カラーモード下ではシステムカラーを使用 */
+  @media (forced-colors: active) {
+    --_svg-foreground: CanvasText;
+
+    stroke: var(--_svg-foreground) !important;
+
+    & [fill]:not([fill="none"]) {
+      fill: var(--_svg-foreground) !important;
+    }
+
+    &:where(:any-link &) {
+      --_svg-foreground: LinkText;
+    }
+
+    &:where(button:enabled &) {
+      --_svg-foreground: ButtonText;
+    }
+
+    &:where(:disabled &) {
+      --_svg-foreground: GrayText;
+    }
+  }
+}
+
+/* ======================================================
+//	MARK: Tabular data
+// ====================================================== */
+:where(table) {
+  /* より洗練された表デザインのためのボーダー結合 */
+  border-collapse: collapse;
+}
+
+:where(caption) {
+  /* キャプションテキストを要素の先頭に揃える */
+  text-align: start;
+}
+
+:where(td, th) {
+  /* テーブルセルとヘッダーからデフォルトのパディングを削除 */
+  padding: unset;
+
+  /* テーブルセルのコンテンツを上部に揃える */
+  vertical-align: top;
+}
+
+:where(th) {
+  /* テーブルヘッダーテキストを太字にする */
+  font-weight: 700;
+
+  /* ヘッダーテキストをセルの先頭に揃える */
+  text-align: initial;
+}
+
+/* ======================================================
+//	MARK: Forms
+// ====================================================== */
+:where(button, input, select, textarea),
+::file-selector-button {
+  /* デフォルトのパディングを削除 */
+  padding: unset;
+
+  /* border-radiusをデフォルトにリセット */
+  border-radius: unset;
+
+  /* デフォルトの背景色を削除 */
+  background-color: unset;
+
+  /* デフォルトのテキスト色を削除 */
+  color: unset;
+
+  /* フォント設定を親から継承するようにリセット */
+  font: unset;
+
+  /* 文字間隔をデフォルトにリセット */
+  letter-spacing: unset;
+
+  /* テキスト配置をデフォルトにリセット */
+  text-align: unset;
+
+  /* テキスト変換をデフォルトにリセット */
+  text-transform: unset;
+}
+
+:where([type="radio" i], [type="checkbox" i]) {
+  /* デフォルトのマージンを削除 */
+  margin: unset;
+}
+
+:where([type="file" i]) {
+  /* ファイル入力フィールドのデフォルトカーソル */
+  cursor: unset;
+}
+
+:where(
+    :is([type="tel"], [type="url"], [type="email"], [type="number"]):not(
+        :placeholder-shown
+      )
+  ) {
+  /*
+  * 一部の入力タイプは、右から左に記述する言語（RTL言語）においても左揃えを維持する必要があります。ただし、これは値が空でない場合に限ります。プレースホルダーは右揃えにすべきだからです。
+  * @see https://rtlstyling.com/posts/rtl-styling#form-inputs
+  */
+  direction: ltr;
+}
+
+:where(textarea) {
+  /* Firefoxでのデフォルトマージンを削除 */
+  margin-block: unset;
+
+  /* テキストエリアの垂直方向のみのリサイズを許可 */
+  resize: block;
+}
+
+:where(
+    input:not([type="button"], [type="submit"], [type="reset"]),
+    textarea,
+    [contenteditable]
+  ) {
+  /* 入力中に自動挿入が入ると挙動不審になる恐れがあるため `no-autospace` を設定 */
+  text-autospace: no-autospace;
+}
+
+:where(button),
+::file-selector-button {
+  /* 下部の空白の発生を防止する */
+  vertical-align: bottom;
+
+  /* ボタンのタッチ操作を最適化 */
+  touch-action: manipulation;
+}
+
+:where(button)::-moz-focus-inner {
+  /* Firefoxでの内部パディングを削除 */
+  padding: unset;
+}
+
+:where(
+    button,
+    label[for],
+    select,
+    [role="tab"],
+    [role="button"],
+    [role="option"]
+  ),
+::file-selector-button {
+  /* クリック可能な要素をポインターカーソルで示す */
+  cursor: pointer;
+}
+
+::file-selector-button {
+  /* デフォルトのボーダーを削除 */
+  border: unset;
+}
+
+:where(select:disabled) {
+  /* 無効化されたセレクトの不透明度を他の無効化された要素と一致させる */
+  opacity: inherit;
+}
+
+:where(fieldset) {
+  /* デフォルトのmargin-inlineを削除 */
+  margin-inline: unset;
+
+  /* デフォルトのパディングを削除 */
+  padding: unset;
+}
+
+:where(legend) {
+  /* デフォルトのpadding-inlineを削除 */
+  padding-inline: unset;
+}
+
+:where(optgroup) {
+  /* フォント設定を親から継承するようにリセット */
+  font: unset;
+}
+
+::placeholder {
+  /* プレースホルダーテキストの不透明度を標準化（Firefoxではデフォルトで低く設定されている可能性がある） */
+  opacity: unset;
+}
+
+/* ======================================================
+//	MARK: Interactive elements
+// ====================================================== */
+:where(summary) {
+  /* よりクリーンな開示ウィジェットのためにdetailsサマリーからデフォルトのマーカーを削除 */
+  display: block flow;
+
+  /* クリック可能な要素をポインターカーソルで示す */
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    /* カスタムスタイリングを可能にするためにデフォルトの開示マーカーを非表示 */
+    display: none;
+  }
+}
+
+:where(dialog, [popover]) {
+  /* 最大インラインサイズの制限をリセット */
+  max-inline-size: unset;
+
+  /* 最大ブロックサイズの制限をリセット */
+  max-block-size: unset;
+
+  /* デフォルトのパディングを削除 */
+  padding: unset;
+}
+
+:where(dialog) {
+  /* ダイアログ要素をfixedとして表示 */
+  position: fixed;
+
+  /* ダイアログ要素を画面の中央に配置 */
+  inset: 0;
+
+  /* ダイアログ要素を画面の中央に配置 */
+  margin: auto;
+}
+
+:where(dialog:not([open], [popover]), [popover]:not(:popover-open)) {
+  /* 開いていないときにダイアログ要素とポップオーバー要素を非表示 */
+  display: none !important;
+}
+
+::backdrop {
+  /* 基盤となるコンテンツをより明確に表示するためにデフォルトの背景色を削除 */
+  background-color: unset;
+}
+
+/* ======================================================
+//	MARK: Focus Styles
+// ====================================================== */
+:where(:-moz-focusring) {
+  /* Firefoxのアウトラインを改善し、入力要素とボタンのスタイルを統一 */
+  outline: auto;
+}
+
+:where(:focus:not(:focus-visible)) {
+  /* 要素が明示的にfocus-visibleでない限り、視覚的な乱雑さを減らすためにフォーカスアウトラインを非表示 */
+  outline: none;
+}
+
+:where(:focus-visible) {
+  /* コンテンツとフォーカスアウトラインの間に間隔を追加 */
+  outline-offset: 3px;
+}
+
+[tabindex="-1"]:focus-visible {
+  /* プログラムでフォーカスされた要素が、自然にフォーカス可能でない限りアウトラインを表示しないようにする */
+  outline: none !important;
+}
+
+/* ======================================================
+//	MARK: Misc
+// ====================================================== */
+:where(:disabled, [aria-disabled="true"]) {
+  /* 非インタラクティブな状態を反映するために、無効化された要素にデフォルトのカーソルを表示 */
+  cursor: default;
+}
+
+[hidden]:not([hidden="until-found"]) {
+  /* 隠れることを意図した要素が表示されないようにし、明瞭さとレイアウト制御を向上 */
+  display: none !important;
+}

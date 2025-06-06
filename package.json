@@ -1,0 +1,37 @@
+{
+  "name": "kiso.css",
+  "version": "1.0.0",
+  "description": "This is a reset CSS that provides a 'foundation' with domestic products in mind.",
+  "main": "kiso.css",
+  "style": "kiso.css",
+  "files": [
+    "kiso.css",
+    "kiso.min.css",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tak-dcxi/kiso.css.git"
+  },
+  "keywords": [
+    "css",
+    "reset-css",
+    "kiso",
+    "kiso-css"
+  ],
+  "author": "Takahiro Arai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tak-dcxi/kiso.css/issues"
+  },
+  "homepage": "https://github.com/tak-dcxi/kiso.css#readme",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "stylelint": "^16.20.0",
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-order": "^7.0.0",
+    "stylelint-plugin-display-multi-keyword-syntax": "^0.1.1",
+    "stylelint-plugin-logical-css": "^1.2.3",
+    "taks-stylelint-order": "^1.1.3"
+  }
+}
