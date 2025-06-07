@@ -147,6 +147,7 @@ module.exports = {
           "mask",
           "mask-image",
           "text-size-adjust",
+          "appearance",
         ],
       },
     ],

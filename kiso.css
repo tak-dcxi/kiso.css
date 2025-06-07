@@ -9,12 +9,6 @@
   /* Include padding and border in element's dimensions */
   box-sizing: border-box;
 
-  /*
-  * Prevent inline-level elements from exceeding container boundaries
-  * @see https://ishadeed.com/article/min-max-css/
-  */
-  min-inline-size: 0;
-
   /* Remove default borders */
   border-width: 0;
 
@@ -26,7 +20,7 @@
 //  MARK: Document and Body Elements
 // ====================================================== */
 :where(:root) {
-  /* Set the default font family to sans-serif */
+  /* Safari defaults to serif fonts when no font-family is specified, so it's recommended to set sans-serif as the default */
   font-family: sans-serif;
 
   /* Standardize font style */
@@ -68,8 +62,8 @@
 
   &:where(:lang(en)) {
     /*
-    * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read.
-    * Therefore, when lang="en", this prevents the last line from ending with a single word.
+    * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read
+    * Therefore, when lang="en", this prevents the last line from ending with a single word
     */
     text-wrap: pretty;
   }
@@ -104,6 +98,9 @@
 :where(h2, h3, h4, h5, h6) {
   /* Reset default block margins */
   margin-block: unset;
+
+  /* Reset font size */
+  font-size: unset;
 }
 
 :where(search) {
@@ -187,8 +184,8 @@
 }
 
 :where(small) {
-  /* Set font size to 1em (same as parent element) */
-  font-size: 1em;
+  /* Set font size to same as parent element */
+  font-size: inherit;
 
   /* Inherit font weight */
   font-weight: inherit;
@@ -229,7 +226,7 @@
 }
 
 :where(mark) {
-  /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode. */
+  /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode */
   @media (forced-colors: active) {
     background-color: Highlight;
     color: HighlightText;
@@ -259,6 +256,23 @@
 
   /* Adjust underline to skip descenders for better readability */
   text-decoration-skip-ink: auto;
+}
+
+:where(a:has(img:only-child, svg:only-child)) {
+  /* Ensure the <a> behaves as a block formatting context for its child image or SVG,
+     preventing margin collapse and enabling proper layout */
+  display: inline flow-root;
+
+  /* Align the anchor box with the bottom of the surrounding text baseline */
+  vertical-align: bottom;
+}
+
+/* ======================================================
+//  MARK: Edits
+// ====================================================== */
+:where(ins) {
+  /* Remove default text decoration */
+  text-decoration-line: unset;
 }
 
 /* ======================================================
@@ -368,14 +382,24 @@
   text-transform: unset;
 }
 
-:where([type="radio" i], [type="checkbox" i]) {
+:where([type="radio"], [type="checkbox"]) {
   /* Remove default margin */
   margin: unset;
 }
 
-:where([type="file" i]) {
+:where([type="file"]) {
   /* Default cursor for file input fields */
   cursor: unset;
+}
+
+:where([type="search"]) {
+  /* Remove the rounded corners of search inputs on macOS and IOS and normalize the background color */
+  -webkit-appearance: textfield;
+
+  @supports (-webkit-touch-callout: none) {
+    border: 1px solid -apple-system-secondary-label;
+    background-color: Canvas;
+  }
 }
 
 :where(
@@ -471,14 +495,14 @@
 //  MARK: Interactive elements
 // ====================================================== */
 :where(summary) {
-  /* Display as a block-level element to remove the default marker */
-  display: block flow;
+  /* Remove the default marker */
+  list-style-type: "";
 
   /* Indicate clickable elements with a pointer cursor */
   cursor: pointer;
 
   &::-webkit-details-marker {
-    /* Hide the default disclosure marker to allow for custom styling */
+    /* In Safari versions earlier than 18.4 (released in April 2025), a triangle icon is displayed using the -webkit-details-marker CSS pseudo-element, so it should be removed */
     display: none;
   }
 }

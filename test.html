@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -678,6 +678,25 @@ P R E F O R M A T T E D T E X T
               The content of this <code>&lt;div&gt;</code> tag can be edited via
               the <code>[contenteditable]</code> attribute.
             </div>
+          </article>
+
+          <article id="interactive__dialog">
+            <header><h2>Dialog</h2></header>
+            <button type="button" commandfor="my-dialog" command="show-modal">
+              Open dialog
+            </button>
+            <dialog
+              id="my-dialog"
+              closedby="any"
+              aria-labelledby="my-dialog-heading"
+              autofocus
+            >
+              <h1 id="my-dialog-heading">Heading</h1>
+              <p>Content</p>
+              <button type="button" commandfor="my-dialog" command="close">
+                Close Dialog
+              </button>
+            </dialog>
           </article>
         </section>
       </main>

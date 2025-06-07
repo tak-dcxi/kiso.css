@@ -9,7 +9,7 @@ It standardizes browser default styles to provide a more consistent development 
 - 🎯 **Modern CSS**: Supports the latest HTML and CSS specifications.
 - ♿ **Accessibility-Focused**: WCAG-compliant styles and support for forced color modes.
 - 🌏 **Multilingual Support**: Special consideration for Japanese, English, and RTL languages.
-- 🪶 **Lightweight and Minimal Reset**: Provides only the essential minimum reset by eliminating unnecessary decorative styles.
+- 🪶 **Minimal Reset**: Provides only the essential minimum reset by eliminating unnecessary decorative styles.
 - 🔧 **Customizable**: Easily overridable as the `:where()` selector keeps specificity at zero.
 
 ## Installation
