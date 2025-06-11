@@ -19,7 +19,7 @@
 /* ======================================================
 //  MARK: Document and Body Elements
 // ====================================================== */
-:where(:root, :host) {
+:where(:root) {
   /* Safari defaults to serif fonts when no font-family is specified, so it's recommended to set sans-serif as the default */
   font-family: sans-serif;
 
@@ -48,13 +48,11 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 
-  /* Remove tap highlight color to improve appearance on mobile devices */
-  -webkit-tap-highlight-color: transparent;
-}
-
-:where(:root) {
   /* Prevent layout shift caused by the appearance/disappearance of the scrollbar */
   scrollbar-gutter: stable;
+
+  /* Remove tap highlight color to improve appearance on mobile devices */
+  -webkit-tap-highlight-color: transparent;
 }
 
 :where(body) {
