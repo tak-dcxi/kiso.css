@@ -76,10 +76,11 @@ Or include it in the `<head>` of your HTML:
 - Proper focus management.
 - Considerations for screen reader compatibility.
 
-### Responsive Images
+### Embedded content
 
 - Automatic size adjustment for images, videos, and other embedded content.
 - Prevents overflow.
+- Supports modern HTML like `<model>`.
 
 ## Browser Support
 
