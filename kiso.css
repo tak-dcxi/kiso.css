@@ -263,7 +263,7 @@
 /* ======================================================
 //  MARK: Embedded content
 // ====================================================== */
-:where(img, picture, svg, video, canvas, audio, iframe, embed, object) {
+:where(img, svg, video, canvas, audio, iframe, embed, object, model) {
   /* Automatically adjust block size based on content */
   block-size: auto;
 
@@ -356,6 +356,12 @@
 
   /* Reset font settings to inherit from parent */
   font: unset;
+
+  /* Reset font-feature-settings to inherit from parent */
+  font-feature-settings: inherit;
+
+  /* Reset font-variation-settings to inherit from parent */
+  font-variation-settings: inherit;
 
   /* Reset letter-spacing to default */
   letter-spacing: unset;
