@@ -35,17 +35,11 @@
   */
   line-height: 1.5;
 
-  /* Align text to the start of the element to support both left-to-right and right-to-left languages */
-  text-align: start;
-
   /* Remove space when punctuation marks are adjacent, and also remove leading spaces in a line */
   text-spacing-trim: trim-start;
 
   /* Insert a smaller-than-normal space between characters like Japanese and alphanumeric characters */
   text-autospace: normal;
-
-  /* Apply strict line-breaking rules */
-  line-break: strict;
 
   /* Wrap words mid-word if they do not fit within the line box */
   overflow-wrap: anywhere;
@@ -59,14 +53,6 @@
 
   /* Remove tap highlight color to improve appearance on mobile devices */
   -webkit-tap-highlight-color: transparent;
-
-  &:where(:lang(en)) {
-    /*
-    * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read
-    * Therefore, when lang="en", this prevents the last line from ending with a single word
-    */
-    text-wrap: pretty;
-  }
 }
 
 :where(body) {
@@ -86,7 +72,7 @@
 }
 
 :where(h1) {
-  /**
+  /*
   * Adjusts user agent (UA) styles for `h1` elements within sectioning content.
   * This addresses DevTools warnings that appear when `h1` elements nested within sectioning content lack `font-size` and `margin` properties.
   * @see https://html.spec.whatwg.org/#sections-and-headings
@@ -111,7 +97,7 @@
 /* ======================================================
 //  MARK: Grouping content
 // ====================================================== */
-:where(p, blockquote, figure, pre, address, ul, ol, dl) {
+:where(p, blockquote, figure, pre, address, ul, ol, dl, menu) {
   /* Reset default block margins */
   margin-block: unset;
 }
@@ -121,12 +107,20 @@
   margin-inline: unset;
 }
 
+:where(p:lang(en)) {
+  /*
+  * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read
+  * Therefore, when lang="en", this prevents the last line from ending with a single word
+  */
+  text-wrap: pretty;
+}
+
 :where(address:lang(ja)) {
   /* Reset font style for Japanese-specific elements */
   font-style: unset;
 }
 
-:where(ul, ol) {
+:where(ul, ol, menu) {
   /* Remove default padding-inline-start */
   padding-inline-start: unset;
 
@@ -185,7 +179,7 @@
 
 :where(small) {
   /* Set font size to same as parent element */
-  font-size: inherit;
+  font-size: unset;
 
   /* Inherit font weight */
   font-weight: inherit;
@@ -258,15 +252,6 @@
   text-decoration-skip-ink: auto;
 }
 
-:where(a:has(img:only-child, svg:only-child)) {
-  /* Ensure the <a> behaves as a block formatting context for its child image or SVG,
-     preventing margin collapse and enabling proper layout */
-  display: inline flow-root;
-
-  /* Align the anchor box with the bottom of the surrounding text baseline */
-  vertical-align: bottom;
-}
-
 /* ======================================================
 //  MARK: Edits
 // ====================================================== */
@@ -329,8 +314,8 @@
 }
 
 :where(caption) {
-  /* Align caption text to the start of the element */
-  text-align: start;
+  /* Remove default text alignment */
+  text-align: unset;
 }
 
 :where(td, th) {
@@ -348,8 +333,8 @@
   /* Make table header text bold */
   font-weight: 700;
 
-  /* Align header text to the start of the cell */
-  text-align: initial;
+  /* Remove default text alignment */
+  text-align: unset;
 }
 
 /* ======================================================
@@ -469,6 +454,12 @@
 }
 
 :where(fieldset) {
+  /*
+  * Prevent fieldset from causing overflow
+  * Reset the default `min-inline-size: min-content` to prevent children from stretching fieldset
+  */
+  min-inline-size: 0;
+
   /* Remove default margin-inline */
   margin-inline: unset;
 
