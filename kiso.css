@@ -48,11 +48,13 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 
-  /* Prevent layout shift caused by the appearance/disappearance of the scrollbar */
-  scrollbar-gutter: stable;
-
   /* Remove tap highlight color to improve appearance on mobile devices */
   -webkit-tap-highlight-color: transparent;
+}
+
+:where(:root) {
+  /* Prevent layout shift caused by the appearance/disappearance of the scrollbar */
+  scrollbar-gutter: stable;
 }
 
 :where(body) {
@@ -177,14 +179,6 @@
   font-style: unset;
 }
 
-:where(small) {
-  /* Set font size to same as parent element */
-  font-size: unset;
-
-  /* Inherit font weight */
-  font-weight: inherit;
-}
-
 :where(code, kbd, samp) {
   /*
   * Set a monospace font family referencing Tailwind
@@ -263,15 +257,12 @@
 /* ======================================================
 //  MARK: Embedded content
 // ====================================================== */
-:where(img, svg, video, canvas, audio, iframe, embed, object, model) {
+:where(img, svg, picture, video, canvas, model, audio, iframe, embed, object) {
   /* Automatically adjust block size based on content */
   block-size: auto;
 
   /* Limit the maximum inline size to prevent overflow */
   max-inline-size: 100%;
-
-  /* Limit the maximum block size to prevent overflow */
-  max-block-size: 100%;
 
   /* Align to the bottom of the text */
   vertical-align: bottom;
@@ -378,11 +369,6 @@
   margin: unset;
 }
 
-:where([type="file"]) {
-  /* Default cursor for file input fields */
-  cursor: unset;
-}
-
 :where([type="search"]) {
   /* Remove the rounded corners of search inputs on macOS and IOS and normalize the background color */
   -webkit-appearance: textfield;
@@ -426,11 +412,6 @@
 ::file-selector-button {
   /* Optimize touch interaction for buttons */
   touch-action: manipulation;
-}
-
-:where(button)::-moz-focus-inner {
-  /* Remove inner padding in Firefox */
-  padding: unset;
 }
 
 :where(
@@ -546,6 +527,11 @@
 [tabindex="-1"]:focus-visible {
   /* Prevent programmatically focused elements from displaying an outline unless they are naturally focusable */
   outline: none !important;
+}
+
+::-moz-focus-inner {
+  /* Remove inner padding in Firefox */
+  padding: unset;
 }
 
 /* ======================================================
