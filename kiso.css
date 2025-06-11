@@ -485,13 +485,15 @@
   }
 }
 
-:where(dialog, [popover]) {
+:where(dialog) {
   /* Reset max-inline-size limit */
   max-inline-size: unset;
 
   /* Reset max-block-size limit */
   max-block-size: unset;
+}
 
+:where(dialog, [popover]) {
   /* Remove default padding */
   padding: unset;
 }
