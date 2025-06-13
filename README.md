@@ -10,7 +10,7 @@ It standardizes browser default styles to provide a more consistent development 
 - ♿ **Accessibility-Focused**: WCAG-compliant styles and support for forced color modes.
 - 🌏 **Multilingual Support**: Special consideration for Japanese, English, and RTL languages.
 - 🪶 **Minimal Reset**: Provides only the essential minimum reset by eliminating unnecessary decorative styles.
-- 🔧 **Customizable**: Easily overridable as the `:where()` selector keeps specificity at zero.
+- 🔧 **Zero Specificity**: All rules use the `:where()` selector for easy overriding without specificity conflicts.
 
 ## Installation
 
@@ -54,42 +54,67 @@ Or include it in the `<head>` of your HTML:
 
 ### Universal Reset
 
-- Sets `box-sizing` to `border-box`.
-- Applies minimum size constraints to prevent overflow.
-- Resets default borders.
+- Sets `box-sizing` to `border-box` for all elements and pseudo-elements.
+
+### Document & Body
+
+- Sets sensible defaults for root element including line-height, text spacing, and scrollbar behavior.
+- Language-specific kerning settings (enabled for English, disabled for Japanese).
+- Ensures body takes at least full viewport height.
 
 ### Typography
 
-- Adjusts font styles and wrapping suitable for both English and Japanese content.
-- Standardizes monospace fonts.
-- Supports modern CSS properties like `text-autospace`.
+- Optimizes text rendering for both English and Japanese content.
+- Implements `text-wrap: pretty` to prevent widows/orphans.
+- Configures modern CSS properties like `text-autospace` and `text-spacing-trim`.
+- Applies strict line-breaking rules for better text layout.
+
+### Lists & Definitions
+
+- Removes default list markers and padding while maintaining accessibility.
+- Resets margins and indentation for cleaner layouts.
+
+### Links
+
+- Removes default link colors and underlines for complete styling control.
+- Maintains text decoration settings for better customization.
 
 ### Form Elements
 
-- Resets for consistent styling.
-- Accessible focus styles.
-- Optimization for touch devices.
+- Comprehensive reset for form controls including buttons, inputs, and textarea.
+- Removes platform-specific styling (especially for iOS/macOS).
+- Optimizes for touch interaction and accessibility.
+- Proper cursor styles for interactive elements.
 
-### Accessibility
+### Embedded Content
 
-- Support for forced color modes.
-- Proper focus management.
-- Considerations for screen reader compatibility.
+- Responsive sizing for images, videos, iframes, and other media.
+- Prevents content overflow with `max-inline-size: 100%`.
+- Supports modern elements like `<model>`.
 
-### Embedded content
+### Tables
 
-- Automatic size adjustment for images, videos, and other embedded content.
-- Prevents overflow.
-- Supports modern HTML like `<model>`.
+- Basic table styling with borders for better visibility.
+- Consistent padding and alignment for cells.
 
-## Browser Support
+### Interactive Elements
 
-kiso.css is compatible with the following browser versions that support CSS Nesting.
+- Proper styling for `<details>`/`<summary>` elements.
+- Reset for `<dialog>` and popover elements.
+- Removes default backdrop colors for better customization.
 
-- Google Chrome / Edge 120+
-- Firefox 117+
-- Safari 16.5+
-- iOS Safari 16.5+
+### Focus Management
+
+- Enhanced focus styles with `outline-offset` for better visibility.
+- Hides focus outline for mouse users (`:focus-visible` support).
+- Special handling for programmatically focused elements.
+
+### Accessibility Features
+
+- Support for forced color modes (Windows High Contrast).
+- ARIA-aware disabled state styling.
+- Screen reader-friendly list styling.
+- Proper `[hidden]` attribute handling.
 
 ## License
 
