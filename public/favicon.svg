@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .background {
+        fill: #fefefe;
+      }
+
+      .text {
+        fill: #2c2c2c;
+      }
+    }
+  </style>
+  <rect class="background" width="16" height="16" rx="4" fill="#2c2c2c"/>
+  <path class="text" d="M4.01 10.626H2.938V6.465H1.566v-.892h3.82v.892H4.01Zm4.749 0-.366-1.2H6.55l-.364 1.2H5.029l1.783-5.074h1.31l1.79 5.074Zm-.622-2.1q-.509-1.638-.573-1.85t-.092-.339q-.114.442-.653 2.188Zm6.477 2.1h-1.218l-1.323-2.129-.453.325v1.8h-1.071V5.569h1.071v2.319l.422-.594 1.369-1.718H14.6L12.837 7.81Z" fill="#fefefe"/>
+</svg>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>kiso.css - 日本のWebサイトのための「基礎」となるリセットCSS</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="email=no,telephone=no,address=no" />
+    <meta
+      name="description"
+      content="kiso.css は、日本のWebサイトのための「基礎」となるリセットCSSです。日本語に最適化しつつ、アクセシビリティやカスタマイズのし易さを重視しています。"
+    />
+    <link rel="canonical" href="https://tak-dcxi.github.io/kiso.css/" />
+    <meta
+      property="og:title"
+      content="kiso.css - 日本のWebサイトのための「基礎」となるリセットCSS"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://tak-dcxi.github.io/kiso.css/public/ogp.jpg"
+    />
+    <meta property="og:url" content="https://tak-dcxi.github.io/kiso.css/" />
+    <meta
+      property="og:description"
+      content="kiso.css は、日本のWebサイトのための「基礎」となるリセットCSSです。日本語に最適化しつつ、アクセシビリティやカスタマイズのし易さを重視しています。"
+    />
+    <meta property="og:locale" content="ja_JP" />
+    <link
+      rel="icon"
+      href="https://tak-dcxi.github.io/kiso.css/public/favicon.ico"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      href="https://tak-dcxi.github.io/kiso.css/public/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="https://tak-dcxi.github.io/kiso.css/public/apple-touch-icon.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="kiso.css - 日本のWebサイトのための「基礎」となるリセットCSS"
+    />
+    <meta name="twitter:site" content="@tak_dcxi" />
+    <meta name="theme-color" content="#0097d3" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"
+    />
+    <style>
+      @property --gradient-alpha {
+        syntax: "<percentage>";
+        inherits: false;
+        initial-value: 100%;
+      }
+
+      :root {
+        --color-white: #f7f7f7;
+        --foreground-base: light-dark(#1f2937, #f3f4f6);
+        --foreground-primary: light-dark(#0097d3, #60a5fa);
+        --foreground-secondary: light-dark(#1e40af, #3b82f6);
+        --background-base: light-dark(var(--color-white), #111827);
+        --background-lighten: light-dark(#f9fafb, #1f2937);
+        --code-background: light-dark(#f3f4f6, #1f2937);
+        --border-color: light-dark(#e5e7eb, #374151);
+        --text-gothic: "Noto Sans JP", sans-serif;
+        --text-english: "Montserrat", sans-serif;
+        --leading-tight: 1.25;
+        --leading-normal: 1.5;
+        --leading-relaxed: 1.75;
+        --rounded-md: 12px;
+        --rounded-lg: 32px;
+
+        background-color: var(--background-base);
+        color: var(--foreground-base);
+        font-family: var(--text-gothic);
+
+        @media (width >= 0) {
+          font-size: 87.5%;
+        }
+
+        @media (width >= 640px) {
+          font-size: 100%;
+        }
+      }
+
+      .HomeTemplate {
+        --_gutter: clamp(16px, 5dvi, 32px);
+
+        display: block grid;
+        grid-template-columns:
+          [full-start]
+          minmax(var(--_gutter), 1fr)
+          [main-start] minmax(auto, 1024px) [main-end]
+          minmax(var(--_gutter), 1fr)
+          [full-end];
+        row-gap: 3lh;
+
+        & > :where(main) > * {
+          grid-column: main;
+        }
+
+        & > :where(.HomeTemplate__Header, footer) {
+          grid-column: full;
+        }
+      }
+
+      .HomeTemplate__Header {
+        display: block grid;
+        grid-template-columns: subgrid;
+        border-block-end: 1px solid var(--border-color);
+        background-color: var(--background-lighten);
+
+        & > * {
+          grid-column: main;
+        }
+      }
+
+      .HomeTemplate__Footer {
+        display: block grid;
+        grid-template-columns: subgrid;
+        border-block-start: 1px solid var(--border-color);
+        background-color: var(--background-lighten);
+
+        & > * {
+          grid-column: main;
+        }
+      }
+
+      .Hero {
+        container: hero / inline-size;
+      }
+
+      .Hero__Layout {
+        display: block grid;
+        row-gap: 2lh;
+        padding-block: 3lh;
+      }
+
+      .Hero__Heading {
+        display: block grid;
+        row-gap: 1lh;
+        line-height: var(--leading-tight);
+        text-align: center;
+        text-wrap: balance;
+      }
+
+      .Hero__Title {
+        margin: unset;
+        background: linear-gradient(
+          135deg,
+          oklch(from var(--foreground-primary) calc(l - 0.1) c h),
+          oklch(from var(--foreground-primary) calc(l + 0.1) c h)
+        );
+        background-clip: text;
+        color: transparent;
+        font-family: var(--text-english);
+        font-size: 3rem;
+      }
+
+      .Hero__Tagline {
+        font-feature-settings: "palt";
+        font-size: 1.25rem;
+        font-kerning: normal;
+        word-break: auto-phrase;
+      }
+
+      .Hero__ActionsList {
+        display: block flex;
+        flex-wrap: wrap;
+        gap: 2ex 1ch;
+        justify-content: center;
+      }
+
+      .BaseButton {
+        --_accent-primary: #8474fe;
+        --_accent-secondary: #4d36d0;
+
+        display: inline flow-root;
+        padding-block: 1cap;
+        padding-inline: 2ch;
+        border-radius: var(--rounded-md);
+        corner-shape: squircle;
+        box-shadow: 0 12px 20px -8px oklch(from var(--_accent-secondary) l c h /
+              10%);
+        background: linear-gradient(
+            to bottom,
+            oklch(from var(--_accent-primary) l c h / var(--gradient-alpha)),
+            oklch(from var(--_accent-secondary) l c h / var(--gradient-alpha))
+          ),
+          var(--_accent-secondary);
+        color: var(--color-white);
+        vertical-align: bottom;
+        transition-duration: 300ms;
+        transition-property: --gradient-alpha;
+
+        @supports (corner-shape: squircle) {
+          border-radius: var(--rounded-lg);
+          corner-shape: squircle;
+        }
+
+        @media (forced-colors: active) {
+          border: 1px solid transparent;
+        }
+
+        &:focus-visible {
+          --gradient-alpha: 0%;
+        }
+
+        &:is(:any-link, :enabled):hover {
+          @media (any-hover: hover) {
+            --gradient-alpha: 0%;
+          }
+        }
+      }
+
+      .GithubButton {
+        --_background-default: #000;
+        --_background-hover: #1c1c1c;
+
+        display: inline grid;
+        grid-template-columns: 1em 1fr;
+        column-gap: 0.5ch;
+        align-items: center;
+        padding-block: 1cap;
+        padding-inline: 2ch;
+        border-radius: var(--rounded-md);
+        corner-shape: squircle;
+        box-shadow: 0 12px 20px -8px oklch(from #000 l c h / 10%);
+        background-color: var(--_background-default);
+        color: var(--color-white);
+        vertical-align: bottom;
+        transition-duration: 300ms;
+        transition-property: background-color;
+
+        @supports (corner-shape: squircle) {
+          border-radius: var(--rounded-lg);
+          corner-shape: squircle;
+        }
+
+        @media (forced-colors: active) {
+          border: 1px solid transparent;
+        }
+
+        &:focus-visible {
+          background-color: var(--_background-hover);
+        }
+
+        &:is(:any-link, :enabled):hover {
+          @media (any-hover: hover) {
+            background-color: var(--_background-hover);
+          }
+        }
+
+        & :where(svg) {
+          inline-size: -webkit-fill-available;
+          inline-size: -moz-available;
+          inline-size: stretch;
+        }
+      }
+
+      .SectionHeading {
+        font-size: 2rem;
+        text-align: center;
+        text-wrap: balance;
+      }
+
+      .FeaturesCards {
+        container: features-cards / inline-size;
+      }
+
+      .FeaturesCards__Layout {
+        display: block grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+        gap: clamp(12px, 4cqi, 24px);
+      }
+
+      .FeaturesCards__Item {
+        display: block grid;
+        grid-template-columns: subgrid;
+        grid-row: span 2;
+        gap: 1lh 0;
+        align-content: start;
+        padding-block: 1.5lh;
+        padding-inline: clamp(20px, 5cqi, 32px);
+        border: 1px solid var(--border-color);
+        border-radius: var(--rounded-md);
+        background-color: var(--background-lighten);
+
+        @supports (corner-shape: squircle) {
+          border-radius: var(--rounded-lg);
+          corner-shape: squircle;
+        }
+      }
+
+      .FeaturesCards__Heading {
+        color: var(--foreground-primary);
+        font-size: 1.25rem;
+        line-height: var(--leading-tight);
+
+        &:lang(ja) {
+          word-break: auto-phrase;
+        }
+      }
+
+      .FeaturesCards__Description {
+        line-height: var(--leading-relaxed);
+        hanging-punctuation: last allow-end;
+      }
+
+      .Section {
+        display: block grid;
+        row-gap: 1.5lh;
+      }
+
+      .InstallationMethod {
+        display: block grid;
+        row-gap: 1lh;
+      }
+
+      .InstallationMethod__Heading {
+        font-size: 1.125rem;
+      }
+
+      .InstallationMethod__Code {
+        display: block grid;
+        overflow: auto hidden;
+        padding-block: 1lh;
+        padding-inline: 3ch;
+        border: 1px solid var(--border-color);
+        border-radius: var(--rounded-md);
+        corner-shape: squircle;
+        background-color: var(--code-background);
+        text-wrap: nowrap;
+      }
+
+      .Footer {
+        display: block grid;
+        row-gap: 1lh;
+        padding-block: 40px;
+      }
+
+      .Footer__Copyright {
+        text-align: center;
+        text-wrap: balance;
+      }
+
+      .Footer__Nav {
+        display: block flex;
+        flex-wrap: wrap;
+        gap: 2ex 2ch;
+        justify-content: center;
+      }
+
+      .Footer__Link {
+        color: var(--foreground-primary);
+        text-underline-offset: 0.3ex;
+
+        &:focus-visible {
+          text-decoration: underline;
+        }
+
+        &:any-link:hover {
+          @media (any-hover: hover) {
+            text-decoration: underline;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body class="HomeTemplate">
+    <header class="HomeTemplate__Header">
+      <div class="Hero">
+        <div class="Hero__Layout">
+          <hgroup class="Hero__Heading">
+            <h1 class="Hero__Title" lang="en" translate="no">kiso.css</h1>
+            <p class="Hero__Tagline">
+              日本のWebサイトのための「基礎」となるリセットCSS
+            </p>
+          </hgroup>
+          <nav class="Hero__Actions" aria-label="ダウンロードリンク">
+            <ul class="Hero__ActionsList">
+              <li>
+                <a href="#installation" class="BaseButton">今すぐ使い始める</a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/tak-dcxi/kiso.css/"
+                  class="GithubButton"
+                  lang="en"
+                  translate="no"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 496 512"
+                    aria-hidden="true"
+                    fill="currentcolor"
+                  >
+                    <path
+                      d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
+                    />
+                  </svg>
+                  GitHub
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main style="display: contents">
+      <section id="features" class="Section">
+        <h2 class="SectionHeading">特徴</h2>
+        <div class="FeaturesCards">
+          <div class="FeaturesCards__Layout">
+            <section class="FeaturesCards__Item">
+              <h3 class="FeaturesCards__Heading">🇯🇵 日本向けの設計</h3>
+              <div class="FeaturesCards__Description">
+                <p>
+                  多くのリセットCSSは海外製のため、日本語の折り返しやタイポグラフィに対応していません。kiso.cssは日本語に最適化されています。
+                </p>
+                <p>もちろん、英語圏の方にも配慮しています。</p>
+              </div>
+            </section>
+            <section class="FeaturesCards__Item">
+              <h3 class="FeaturesCards__Heading">🎯 上書きが容易</h3>
+              <div class="FeaturesCards__Description">
+                <p>
+                  kiso.cssは原則的に<code>:where()</code>
+                  擬似クラスを使用して詳細度を0にして定義しています。
+                </p>
+                <p>
+                  そのため、詳細度の壁に悩まされることなく、簡単に上書きができます。
+                </p>
+              </div>
+            </section>
+            <section class="FeaturesCards__Item">
+              <h3 class="FeaturesCards__Heading">♿ アクセシビリティ重視</h3>
+              <div class="FeaturesCards__Description">
+                <p>
+                  リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
+                </p>
+              </div>
+            </section>
+            <section class="FeaturesCards__Item">
+              <h3 class="FeaturesCards__Heading">🚀 モダンCSS</h3>
+              <div class="FeaturesCards__Description">
+                <p>
+                  最新のHTML/CSS仕様をサポートしています。
+                  <code>text-wrap</code
+                  >、<code>text-autospace</code>、<code>text-spacing-trim</code>、<code
+                    >scrollbar-gutter</code
+                  >
+                  などのプログレッシブ・エンハンスメントで利用できる新しいプロパティを活用しています。
+                </p>
+              </div>
+            </section>
+            <section class="FeaturesCards__Item">
+              <h3 class="FeaturesCards__Heading">📦 リセットは最小限に</h3>
+              <div class="FeaturesCards__Description">
+                <p>普段の実装を分析し、必要最小限のリセットを行っています。</p>
+                <p>
+                  残すところは残しつつ、普段の実装で不要なUAスタイルはリセットしています。
+                </p>
+              </div>
+            </section>
+            <section class="FeaturesCards__Item">
+              <h3 class="FeaturesCards__Heading">🔧 簡単導入</h3>
+              <div class="FeaturesCards__Description">
+                <p>
+                  npm、CDN、直接ダウンロードに対応。1行のインポートですぐに使用開始できます。
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="installation" class="Section">
+        <h2 class="SectionHeading">インストール</h2>
+
+        <section class="InstallationMethod">
+          <h3 class="InstallationMethod__Heading">npm / yarn</h3>
+          <div class="InstallationMethod__Code">
+            <code>npm install kiso.css</code>
+          </div>
+          <div class="InstallationMethod__Code">
+            <code>/* import your CSS file */</code>
+            <code>@import "kiso.css";</code>
+          </div>
+        </section>
+
+        <section class="InstallationMethod">
+          <h3 class="InstallationMethod__Heading">CDN</h3>
+          <div class="InstallationMethod__Code">
+            <code
+              >&lt;link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code
+            >
+          </div>
+        </section>
+
+        <section class="InstallationMethod">
+          <h3 class="InstallationMethod__Heading">ダウンロード</h3>
+          <p>
+            <a href="https://tak-dcxi.github.io/kiso.css/kiso.css">GitHub</a
+            >から直接ダウンロードして、プロジェクトに含めることもできます。
+          </p>
+        </section>
+      </section>
+    </main>
+
+    <footer class="HomeTemplate__Footer">
+      <div class="Footer">
+        <ul class="Footer__Nav" lang="en" translate="no">
+          <li>
+            <a
+              class="Footer__Link"
+              href="https://github.com/tak-dcxi/kiso.css/"
+              lang="en"
+              translate="no"
+              >GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              class="Footer__Link"
+              href="https://www.npmjs.com/package/kiso.css"
+              lang="en"
+              translate="no"
+              >npm</a
+            >
+          </li>
+          <li>
+            <a
+              class="Footer__Link"
+              href="https://github.com/tak-dcxi/kiso.css/blob/main/LICENSE"
+              lang="en"
+              >MIT License</a
+            >
+          </li>
+        </ul>
+        <p class="Footer__Copyright" lang="en" translate="no">
+          <small>
+            © 2025 TAK (
+            <a
+              class="Footer__Link"
+              href="https://www.tak-dcxi.com/"
+              target="_blank"
+            >
+              TAKLOG </a
+            >)
+          </small>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
