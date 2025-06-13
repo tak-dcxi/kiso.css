@@ -155,9 +155,11 @@
 
   /* Set tab size to 2 */
   tab-size: 2;
+}
 
-  /* Wrap text when printing */
-  @media print {
+@media print {
+  :where(pre) {
+    /* Wrap text when printing */
     white-space: pre-wrap;
   }
 }
@@ -189,6 +191,12 @@
   font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas,
     "Liberation Mono", "Courier New", serif;
 
+  /* Reset font feature settings */
+  font-feature-settings: initial;
+
+  /* Reset font variation settings */
+  font-variation-settings: initial;
+
   /* Reset font size to ensure consistent display across different devices */
   font-size: unset;
 }
@@ -196,11 +204,11 @@
 :where(var) {
   /* Set the font family of the <var> element to serif to enhance the typographical distinction of variable names in technical content */
   font-family: serif;
+}
 
+:where(var:lang(ja)) {
   /* Reset the font family for <var> elements in Japanese content */
-  &:where(:lang(ja)) {
-    font-family: unset;
-  }
+  font-family: unset;
 }
 
 :where(abbr[title]) {
@@ -214,17 +222,17 @@
   cursor: help;
 }
 
-:where(mark) {
-  /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode */
-  @media (forced-colors: active) {
-    background-color: Highlight;
-    color: HighlightText;
-  }
-}
-
 :where(time) {
   /* Set to `no-autospace` because date notations in typography do not include spaces */
   text-autospace: no-autospace;
+}
+
+@media (forced-colors: active) {
+  :where(mark) {
+    /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode */
+    background-color: Highlight;
+    color: HighlightText;
+  }
 }
 
 /* ======================================================
@@ -267,31 +275,6 @@
 
   /* Align to the bottom of the text */
   vertical-align: bottom;
-}
-
-:where(svg) {
-  /* In forced-colors mode, the color of SVG elements may not change, which can be problematic. Use system colors in forced-colors mode. */
-  @media (forced-colors: active) {
-    --_svg-foreground: CanvasText;
-
-    stroke: var(--_svg-foreground) !important;
-
-    & [fill]:not([fill="none"]) {
-      fill: var(--_svg-foreground) !important;
-    }
-
-    &:where(:any-link &) {
-      --_svg-foreground: LinkText;
-    }
-
-    &:where(button:enabled &) {
-      --_svg-foreground: ButtonText;
-    }
-
-    &:where(:disabled &) {
-      --_svg-foreground: GrayText;
-    }
-  }
 }
 
 /* ======================================================
@@ -371,10 +354,13 @@
 }
 
 :where([type="search"]) {
-  /* Remove the rounded corners of search inputs on macOS and IOS and normalize the background color */
+  /* Remove the rounded corners of search inputs on macOS and normalize the background color */
   -webkit-appearance: textfield;
+}
 
-  @supports (-webkit-touch-callout: none) {
+@supports (-webkit-touch-callout: none) {
+  :where([type="search"]) {
+    /* Remove the rounded corners of search inputs on iOS and normalize the background color */
     border: 1px solid -apple-system-secondary-label;
     background-color: Canvas;
   }
@@ -465,6 +451,11 @@
   font: unset;
 }
 
+:where(progress) {
+  /* Reset vertical alignment */
+  vertical-align: initial;
+}
+
 ::placeholder {
   /* Standardize the opacity of placeholder text (it may be set lower by default in Firefox) */
   opacity: unset;
@@ -479,11 +470,11 @@
 
   /* Indicate clickable elements with a pointer cursor */
   cursor: pointer;
+}
 
-  &::-webkit-details-marker {
-    /* In Safari versions earlier than 18.4 (released in April 2025), a triangle icon is displayed using the -webkit-details-marker CSS pseudo-element, so it should be removed */
-    display: none;
-  }
+:where(summary)::-webkit-details-marker {
+  /* In Safari versions earlier than 18.4 (released in April 2025), a triangle icon is displayed using the -webkit-details-marker CSS pseudo-element, so it should be removed */
+  display: none;
 }
 
 :where(dialog) {
