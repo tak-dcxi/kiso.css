@@ -77,7 +77,6 @@ module.exports = {
         },
       },
     ],
-    "font-weight-notation": "numeric",
     "function-no-unknown": [
       true,
       {
