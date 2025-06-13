@@ -7,7 +7,8 @@
   "files": [
     "kiso.css",
     "kiso.min.css",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "repository": {
     "type": "git",
