@@ -41,6 +41,9 @@
   /* Insert a smaller-than-normal space between characters like Japanese and alphanumeric characters */
   text-autospace: normal;
 
+  /* Apply strict line-breaking rules */
+  line-break: strict;
+
   /* Wrap words mid-word if they do not fit within the line box */
   overflow-wrap: anywhere;
 
