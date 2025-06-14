@@ -307,11 +307,8 @@
   background-color: unset;
   color: unset;
   font: unset;
-  font-feature-settings: inherit;
-  font-variation-settings: inherit;
   letter-spacing: unset;
   text-align: unset;
-  text-transform: unset;
 }
 
 :where([type="radio"], [type="checkbox"]) {
