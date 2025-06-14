@@ -188,11 +188,6 @@
   font-size: unset;
 }
 
-:where(var:not(:lang(ja))) {
-  /* Set the font family of the <var> element to serif to enhance the typographical distinction of variable names in technical content. */
-  font-family: serif;
-}
-
 :where(abbr[title]) {
   /* Display an underline. */
   text-decoration-line: underline;
@@ -221,9 +216,6 @@
 //  MARK: Links
 // ====================================================== */
 :where(a:any-link) {
-  /* The `background-color` specified in the UA stylesheet is often unnecessary, so it is reset. */
-  background-color: unset;
-
   /* The default `color` from the UA stylesheet is rarely used as is, so it's reset to allow inheritance. */
   color: unset;
 
@@ -234,11 +226,8 @@
   */
   text-decoration-line: unset;
 
-  /* Sets the link underline thickness to a consistent `1px`. */
-  text-decoration-thickness: 1px;
-
-  /* Adjust underline to skip descenders for better readability. */
-  text-decoration-skip-ink: auto;
+  /* Set the underline thickness to the font's default thickness. */
+  text-decoration-thickness: from-font;
 }
 
 /* ======================================================
@@ -284,8 +273,8 @@
   * It's common practice to apply `padding` to `<td>` and `<th>` elements.
   * Since the UA stylesheet's padding is small, a reasonable amount is set here to ensure readability even for unstyled tables.
   */
-  padding-block: 0.25em;
-  padding-inline: 0.5em;
+  padding-block: 0.25lh;
+  padding-inline: 0.5ic;
 
   /*
   * Since `<td>` and `<th>` elements are often styled with a border, a `1px` border is applied by default.
