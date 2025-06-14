@@ -15,7 +15,7 @@
 // ====================================================== */
 :where(:root) {
   /* Safari defaults to serif fonts when no font-family is specified, so it's recommended to set sans-serif as the default */
-  font-family: sans-serif;
+  font-family: ui-sans-serif, system-ui, sans-serif;
 
   /*
   * From an accessibility perspective, specify a line height of at least 1.5 times the text size within paragraphs
@@ -46,16 +46,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-:where(:root:lang(en)) {
-  /* Enable kerning for English */
-  font-kerning: normal;
-}
-
-:where(:root:lang(ja)) {
-  /* Disable kerning for Japanese */
-  font-kerning: none;
-}
-
 :where(body) {
   /* Ensure the body element occupies at least 100% of the viewport's block size */
   min-block-size: 100dvb;
@@ -68,16 +58,8 @@
 // MARK: Sections
 // ------------------------------------------------------ */
 :where(h1, h2, h3, h4, h5, h6) {
-  /* Enable kerning for headings */
-  font-kerning: normal;
-
   /* Prevent the last line from ending with a single word */
   text-wrap: pretty;
-}
-
-:where(:is(h1, h2, h3, h4, h5, h6):lang(ja)) {
-  /* Adjust punctuation spacing for better typographic balance in headings */
-  font-feature-settings: "palt";
 }
 
 :where(h1) {
@@ -136,7 +118,7 @@
 
 :where(dt) {
   /* Make definition terms bold */
-  font-weight: 700;
+  font-weight: bold;
 }
 
 :where(dd) {
@@ -164,7 +146,7 @@
 // ====================================================== */
 :where(em:lang(ja)) {
   /* Strengthen the weight of emphasis elements in Japanese content */
-  font-weight: 700;
+  font-weight: bold;
 }
 
 :where(:is(i, cite, em, dfn, var):lang(ja)) {
@@ -243,14 +225,6 @@
 
   /* Adjust underline to skip descenders for better readability */
   text-decoration-skip-ink: auto;
-}
-
-/* ======================================================
-//  MARK: Edits
-// ====================================================== */
-:where(ins) {
-  /* Remove default text decoration */
-  text-decoration-line: unset;
 }
 
 /* ======================================================

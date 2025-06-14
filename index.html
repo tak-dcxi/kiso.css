@@ -53,10 +53,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"
-    />
+    <link rel="stylesheet" href="kiso.css" />
     <style>
       @property --gradient-alpha {
         syntax: "<percentage>";
@@ -84,6 +81,7 @@
         background-color: var(--background-base);
         color: var(--foreground-base);
         font-family: var(--text-gothic);
+        -webkit-font-smoothing: antialiased;
 
         @media (width >= 0) {
           font-size: 87.5%;
@@ -91,6 +89,15 @@
 
         @media (width >= 640px) {
           font-size: 100%;
+        }
+
+        &:lang(en) {
+          font-kerning: normal;
+          text-wrap: pretty;
+        }
+
+        &:lang(ja) {
+          font-kerning: none;
         }
       }
 
@@ -166,13 +173,22 @@
         color: transparent;
         font-family: var(--text-english);
         font-size: 3rem;
+        font-kerning: normal;
+
+        &:lang(ja) {
+          font-feature-settings: "palt";
+          word-break: auto-phrase;
+        }
       }
 
       .Hero__Tagline {
-        font-feature-settings: "palt";
         font-size: 1.25rem;
         font-kerning: normal;
-        word-break: auto-phrase;
+
+        &:lang(ja) {
+          font-feature-settings: "palt";
+          word-break: auto-phrase;
+        }
       }
 
       .Hero__ActionsList {
@@ -306,9 +322,11 @@
       .FeaturesCards__Heading {
         color: var(--foreground-primary);
         font-size: 1.25rem;
+        font-kerning: normal;
         line-height: var(--leading-tight);
 
         &:lang(ja) {
+          font-feature-settings: "palt";
           word-break: auto-phrase;
         }
       }
@@ -330,6 +348,12 @@
 
       .InstallationMethod__Heading {
         font-size: 1.125rem;
+        font-kerning: normal;
+
+        &:lang(ja) {
+          font-feature-settings: "palt";
+          word-break: auto-phrase;
+        }
       }
 
       .InstallationMethod__Code {
