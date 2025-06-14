@@ -1,4 +1,4 @@
-/*! kiso.css v1.0.10 | MIT License | https://github.com/tak-dcxi/kiso.css */
+/*! kiso.css v1.1.0 | MIT License | https://github.com/tak-dcxi/kiso.css */
 
 /* ======================================================
 //  MARK: Universal
@@ -443,20 +443,27 @@
   display: none;
 }
 
+:where(dialog, [popover]) {
+  /* Prevent the dialog from causing scroll chaining */
+  overscroll-behavior-block: contain;
+
+  /* Remove default padding */
+  padding: unset;
+
+  /* Remove default border */
+  border: unset;
+}
+
 :where(dialog) {
   /* Reset max-inline-size limit */
   max-inline-size: unset;
 
   /* Reset max-block-size limit */
   max-block-size: unset;
-
-  /* Remove default border */
-  border: unset;
 }
 
-:where(dialog, [popover]) {
-  /* Remove default padding */
-  padding: unset;
+:where([popover]) {
+  margin: unset;
 }
 
 :where(dialog:not([open], [popover]), [popover]:not(:popover-open)) {
