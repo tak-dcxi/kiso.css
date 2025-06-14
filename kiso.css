@@ -6,7 +6,10 @@
 *,
 ::before,
 ::after {
-  /* Include padding and border in element's dimensions */
+  /*
+  * Includes `padding` and `border` in the element's specified dimensions.
+  * It is highly recommended to set `box-sizing: border-box;` by default, as it makes styling much easier, especially when specifying `width: 100%;`.
+  */
   box-sizing: border-box;
 }
 
@@ -14,43 +17,49 @@
 //  MARK: Document and Body Elements
 // ====================================================== */
 :where(:root) {
-  /* Safari defaults to serif fonts when no font-family is specified, so it's recommended to set sans-serif as the default */
+  /* In Safari, if `font-family` is not specified, a serif font is applied by default, so `sans-serif` is set as the default here. */
   font-family: ui-sans-serif, system-ui, sans-serif;
 
   /*
-  * From an accessibility perspective, specify a line height of at least 1.5 times the text size within paragraphs
+  * For accessibility, it is recommended to set the `line-height` to at least 1.5 times the text size within paragraphs.
   * @see https://waic.jp/translations/WCAG21/#visual-presentation
   */
   line-height: 1.5;
 
-  /* Remove space when punctuation marks are adjacent, and also remove leading spaces in a line */
+  /* Remove space when punctuation marks are adjacent, and also remove leading spaces in a line. */
   text-spacing-trim: trim-start;
 
-  /* Insert a smaller-than-normal space between characters like Japanese and alphanumeric characters */
+  /* Improves readability by inserting a small space between Japanese and alphanumeric characters. */
   text-autospace: normal;
 
-  /* Apply strict line-breaking rules */
+  /* Prevents misreading by applying strict line-breaking rules. */
   line-break: strict;
 
-  /* Wrap words mid-word if they do not fit within the line box */
+  /* Wraps English words mid-word. Specifying `anywhere` also prevents content from overflowing in layouts like `flex` or `grid`. */
   overflow-wrap: anywhere;
 
-  /* Prevent mobile browsers from automatically enlarging text size */
+  /*
+  * Mobile browsers have an algorithm that automatically adjusts font sizes to prevent text from becoming too small.
+  * This controls the auto-adjustment feature to prevent unwanted resizing.
+  */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 
-  /* Prevent layout shift caused by the appearance/disappearance of the scrollbar */
+  /* Prevents layout shift caused by the appearance or disappearance of the scrollbar. */
   scrollbar-gutter: stable;
 
-  /* Remove tap highlight color to improve appearance on mobile devices */
+  /* Suppresses the tap highlight on iOS. */
   -webkit-tap-highlight-color: transparent;
 }
 
 :where(body) {
-  /* Ensure the body element occupies at least 100% of the viewport's block size */
+  /*
+  * When creating a sticky footer, a minimum height is often required.
+  * Setting the `min-block-size` to the dynamic viewport height ensures enough space for the footer.
+  */
   min-block-size: 100dvb;
 
-  /* Reset default margin */
+  /* The `margin` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   margin: unset;
 }
 
@@ -58,7 +67,7 @@
 // MARK: Sections
 // ------------------------------------------------------ */
 :where(h1, h2, h3, h4, h5, h6) {
-  /* Prevent the last line from ending with a single word */
+  /* Prevents the last line of text from ending with a single word, which can look awkward (known as an orphan). */
   text-wrap: pretty;
 }
 
@@ -73,12 +82,15 @@
 }
 
 :where(h2, h3, h4, h5, h6) {
-  /* Reset default block margins */
+  /* The `margin-block` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset. */
   margin-block: unset;
 }
 
 :where(search) {
-  /* Consistently display the 'search' element */
+  /*
+  * The `<search>` element is supported from Safari 17.
+  * This prevents it from being displayed as an inline element in unsupported environments.
+  */
   display: block flow;
 }
 
@@ -86,57 +98,63 @@
 //  MARK: Grouping content
 // ====================================================== */
 :where(p, blockquote, figure, pre, address, ul, ol, dl, menu) {
-  /* Reset default block margins */
+  /* The `margin-block` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset. */
   margin-block: unset;
 }
 
 :where(blockquote, figure) {
-  /* Reset default inline margins */
+  /* The `margin-inline` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset. */
   margin-inline: unset;
 }
 
 :where(p:lang(en)) {
   /*
   * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read
-  * Therefore, when lang="en", this prevents the last line from ending with a single word
+  * Therefore, when lang="en", this prevents the last line from ending with a single word.
   */
   text-wrap: pretty;
 }
 
 :where(address:lang(ja)) {
-  /* Reset font style for Japanese-specific elements */
+  /* Italic style is not common in Japanese, so the `font-style` is reset. */
   font-style: unset;
 }
 
 :where(ul, ol, menu) {
-  /* Remove default padding-inline-start */
+  /* The `padding-inline-start` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset. */
   padding-inline-start: unset;
 
-  /* In Safari, using "list-style: none" prevents screen readers from announcing lists, so use "list-style-type: """ to hide markers without affecting accessibility */
+  /*
+  * In Safari, using `list-style: none` prevents screen readers from announcing lists.
+  * `list-style-type: ""` is used to hide markers without affecting accessibility.
+  */
   list-style-type: "";
 }
 
 :where(dt) {
-  /* Make definition terms bold */
+  /* It is common to display `<dt>` elements in bold, so `font-weight: bold;` is set by default. */
   font-weight: bold;
 }
 
 :where(dd) {
-  /* Remove default indent */
+  /* The `margin-inline-start` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset. */
   margin-inline-start: unset;
 }
 
 :where(pre) {
-  /* Prevent inheritance to ensure no misalignment */
+  /*
+  * Since `text-spacing-trim` can affect spacing in `<pre>` elements even with its initial value, the final rendering may depend on the user's font settings.
+  * To ensure consistent alignment, `space-all` is explicitly specified and inheritance is prevented.
+  */
   text-spacing-trim: space-all;
 
-  /* Set to `no-autospace` as it can cause misalignment with monospaced fonts */
+  /* Set to `no-autospace` as it can cause misalignment with monospaced fonts. */
   text-autospace: no-autospace;
 }
 
 @media print {
   :where(pre) {
-    /* Wrap text when printing */
+    /* Wraps text when printing. */
     white-space: pre-wrap;
   }
 }
@@ -145,63 +163,60 @@
 //  MARK: Text-level semantics
 // ====================================================== */
 :where(em:lang(ja)) {
-  /* Strengthen the weight of emphasis elements in Japanese content */
+  /* In Japanese, emphasis is commonly represented by bold text, so `font-weight: bold;` is set by default. */
   font-weight: bold;
 }
 
 :where(:is(i, cite, em, dfn, var):lang(ja)) {
-  /* Reset font style for Japanese-specific elements */
+  /* Italic style is not common in Japanese, so the `font-style` is reset. */
   font-style: unset;
 }
 
 :where(code, kbd, samp) {
   /*
-  * Set a monospace font family referencing Tailwind
+  * Set a monospace font family referencing Tailwind.
   * @see https://tailwindcss.com/docs/font-family
-  * Specifying 'serif' is a countermeasure for the 13px issue in Chrome
   */
-  font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas,
-    "Liberation Mono", "Courier New", serif;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 
-  /* Reset font feature settings */
+  /* Font feature settings can have adverse effects on monospaced fonts, so their values are explicitly set to `initial` to prevent inheritance. */
   font-feature-settings: initial;
-
-  /* Reset font variation settings */
   font-variation-settings: initial;
 
-  /* Reset font size to ensure consistent display across different devices */
+  /* Resets the `font-size` specified in the UA stylesheet to allow inheritance. */
   font-size: unset;
 }
 
 :where(var) {
-  /* Set the font family of the <var> element to serif to enhance the typographical distinction of variable names in technical content */
+  /* Set the font family of the <var> element to serif to enhance the typographical distinction of variable names in technical content. */
   font-family: serif;
 }
 
 :where(var:lang(ja)) {
-  /* Reset the font family for <var> elements in Japanese content */
+  /* Reset the font family for <var> elements in Japanese content. */
   font-family: unset;
 }
 
 :where(abbr[title]) {
-  /* Display an underline */
+  /* Display an underline. */
   text-decoration-line: underline;
 
-  /* Set the underline style to dotted */
+  /* Set the underline style to dotted. */
   text-decoration-style: dotted;
 
-  /* Display a tooltip on mouse hover */
+  /* Display a tooltip on mouse hover. */
   cursor: help;
 }
 
 :where(time) {
-  /* Set to `no-autospace` because date notations in typography do not include spaces */
+  /* Set to `no-autospace` because date notations in typography do not include spaces. */
   text-autospace: no-autospace;
 }
 
 @media (forced-colors: active) {
   :where(mark) {
-    /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode */
+    /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode. */
     background-color: Highlight;
     color: HighlightText;
   }
@@ -211,19 +226,23 @@
 //  MARK: Links
 // ====================================================== */
 :where(a:any-link) {
-  /* Remove default background color */
+  /* The `background-color` specified in the UA stylesheet is often unnecessary, so it is reset. */
   background-color: unset;
 
-  /* Reset text color to default or inherited value */
+  /* The default `color` from the UA stylesheet is rarely used as is, so it's reset to allow inheritance. */
   color: unset;
 
-  /* Remove underline from links */
+  /*
+  * While link underlines can be useful, they are often obstructive.
+  * They are disabled by default.
+  * If needed, restore them using `revert`.
+  */
   text-decoration-line: unset;
 
-  /* Set text decoration thickness to 1px */
+  /* Sets the link underline thickness to a consistent `1px`. */
   text-decoration-thickness: 1px;
 
-  /* Adjust underline to skip descenders for better readability */
+  /* Adjust underline to skip descenders for better readability. */
   text-decoration-skip-ink: auto;
 }
 
@@ -231,17 +250,18 @@
 //  MARK: Embedded content
 // ====================================================== */
 :where(img, svg, picture, video, canvas, model, audio, iframe, embed, object) {
-  /* Automatically adjust block size based on content */
+  /* Automatically adjust block size based on content. */
   block-size: auto;
 
-  /* Limit the maximum inline size to prevent overflow */
+  /* Prevents overflow by setting the maximum width to `100%`. */
   max-inline-size: 100%;
 
-  /* Align to the bottom of the text */
+  /* Prevents extra space from appearing at the bottom of the element. */
   vertical-align: bottom;
 }
 
 :where(iframe) {
+  /* The `border` specified in the UA stylesheet is often unnecessary, so it is reset. */
   border: unset;
 }
 
@@ -249,32 +269,41 @@
 //  MARK: Tabular data
 // ====================================================== */
 :where(table) {
-  /* Add borders to make the layout easier to visualize */
+  /*
+  * Since `<table>` elements are often styled with a border, a `1px` border is applied by default.
+  * This ensures readability even if the table is inserted without custom styles.
+  */
   border: 1px solid;
 
-  /* Collapse borders for a more refined table design */
+  /* Collapse borders for a more refined table design. */
   border-collapse: collapse;
 }
 
 :where(caption) {
-  /* Remove default text alignment */
+  /* Resetting the `text-align` from the UA stylesheet provides more styling flexibility. */
   text-align: unset;
 }
 
 :where(td, th) {
-  /* Add padding to make the layout easier to visualize */
+  /*
+  * It's common practice to apply `padding` to `<td>` and `<th>` elements.
+  * Since the UA stylesheet's padding is small, a reasonable amount is set here to ensure readability even for unstyled tables.
+  */
   padding-block: 0.25em;
   padding-inline: 0.5em;
 
-  /* Add borders to make the layout easier to visualize */
+  /*
+  * Since `<td>` and `<th>` elements are often styled with a border, a `1px` border is applied by default.
+  * This ensures readability even if the table is inserted without custom styles.
+  */
   border: 1px solid;
 
-  /* Align table cell content to the top */
+  /* Vertical alignment is often set to the top, so `top` is specified as the default. */
   vertical-align: top;
 }
 
 :where(th) {
-  /* Remove default text alignment */
+  /* Resetting the `text-align` from the UA stylesheet provides more styling flexibility. */
   text-align: unset;
 }
 
@@ -283,47 +312,37 @@
 // ====================================================== */
 :where(button, input, select, textarea),
 ::file-selector-button {
-  /* Add borders to make the layout easier to visualize */
+  /*
+  * These elements are often styled with a border, so a `1px` border is applied by default for consistency.
+  * This ensures readability even for unstyled elements.
+  * When resetting, it's recommended to use `border-color: transparent` instead of `border: none` to account for forced color modes.
+  */
   border: 1px solid;
 
-  /* Remove default background color */
+  /* These styles specified in the UA stylesheet are often unnecessary, so they are reset to allow for inheritance. */
   background-color: unset;
-
-  /* Remove default text color */
   color: unset;
-
-  /* Reset font settings to inherit from parent */
   font: unset;
-
-  /* Reset font-feature-settings to inherit from parent */
   font-feature-settings: inherit;
-
-  /* Reset font-variation-settings to inherit from parent */
   font-variation-settings: inherit;
-
-  /* Reset letter-spacing to default */
   letter-spacing: unset;
-
-  /* Reset text-alignment to default */
   text-align: unset;
-
-  /* Reset text-transform to default */
   text-transform: unset;
 }
 
 :where([type="radio"], [type="checkbox"]) {
-  /* Remove default margin */
+  /* The `margin` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   margin: unset;
 }
 
 :where([type="search"]) {
-  /* Remove the rounded corners of search inputs on macOS and normalize the background color */
+  /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
 }
 
 @supports (-webkit-touch-callout: none) {
   :where([type="search"]) {
-    /* Remove the rounded corners of search inputs on iOS and normalize the background color */
+    /* Remove the rounded corners of search inputs on iOS and normalize the background color. */
     border: 1px solid -apple-system-secondary-label;
     background-color: Canvas;
   }
@@ -335,17 +354,18 @@
       )
   ) {
   /*
-  * Certain input types need to maintain left alignment even in right-to-left (RTL) languages. However, this only applies when the value is not empty, as the placeholder should be right-aligned.
+  * Certain input types need to maintain left alignment even in right-to-left (RTL) languages.
+  * However, this only applies when the value is not empty, as the placeholder should be right-aligned.
   * @see https://rtlstyling.com/posts/rtl-styling#form-inputs
   */
   direction: ltr;
 }
 
 :where(textarea) {
-  /* Remove default margin in Firefox */
+  /* The `margin-block` specified in Firefox's UA stylesheet is often unnecessary, so it is reset. */
   margin-block: unset;
 
-  /* Allow vertical resizing of textareas only */
+  /* Allows vertical resizing for `<textarea>` elements. */
   resize: block;
 }
 
@@ -354,13 +374,16 @@
     textarea,
     [contenteditable]
   ) {
-  /* Set to `no-autospace` as auto-spacing during input can cause erratic behavior */
+  /* Set to `no-autospace` because `text-autospace` can insert spaces during input, potentially causing erratic behavior. */
   text-autospace: no-autospace;
 }
 
 :where(button, [type="button"], [type="submit"], [type="reset"]),
 ::file-selector-button {
-  /* Optimize touch interaction for buttons */
+  /*
+  * On iOS, double-tapping a button can cause zooming, which harms usability.
+  * `touch-action: manipulation` is specified to disable zooming on double-tap.
+  */
   touch-action: manipulation;
 }
 
@@ -376,54 +399,45 @@
     [role="option"]
   ),
 ::file-selector-button {
-  /* Indicate clickable elements with a pointer cursor */
+  /* Indicate clickable elements with a pointer cursor. */
   cursor: pointer;
 }
 
-::file-selector-button {
-  /* Remove default border */
-  border: unset;
-}
-
 :where(select:disabled) {
-  /* Match the opacity of disabled selects with other disabled elements */
+  /* Match the opacity of disabled selects with other disabled elements. */
   opacity: inherit;
 }
 
 :where(fieldset) {
   /*
-  * Prevent fieldset from causing overflow
-  * Reset the default `min-inline-size: min-content` to prevent children from stretching fieldset
+  * Prevent fieldset from causing overflow.
+  * Reset the default `min-inline-size: min-content` to prevent children from stretching fieldset.
   */
   min-inline-size: 0;
 
-  /* Remove default margin-inline */
+  /* The following default styles are often unnecessary, so they are reset. */
   margin-inline: unset;
-
-  /* Remove default padding */
   padding: unset;
-
-  /* Remove default border */
   border: unset;
 }
 
 :where(legend) {
-  /* Remove default padding-inline */
+  /* The default `padding-inline` is often unnecessary, so it is reset. */
   padding-inline: unset;
 }
 
 :where(optgroup) {
-  /* Reset font settings to inherit from parent */
+  /* Reset font settings to inherit from parent. */
   font: unset;
 }
 
 :where(progress) {
-  /* Reset vertical alignment */
+  /* Resets the vertical alignment of the `<progress>` element to its initial value. */
   vertical-align: initial;
 }
 
 ::placeholder {
-  /* Standardize the opacity of placeholder text (it may be set lower by default in Firefox) */
+  /* Standardize the opacity of placeholder text (it may be set lower by default in Firefox). */
   opacity: unset;
 }
 
@@ -431,48 +445,54 @@
 //  MARK: Interactive elements
 // ====================================================== */
 :where(summary) {
-  /* Remove the default marker */
+  /* The default triangle marker is often unnecessary, so it is disabled. */
   list-style-type: "";
 
-  /* Indicate clickable elements with a pointer cursor */
+  /* Changing the cursor to a pointer clarifies the clickability of the element. */
   cursor: pointer;
 }
 
 :where(summary)::-webkit-details-marker {
-  /* In Safari versions earlier than 18.4 (released in April 2025), a triangle icon is displayed using the -webkit-details-marker CSS pseudo-element, so it should be removed */
+  /* In Safari versions earlier than 18.4 (released in April 2025), a triangle icon is displayed using the -webkit-details-marker CSS pseudo-element, so it should be removed. */
   display: none;
 }
 
 :where(dialog, [popover]) {
-  /* Prevent the dialog from causing scroll chaining */
+  /*
+  * When these fixed-position elements are scrolled, preventing scroll chaining on the underlying page and bounce effects on mobile improves usability.
+  * Disabling block-direction scroll chaining is recommended.
+  */
   overscroll-behavior-block: contain;
 
-  /* Remove default padding */
+  /* The following default styles are often unnecessary, so they are reset. */
   padding: unset;
-
-  /* Remove default border */
   border: unset;
 }
 
 :where(dialog) {
-  /* Reset max-inline-size limit */
+  /*
+  * The max width and height of a `<dialog>` element are typically determined by the design.
+  * These UA stylesheet properties are reset as they can be obstructive, especially when trying to make the dialog full-screen.
+  */
   max-inline-size: unset;
-
-  /* Reset max-block-size limit */
   max-block-size: unset;
 }
 
 :where([popover]) {
+  /* While the UA stylesheet's `margin` for `<dialog>` elements is useful for centering and is left intact, the `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning. */
   margin: unset;
 }
 
 :where(dialog:not([open], [popover]), [popover]:not(:popover-open)) {
-  /* Hide dialog and popover elements when not open */
+  /*
+  * These elements can be easily displayed by explicitly setting their `display` property.
+  * To prevent them from appearing when not in an open state, they are forcibly hidden.
+  */
   display: none !important;
 }
 
 ::backdrop {
-  /* Remove the default background color to more clearly display the underlying content */
+  /* The default background color for the `::backdrop` is often unnecessary, so it is reset. */
   background-color: unset;
 }
 
@@ -480,30 +500,28 @@
 //  MARK: Focus Styles
 // ====================================================== */
 :where(:-moz-focusring) {
-  /* Improve Firefox's outline and unify styles for input elements and buttons */
+  /* Improve Firefox's outline and unify styles for input elements and buttons. */
   outline: auto;
 }
 
 :where(:focus:not(:focus-visible)) {
-  /* Hide the focus outline to reduce visual clutter unless the element is explicitly :focus-visible */
+  /* Hide the focus outline to reduce visual clutter unless the element is explicitly `:focus-visible`. */
   outline: none;
 }
 
 :where(:focus-visible) {
-  /* Add space between the content and the focus outline */
+  /* Add space between the content and the focus outline. */
   outline-offset: 3px;
 }
 
 [tabindex="-1"]:focus-visible {
-  /* Prevent programmatically focused elements from displaying an outline unless they are naturally focusable */
+  /* Prevent programmatically focused elements from displaying an outline unless they are naturally focusable. */
   outline: none !important;
 }
 
 ::-moz-focus-inner {
-  /* Remove inner padding in Firefox */
+  /* The following styles specified in Firefox's UA stylesheet are often unnecessary, so they are reset. */
   padding: unset;
-
-  /* Remove border in Firefox */
   border: none;
 }
 
@@ -511,11 +529,11 @@
 //  MARK: Misc
 // ====================================================== */
 :where(:disabled, [aria-disabled="true"]) {
-  /* Display the default cursor on disabled elements to reflect their non-interactive state */
+  /* Display the default cursor on disabled elements to reflect their non-interactive state. */
   cursor: default;
 }
 
 [hidden]:not([hidden="until-found"]) {
-  /* Ensure that elements intended to be hidden are not displayed, improving clarity and layout control */
+  /* Ensure that elements intended to be hidden are not displayed, improving clarity and layout control. */
   display: none !important;
 }
