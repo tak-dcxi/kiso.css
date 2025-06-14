@@ -188,14 +188,9 @@
   font-size: unset;
 }
 
-:where(var) {
+:where(var:not(:lang(ja))) {
   /* Set the font family of the <var> element to serif to enhance the typographical distinction of variable names in technical content. */
   font-family: serif;
-}
-
-:where(var:lang(ja)) {
-  /* Reset the font family for <var> elements in Japanese content. */
-  font-family: unset;
 }
 
 :where(abbr[title]) {
