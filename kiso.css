@@ -479,7 +479,10 @@
 }
 
 :where([popover]) {
-  /* While the UA stylesheet's `margin` for `<dialog>` elements is useful for centering and is left intact, the `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning. */
+  /*
+  * While the UA stylesheet's `margin` for `<dialog>` elements is useful for centering with `inset: 0`,
+  * But `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning.
+  */
   margin: unset;
 }
 

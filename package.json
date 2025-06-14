@@ -1,6 +1,6 @@
 {
   "name": "kiso.css",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "This is a reset CSS that provides a 'foundation' with domestic products in mind.",
   "main": "kiso.css",
   "style": "kiso.css",
