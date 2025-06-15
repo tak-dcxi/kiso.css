@@ -1,23 +1,36 @@
 # kiso.css
 
-kiso.css is a comprehensive yet lightweight reset CSS library for modern web development.
+A modern reset CSS designed with Japanese websites in mind.
 
-It standardizes browser default styles to provide a more consistent development experience.
+kiso.css provides better defaults for modern web development. It standardizes browser styles, offering a consistent and solid foundation for your project.
 
-## Features
+[**Demo Site**](https://tak-dcxi.github.io/kiso.css/)
 
-- 🎯 **Modern CSS**: Supports the latest HTML and CSS specifications.
-- ♿ **Accessibility-Focused**: WCAG-compliant styles and support for forced color modes.
-- 🌏 **Multilingual Support**: Special consideration for Japanese, English, and RTL languages.
-- 🪶 **Minimal Reset**: Provides only the essential minimum reset by eliminating unnecessary decorative styles.
+## Key Features
+
+- 🇯🇵 **Optimized for Japanese**: Provides beautiful typography for Japanese text out-of-the-box.
+- ♿ **Accessibility First**: Ensures accessible web design, including WCAG-compliant focus styles and forced color mode support.
+- 🪶 **Minimal & Sensible**: Resets only what's necessary, preserving useful browser defaults and avoiding destructive styles.
 - 🔧 **Zero Specificity**: All rules use the `:where()` selector for easy overriding without specificity conflicts.
+- 🎯 **Modern CSS**: Utilizes modern CSS properties like `text-wrap: pretty` and `scrollbar-gutter: stable`.
+- 🌏 **Multilingual Ready**: Designed with consideration for Japanese, English, and RTL languages.
 
 ## Installation
 
-### npm
+### Package Manager
 
 ```bash
 npm install kiso.css
+# or
+yarn add kiso.css
+```
+
+Import it into your main CSS file:
+
+```css
+@import "kiso.css";
+
+/* Your styles here */
 ```
 
 ### CDN
@@ -29,97 +42,39 @@ npm install kiso.css
 />
 ```
 
-### Direct Download
+## Core Concepts
 
-Download [kiso.css](https://github.com/tak-dcxi/kiso.css/blob/main/kiso.css) and include it in your project.
+### Japanese Typography
 
-## Usage
+kiso.css is built to handle Japanese text gracefully. It automatically adjusts spacing between Japanese and alphanumeric characters (`text-autospace`), refines line breaks (`line-break: strict`), and handles punctuation spacing (`text-spacing-trim`), which are often overlooked in other reset libraries.
 
-Import kiso.css at the top of your CSS file:
+### Zero Specificity
+
+By wrapping selectors in `:where()`, kiso.css keeps specificity at zero. This means you can easily override any style with your own classes or element selectors without resorting to `!important` or complex selectors.
 
 ```css
-@import "kiso.css";
-
-/* Your styles go here */
+/* This will easily override kiso.css without any specificity issues */
+a {
+  color: red;
+}
 ```
 
-Or include it in the `<head>` of your HTML:
+### Accessibility by Default
 
-```html
-<link rel="stylesheet" href="path/to/kiso.css" />
-<link rel="stylesheet" href="your-styles.css" />
-```
+Accessibility is a core principle. For example, lists remain recognizable by screen readers (`list-style-type: ""`), and focus rings are enhanced for better visibility (`:focus-visible`).
 
-## Main Features
+### Selective Reset
 
-### Universal Reset
+We avoid "over-resetting." Useful UA styles like `font-weight` on headings, `padding` on buttons, and borders on tables are preserved to reduce the amount of code you need to write. Destructive resets like `appearance: none` are avoided.
 
-- Sets `box-sizing` to `border-box` for all elements and pseudo-elements.
+## Contributing
 
-### Document & Body
-
-- Sets sensible defaults for root element including line-height, text spacing, and scrollbar behavior.
-- Language-specific kerning settings (enabled for English, disabled for Japanese).
-- Ensures body takes at least full viewport height.
-
-### Typography
-
-- Optimizes text rendering for both English and Japanese content.
-- Implements `text-wrap: pretty` to prevent widows/orphans.
-- Configures modern CSS properties like `text-autospace` and `text-spacing-trim`.
-- Applies strict line-breaking rules for better text layout.
-
-### Lists & Definitions
-
-- Removes default list markers and padding while maintaining accessibility.
-- Resets margins and indentation for cleaner layouts.
-
-### Links
-
-- Removes default link colors and underlines for complete styling control.
-- Maintains text decoration settings for better customization.
-
-### Form Elements
-
-- Comprehensive reset for form controls including buttons, inputs, and textarea.
-- Removes platform-specific styling (especially for iOS/macOS).
-- Optimizes for touch interaction and accessibility.
-- Proper cursor styles for interactive elements.
-
-### Embedded Content
-
-- Responsive sizing for images, videos, iframes, and other media.
-- Prevents content overflow with `max-inline-size: 100%`.
-- Supports modern elements like `<model>`.
-
-### Tables
-
-- Basic table styling with borders for better visibility.
-- Consistent padding and alignment for cells.
-
-### Interactive Elements
-
-- Proper styling for `<details>`/`<summary>` elements.
-- Reset for `<dialog>` and popover elements.
-- Removes default backdrop colors for better customization.
-
-### Focus Management
-
-- Enhanced focus styles with `outline-offset` for better visibility.
-- Hides focus outline for mouse users (`:focus-visible` support).
-- Special handling for programmatically focused elements.
-
-### Accessibility Features
-
-- Support for forced color modes (Windows High Contrast).
-- ARIA-aware disabled state styling.
-- Screen reader-friendly list styling.
-- Proper `[hidden]` attribute handling.
+Feedback and contributions are welcome\! Please feel free to open an [Issue](https://github.com/tak-dcxi/kiso.css/issues) or a [Pull Request](https://github.com/tak-dcxi/kiso.css/pulls).
 
 ## License
 
-[MIT License](https://www.google.com/search?q=./LICENSE)
+kiso.css is available under the [MIT License](https://www.google.com/search?q=./LICENSE).
 
-## Origin of the Name
+---
 
-"Kiso" (基礎) means "foundation" in Japanese. We hope this library becomes the solid "foundation" for your web projects.
+**Note:** The name "kiso" (基礎) means "foundation" in Japanese, reflecting our goal to provide a solid base for your web projects.
