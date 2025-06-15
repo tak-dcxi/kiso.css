@@ -257,11 +257,6 @@
   border-collapse: collapse;
 }
 
-:where(caption) {
-  /* Resetting the `text-align` from the UA stylesheet provides more styling flexibility. */
-  text-align: unset;
-}
-
 :where(th) {
   /* Resetting the `text-align` from the UA stylesheet provides more styling flexibility. */
   text-align: unset;
@@ -382,14 +377,9 @@
   padding-inline: unset;
 }
 
-:where(optgroup) {
-  /* Reset font settings to inherit from parent. */
-  font: unset;
-}
-
 :where(progress) {
   /* Resets the vertical alignment of the `<progress>` element to its initial value. */
-  vertical-align: initial;
+  vertical-align: unset;
 }
 
 ::placeholder {
@@ -425,6 +415,14 @@
   border: unset;
 }
 
+:where(dialog:not([open], [popover]), [popover]:not(:popover-open)) {
+  /*
+  * These elements can be easily displayed by explicitly setting their `display` property.
+  * To prevent them from appearing when not in an open state, they are forcibly hidden.
+  */
+  display: none !important;
+}
+
 :where(dialog) {
   /*
   * The max width and height of a `<dialog>` element are typically determined by the design.
@@ -447,22 +445,9 @@
   margin: unset;
 }
 
-:where(dialog:not([open], [popover]), [popover]:not(:popover-open)) {
-  /*
-  * These elements can be easily displayed by explicitly setting their `display` property.
-  * To prevent them from appearing when not in an open state, they are forcibly hidden.
-  */
-  display: none !important;
-}
-
 /* ======================================================
 //  MARK: Focus Styles
 // ====================================================== */
-:where(:-moz-focusring) {
-  /* Improve Firefox's outline and unify styles for input elements and buttons. */
-  outline: auto;
-}
-
 :where(:focus:not(:focus-visible)) {
   /* Hide the focus outline to reduce visual clutter unless the element is explicitly `:focus-visible`. */
   outline: none;
@@ -476,12 +461,6 @@
 [tabindex="-1"]:focus-visible {
   /* Prevent programmatically focused elements from displaying an outline unless they are naturally focusable. */
   outline: none !important;
-}
-
-::-moz-focus-inner {
-  /* The following styles specified in Firefox's UA stylesheet are often unnecessary, so they are reset. */
-  padding: unset;
-  border: none;
 }
 
 /* ======================================================
