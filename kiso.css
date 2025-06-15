@@ -132,8 +132,8 @@
 }
 
 :where(dt) {
-  /* It is common to display `<dt>` elements in bold, so `font-weight: bold;` is set by default. */
-  font-weight: bold;
+  /* It is common to display `<dt>` elements in bold, so `font-weight: bolder;` is set by default. */
+  font-weight: bolder;
 }
 
 :where(dd) {
@@ -163,8 +163,8 @@
 //  MARK: Text-level semantics
 // ====================================================== */
 :where(em:lang(ja)) {
-  /* In Japanese, emphasis is commonly represented by bold text, so `font-weight: bold;` is set by default. */
-  font-weight: bold;
+  /* In Japanese, emphasis is commonly represented by bold text, so `font-weight: bolder;` is set by default. */
+  font-weight: bolder;
 }
 
 :where(:is(i, cite, em, dfn, var):lang(ja)) {
@@ -253,12 +253,6 @@
 //  MARK: Tabular data
 // ====================================================== */
 :where(table) {
-  /*
-  * Since `<table>` elements are often styled with a border, a `1px` border is applied by default.
-  * This ensures readability even if the table is inserted without custom styles.
-  */
-  border: 1px solid;
-
   /* Collapse borders for a more refined table design. */
   border-collapse: collapse;
 }
@@ -266,24 +260,6 @@
 :where(caption) {
   /* Resetting the `text-align` from the UA stylesheet provides more styling flexibility. */
   text-align: unset;
-}
-
-:where(td, th) {
-  /*
-  * It's common practice to apply `padding` to `<td>` and `<th>` elements.
-  * Since the UA stylesheet's padding is small, a reasonable amount is set here to ensure readability even for unstyled tables.
-  */
-  padding-block: 0.25lh;
-  padding-inline: 0.5ic;
-
-  /*
-  * Since `<td>` and `<th>` elements are often styled with a border, a `1px` border is applied by default.
-  * This ensures readability even if the table is inserted without custom styles.
-  */
-  border: 1px solid;
-
-  /* Vertical alignment is often set to the top, so `top` is specified as the default. */
-  vertical-align: top;
 }
 
 :where(th) {
@@ -301,10 +277,11 @@
   * This ensures readability even for unstyled elements.
   * When resetting, it's recommended to use `border-color: transparent` instead of `border: none` to account for forced color modes.
   */
-  border: 1px solid;
+  border-width: 1px;
+  border-style: solid;
 
   /* These styles specified in the UA stylesheet are often unnecessary, so they are reset to allow for inheritance. */
-  background-color: unset;
+  border-color: unset;
   color: unset;
   font: unset;
   letter-spacing: unset;
@@ -361,6 +338,9 @@
 
 :where(button, [type="button"], [type="submit"], [type="reset"]),
 ::file-selector-button {
+  /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
+  background-color: unset;
+
   /*
   * On iOS, double-tapping a button can cause zooming, which harms usability.
   * `touch-action: manipulation` is specified to disable zooming on double-tap.
@@ -382,11 +362,6 @@
 ::file-selector-button {
   /* Indicate clickable elements with a pointer cursor. */
   cursor: pointer;
-}
-
-:where(select:disabled) {
-  /* Match the opacity of disabled selects with other disabled elements. */
-  opacity: inherit;
 }
 
 :where(fieldset) {
@@ -459,6 +434,11 @@
   max-block-size: unset;
 }
 
+:where(dialog)::backdrop {
+  /* Normalize the background color of the `::backdrop` element. */
+  background-color: oklch(0% 0 0deg / 30%);
+}
+
 :where([popover]) {
   /*
   * While the UA stylesheet's `margin` for `<dialog>` elements is useful for centering with `inset: 0`,
@@ -473,11 +453,6 @@
   * To prevent them from appearing when not in an open state, they are forcibly hidden.
   */
   display: none !important;
-}
-
-::backdrop {
-  /* The default background color for the `::backdrop` is often unnecessary, so it is reset. */
-  background-color: unset;
 }
 
 /* ======================================================
