@@ -277,6 +277,7 @@
 
   /* These styles specified in the UA stylesheet are often unnecessary, so they are reset to allow for inheritance. */
   border-color: unset;
+  border-radius: unset;
   color: unset;
   font: unset;
   letter-spacing: unset;
