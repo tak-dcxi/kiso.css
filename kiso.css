@@ -18,7 +18,7 @@
 // ====================================================== */
 :where(:root) {
   /* In Safari, if `font-family` is not specified, a serif font is applied by default, so `sans-serif` is set as the default here. */
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: sans-serif;
 
   /*
   * For accessibility, it is recommended to set the `line-height` to at least 1.5 times the text size within paragraphs.
