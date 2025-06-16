@@ -348,9 +348,9 @@
         hanging-punctuation: last allow-end;
 
         & > :where(p) {
-          inline-size: calc-size(auto, round(down, 100%, 1ic));
+          inline-size: round(down, 100%, 1ic);
 
-          @supports (calc-size(auto, round(down, size, 1ic))) {
+          @supports (inline-size: calc-size(auto, round(down, size, 1ic))) {
             inline-size: calc-size(auto, round(down, size, 1ic));
           }
         }
