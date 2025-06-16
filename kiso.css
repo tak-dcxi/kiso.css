@@ -332,6 +332,11 @@
   text-autospace: no-autospace;
 }
 
+:where(select) {
+  /* The `background-color` specified in iOS Safari's User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
+  background-color: unset;
+}
+
 :where(button, [type="button"], [type="submit"], [type="reset"]),
 ::file-selector-button {
   /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
