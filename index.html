@@ -102,16 +102,16 @@
       }
 
       .HomeTemplate {
-        --_gutter: clamp(16px, 5dvi, 32px);
+        --_gutter: clamp(1ic, 5dvi, 2ic);
 
         display: block grid;
         grid-template-columns:
           [full-start]
           minmax(var(--_gutter), 1fr)
-          [main-start] minmax(auto, 1024px) [main-end]
+          [main-start] minmax(auto, 64ic) [main-end]
           minmax(var(--_gutter), 1fr)
           [full-end];
-        row-gap: 3lh;
+        row-gap: 3rlh;
 
         & > :where(main) > * {
           grid-column: main;
@@ -150,13 +150,13 @@
 
       .Hero__Layout {
         display: block grid;
-        row-gap: 2lh;
-        padding-block: 3lh;
+        row-gap: 2rlh;
+        padding-block: 3rlh;
       }
 
       .Hero__Heading {
         display: block grid;
-        row-gap: 1lh;
+        row-gap: 1rlh;
         line-height: var(--leading-tight);
         text-align: center;
         text-wrap: balance;
@@ -164,16 +164,19 @@
 
       .Hero__Title {
         margin: unset;
-        background: linear-gradient(
-          135deg,
-          oklch(from var(--foreground-primary) calc(l - 0.1) c h),
-          oklch(from var(--foreground-primary) calc(l + 0.1) c h)
-        );
-        background-clip: text;
-        color: transparent;
         font-family: var(--text-english);
         font-size: 3rem;
         font-kerning: normal;
+
+        @media (forced-colors: none) {
+          background-image: linear-gradient(
+            135deg,
+            oklch(from var(--foreground-primary) calc(l - 0.1) c h),
+            oklch(from var(--foreground-primary) calc(l + 0.1) c h)
+          );
+          background-clip: text;
+          color: transparent;
+        }
 
         &:lang(ja) {
           font-feature-settings: "palt";
@@ -245,7 +248,7 @@
         --_background-hover: #1c1c1c;
 
         display: inline grid;
-        grid-template-columns: 1em 1fr;
+        grid-template-columns: 2ch 1fr;
         column-gap: 0.5ch;
         align-items: center;
         padding-block: 1cap;
@@ -297,18 +300,18 @@
 
       .FeaturesCards__Layout {
         display: block grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-        gap: clamp(12px, 4cqi, 24px);
+        grid-template-columns: repeat(auto-fit, minmax(min(25ic, 100%), 1fr));
+        gap: clamp(1ic, 4cqi, 1.5ic);
       }
 
       .FeaturesCards__Item {
         display: block grid;
         grid-template-columns: subgrid;
         grid-row: span 2;
-        gap: 1lh 0;
+        gap: 1rlh 0;
         align-content: start;
-        padding-block: 1.5lh;
-        padding-inline: clamp(20px, 5cqi, 32px);
+        padding-block: 1.5rlh;
+        padding-inline: clamp(1ic, 5cqi, 2ic);
         border: 1px solid var(--border-color);
         border-radius: var(--rounded-md);
         background-color: var(--background-lighten);
@@ -334,16 +337,28 @@
       .FeaturesCards__Description {
         line-height: var(--leading-relaxed);
         hanging-punctuation: last allow-end;
+
+        & > :where(p) {
+          inline-size: calc-size(auto, round(down, 100%, 1ic));
+
+          @supports (calc-size(auto, round(down, size, 1ic))) {
+            inline-size: calc-size(auto, round(down, size, 1ic));
+          }
+        }
+
+        & > :where(p + p) {
+          margin-block-start: 1rlh;
+        }
       }
 
       .Section {
         display: block grid;
-        row-gap: 1.5lh;
+        row-gap: 1.5rlh;
       }
 
       .InstallationMethod {
         display: block grid;
-        row-gap: 1lh;
+        row-gap: 1rlh;
       }
 
       .InstallationMethod__Heading {
@@ -358,8 +373,9 @@
 
       .InstallationMethod__Code {
         display: block grid;
-        overflow: auto hidden;
-        padding-block: 1lh;
+        overflow-x: auto;
+        overflow-y: clip;
+        padding-block: 1rlh;
         padding-inline: 3ch;
         border: 1px solid var(--border-color);
         border-radius: var(--rounded-md);
@@ -370,8 +386,8 @@
 
       .Footer {
         display: block grid;
-        row-gap: 1lh;
-        padding-block: 40px;
+        row-gap: 1rlh;
+        padding-block: 2rlh;
       }
 
       .Footer__Copyright {
@@ -468,20 +484,24 @@
               <h3 class="FeaturesCards__Heading">🇯🇵 日本向けの設計</h3>
               <div class="FeaturesCards__Description">
                 <p>
-                  多くのリセットCSSは海外製のため、日本語の折り返しやタイポグラフィに対応していません。kiso.cssは日本語に最適化されています。
+                  kiso.cssの最大の特徴は、日本語環境での使用を前提とした設計にあります。
                 </p>
-                <p>もちろん、英語圏の方にも配慮しています。</p>
+                <p>
+                  多くのリセットCSSは欧文を前提としており、日本語のWebサイトで使用する際には追加の調整が必要になることが少なくありません。
+                </p>
+                <p>
+                  kiso.cssでは、副作用が少ない範囲で日本語に特化したスタイル調整を加えています。もちろん、英語圏の方にも配慮しています。
+                </p>
               </div>
             </section>
             <section class="FeaturesCards__Item">
               <h3 class="FeaturesCards__Heading">🎯 上書きが容易</h3>
               <div class="FeaturesCards__Description">
                 <p>
-                  kiso.cssは原則的に<code>:where()</code>
-                  擬似クラスを使用して詳細度を0にして定義しています。
+                  kiso.cssでは、疑似要素や<code>!important</code>が明示的に指定されたスタイルを除き、すべてのセレクタを<code>:where()</code>擬似クラスで囲むことで詳細度を0にしています。
                 </p>
                 <p>
-                  そのため、詳細度の壁に悩まされることなく、簡単に上書きができます。
+                  kiso.cssはスタイルを容易に上書きできるため、カスタマイズ性の高いリセットCSSとなっています。
                 </p>
               </div>
             </section>
@@ -491,27 +511,40 @@
                 <p>
                   リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
                 </p>
+                <p>
+                  SafariとVoiceOverの組み合わせでは<code>list-style:none</code>が指定された<code>&lt;ul&gt;</code>や<code>&lt;ol&gt;</code>を「リスト」として認識しない仕様がありますが、kiso.cssは他のリセットCSSとの差別点として「リスト」として認識できるように配慮しています。
+                </p>
               </div>
             </section>
             <section class="FeaturesCards__Item">
               <h3 class="FeaturesCards__Heading">🚀 モダンCSS</h3>
               <div class="FeaturesCards__Description">
+                <p>最新のHTML/CSS仕様をサポートしています。</p>
                 <p>
-                  最新のHTML/CSS仕様をサポートしています。
                   <code>text-wrap</code
                   >、<code>text-autospace</code>、<code>text-spacing-trim</code>、<code
                     >scrollbar-gutter</code
                   >
                   などのプログレッシブ・エンハンスメントで利用できる新しいプロパティを活用しています。
                 </p>
+                <p>
+                  <code>&lt;dialog&gt;</code>、<code>&lt;model&gt;</code>、
+                  <code>&lt;search&gt;</code>、
+                  ポップオーバー属性などの新しいHTMLもサポートしています。
+                </p>
               </div>
             </section>
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">📦 リセットは最小限に</h3>
+              <h3 class="FeaturesCards__Heading">👀 厳選されたリセット</h3>
               <div class="FeaturesCards__Description">
-                <p>普段の実装を分析し、必要最小限のリセットを行っています。</p>
                 <p>
-                  残すところは残しつつ、普段の実装で不要なUAスタイルはリセットしています。
+                  kiso.cssは闇雲にリセットするのではなく、リセットするスタイルを厳選しています。
+                </p>
+                <p>
+                  過去の経験を基に、リセットする方が都合の良いスタイルとそうでないものを洗い出し、前者を選択的にリセットする方針を取りました。
+                </p>
+                <p>
+                  残すところは残しつつ、普段の実装では無しにしたほうが都合の良いUAスタイルはリセットしています。
                 </p>
               </div>
             </section>
