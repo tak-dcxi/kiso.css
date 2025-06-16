@@ -90,6 +90,7 @@
         background-color: var(--background-base);
         color: var(--foreground-base);
         font-family: var(--text-gothic);
+        text-underline-offset: calc((1lh - 1cap) / 2 / 2);
         -webkit-font-smoothing: antialiased;
 
         @media (width >= 0) {
@@ -111,7 +112,7 @@
       }
 
       .HomeTemplate {
-        --_gutter: clamp(1ic, 5dvi, 2ic);
+        --_gutter: clamp(1ic, 4dvi, 2ic);
 
         display: block grid;
         grid-template-columns:
@@ -310,7 +311,7 @@
       .FeaturesCards__Layout {
         display: block grid;
         grid-template-columns: repeat(auto-fit, minmax(min(25ic, 100%), 1fr));
-        gap: clamp(1ic, 4cqi, 1.5ic);
+        gap: clamp(1ic, 3cqi, 1.5ic);
       }
 
       .FeaturesCards__Item {
@@ -320,7 +321,7 @@
         gap: 1rlh 0;
         align-content: start;
         padding-block: 1.5rlh;
-        padding-inline: clamp(1ic, 5cqi, 2ic);
+        padding-inline: clamp(1.5ic, 4cqi, 2ic);
         border: 1px solid var(--border-color);
         border-radius: var(--rounded-md);
         background-color: var(--background-lighten);
@@ -413,7 +414,6 @@
 
       .Footer__Link {
         color: var(--foreground-primary);
-        text-underline-offset: 0.3ex;
 
         &:focus-visible {
           text-decoration: underline;
