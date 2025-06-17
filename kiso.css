@@ -289,6 +289,11 @@
   margin: unset;
 }
 
+:where([type="file"]) {
+  /* The `border` is often unnecessary, so it is reset here. */
+  border: unset;
+}
+
 :where([type="search"]) {
   /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
@@ -296,8 +301,7 @@
 
 @supports (-webkit-touch-callout: none) {
   :where([type="search"]) {
-    /* Remove the rounded corners of search inputs on iOS and normalize the background color. */
-    border: 1px solid -apple-system-secondary-label;
+    /* normalize the background color on iOS. */
     background-color: Canvas;
   }
 }
@@ -330,11 +334,6 @@
   ) {
   /* Set to `no-autospace` because `text-autospace` can insert spaces during input, potentially causing erratic behavior. */
   text-autospace: no-autospace;
-}
-
-:where(select) {
-  /* The `background-color` specified in iOS Safari's User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
-  background-color: unset;
 }
 
 :where(button, [type="button"], [type="submit"], [type="reset"]),
