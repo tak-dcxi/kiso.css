@@ -257,8 +257,13 @@
   border-collapse: collapse;
 }
 
+:where(caption) {
+  /* The `text-align` specified in the UA stylesheet is often unnecessary, so it is reset. */
+  text-align: unset;
+}
+
 :where(th) {
-  /* Resetting the `text-align` from the UA stylesheet provides more styling flexibility. */
+  /* The `text-align` specified in the UA stylesheet is often unnecessary, so it is reset. */
   text-align: unset;
 }
 
