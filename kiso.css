@@ -1,4 +1,4 @@
-/*! kiso.css v1.1.5 | MIT License | https://github.com/tak-dcxi/kiso.css */
+/*! kiso.css v1.1.6 | MIT License | https://github.com/tak-dcxi/kiso.css */
 
 /* ======================================================
 //  MARK: Universal
@@ -109,7 +109,7 @@
 
 :where(p:lang(en)) {
   /*
-  * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read
+  * In English, a single word on the last line is called a "widow" or "orphan" and is considered something to avoid as it makes the text harder to read.
   * Therefore, when lang="en", this prevents the last line from ending with a single word.
   */
   text-wrap: pretty;
