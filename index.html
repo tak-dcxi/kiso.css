@@ -53,17 +53,59 @@
       rel="preload"
       as="style"
       fetchpriority="high"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+JP:wght@100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
         rel="stylesheet"
       />
     </noscript>
     <link rel="stylesheet" href="kiso.css" />
     <style>
+      @property --color-white {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #f7f7f7;
+      }
+
+      @property --color-black {
+        syntax: "<color>";
+        inherits: false;
+        initial-value: #000;
+      }
+
+      @property --leading-tight {
+        syntax: "<number>";
+        inherits: false;
+        initial-value: 1.25;
+      }
+
+      @property --leading-normal {
+        syntax: "<number>";
+        inherits: false;
+        initial-value: 1.5;
+      }
+
+      @property --leading-relaxed {
+        syntax: "<number>";
+        inherits: false;
+        initial-value: 1.75;
+      }
+
+      @property --rounded-md {
+        syntax: "<length>";
+        inherits: false;
+        initial-value: 12px;
+      }
+
+      @property --rounded-lg {
+        syntax: "<length>";
+        inherits: false;
+        initial-value: 32px;
+      }
+
       @property --gradient-alpha {
         syntax: "<percentage>";
         inherits: false;
@@ -71,7 +113,6 @@
       }
 
       :root {
-        --color-white: #f7f7f7;
         --foreground-base: light-dark(#1f2937, #f3f4f6);
         --foreground-primary: light-dark(#0097d3, #60a5fa);
         --foreground-secondary: light-dark(#1e40af, #3b82f6);
@@ -79,31 +120,43 @@
         --background-lighten: light-dark(#f9fafb, #1f2937);
         --code-background: light-dark(#f3f4f6, #1f2937);
         --border-color: light-dark(#e5e7eb, #374151);
-        --text-gothic: "Noto Sans JP", sans-serif;
-        --text-english: "Montserrat", sans-serif;
-        --leading-tight: 1.25;
-        --leading-normal: 1.5;
-        --leading-relaxed: 1.75;
-        --rounded-md: 12px;
-        --rounded-lg: 32px;
 
+        font-family: "Montserrat", sans-serif;
         background-color: var(--background-base);
         color: var(--foreground-base);
-        font-family: var(--text-gothic);
         text-underline-offset: calc((1lh - 1cap) / 2 / 2);
         -webkit-font-smoothing: antialiased;
 
-        @media (width >= 0) {
-          font-size: 87.5%;
-        }
+        /*
+        * @prompt o3
+        * https://webkit.org/blog/16993/news-from-wwdc25-web-technology-coming-this-fall-in-safari-26-beta/
+        * Progress関数で1280pxの時に100%、375pxの時に87.5%を返す実装を提案してください。
+        */
+        font-size: clamp(
+          87.5%,
+          calc(87.5% + progress(100svi, 375px, 1280px) * 12.5%),
+          100%
+        );
 
-        @media (width >= 640px) {
-          font-size: 100%;
+        @supports not (
+          font-size:
+            clamp(
+              87.5%,
+              calc(87.5% + progress(100svi, 375px, 1280px) * 12.5%),
+              100%
+            )
+        ) {
+          @media (width >= 0) {
+            font-size: 87.5%;
+          }
+
+          @media (width >= 640px) {
+            font-size: 100%;
+          }
         }
 
         &:lang(en) {
           font-kerning: normal;
-          text-wrap: pretty;
         }
 
         &:lang(ja) {
@@ -112,19 +165,20 @@
       }
 
       .HomeTemplate {
-        --_gutter: clamp(1ic, 4dvi, 2ic);
+        --_min-width: 64rem;
+        --_gutter: clamp(1ic, 14 / 375 * 100%, 2ic);
 
         display: block grid;
         grid-template-columns:
           [full-start]
           minmax(var(--_gutter), 1fr)
-          [main-start] minmax(auto, 64ic) [main-end]
+          [content-start] minmax(auto, var(--_min-width)) [content-end]
           minmax(var(--_gutter), 1fr)
           [full-end];
         row-gap: 3rlh;
 
         & > :where(main) > * {
-          grid-column: main;
+          grid-column: content;
         }
 
         & > :where(.HomeTemplate__Header, footer) {
@@ -139,7 +193,7 @@
         background-color: var(--background-lighten);
 
         & > * {
-          grid-column: main;
+          grid-column: content;
         }
       }
 
@@ -150,7 +204,7 @@
         background-color: var(--background-lighten);
 
         & > * {
-          grid-column: main;
+          grid-column: content;
         }
       }
 
@@ -165,16 +219,20 @@
       }
 
       .Hero__Heading {
-        display: block grid;
-        row-gap: 1rlh;
         line-height: var(--leading-tight);
         text-align: center;
         text-wrap: balance;
+
+        & > * + * {
+          margin-block-start: 1rlh;
+        }
+
+        & > :where(.Hero__Title) {
+          margin: unset;
+        }
       }
 
       .Hero__Title {
-        margin: unset;
-        font-family: var(--text-english);
         font-size: 3rem;
         font-kerning: normal;
 
@@ -186,11 +244,6 @@
           );
           background-clip: text;
           color: transparent;
-        }
-
-        &:lang(ja) {
-          font-feature-settings: "palt";
-          word-break: auto-phrase;
         }
       }
 
@@ -219,7 +272,6 @@
         padding-block: 1cap;
         padding-inline: 2ch;
         border-radius: var(--rounded-md);
-        corner-shape: squircle;
         box-shadow: 0 12px 20px -8px oklch(from var(--_accent-secondary) l c h /
               10%);
         background: linear-gradient(
@@ -246,7 +298,7 @@
           --gradient-alpha: 0%;
         }
 
-        &:is(:any-link, :enabled):hover {
+        &:any-link:hover {
           @media (any-hover: hover) {
             --gradient-alpha: 0%;
           }
@@ -254,7 +306,7 @@
       }
 
       .GithubButton {
-        --_background-default: #000;
+        --_background-default: var(--color-black);
         --_background-hover: #1c1c1c;
 
         display: inline grid;
@@ -264,8 +316,7 @@
         padding-block: 1cap;
         padding-inline: 2ch;
         border-radius: var(--rounded-md);
-        corner-shape: squircle;
-        box-shadow: 0 12px 20px -8px oklch(from #000 l c h / 10%);
+        box-shadow: 0 12px 20px -8px oklch(from var(--color-black) l c h / 10%);
         background-color: var(--_background-default);
         color: var(--color-white);
         vertical-align: bottom;
@@ -285,7 +336,7 @@
           background-color: var(--_background-hover);
         }
 
-        &:is(:any-link, :enabled):hover {
+        &:any-link:hover {
           @media (any-hover: hover) {
             background-color: var(--_background-hover);
           }
@@ -305,13 +356,18 @@
       }
 
       .FeaturesCards {
+        --_min-width: 25ic;
+
         container: features-cards / inline-size;
       }
 
       .FeaturesCards__Layout {
         display: block grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(25ic, 100%), 1fr));
-        gap: clamp(1ic, 3cqi, 1.5ic);
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(min(var(--_min-width), 100%), 1fr)
+        );
+        gap: clamp(1ic, tan(atan2(1ic, var(--_min-width))) * 100cqi, 1.5ic);
       }
 
       .FeaturesCards__Item {
@@ -321,7 +377,11 @@
         gap: 1rlh 0;
         align-content: start;
         padding-block: 1.5rlh;
-        padding-inline: clamp(1.5ic, 4cqi, 2ic);
+        padding-inline: clamp(
+          1.5ic,
+          tan(atan2(1.5ic, var(--_min-width))) * 100%,
+          2ic
+        );
         border: 1px solid var(--border-color);
         border-radius: var(--rounded-md);
         background-color: var(--background-lighten);
@@ -333,6 +393,8 @@
       }
 
       .FeaturesCards__Heading {
+        display: block flex;
+        column-gap: 0.5ic;
         color: var(--foreground-primary);
         font-size: 1.25rem;
         font-kerning: normal;
@@ -350,10 +412,7 @@
 
         & > :where(p) {
           inline-size: round(down, 100%, 1ic);
-
-          @supports (inline-size: calc-size(auto, round(down, size, 1ic))) {
-            inline-size: calc-size(auto, round(down, size, 1ic));
-          }
+          inline-size: calc-size(auto, round(down, size, 1ic));
         }
 
         & > :where(p + p) {
@@ -408,22 +467,8 @@
       .Footer__Nav {
         display: block flex;
         flex-wrap: wrap;
-        gap: 2ex 2ch;
+        gap: 1ex 2ch;
         justify-content: center;
-      }
-
-      .Footer__Link {
-        color: var(--foreground-primary);
-
-        &:focus-visible {
-          text-decoration: underline;
-        }
-
-        &:any-link:hover {
-          @media (any-hover: hover) {
-            text-decoration: underline;
-          }
-        }
       }
 
       .text-link {
@@ -490,7 +535,9 @@
         <div class="FeaturesCards">
           <div class="FeaturesCards__Layout">
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">🇯🇵 日本向けの設計</h3>
+              <h3 class="FeaturesCards__Heading">
+                <span aria-hidden="true">🇯🇵</span>日本向けの設計
+              </h3>
               <div class="FeaturesCards__Description">
                 <p>
                   kiso.cssの最大の特徴は、日本語環境での使用を前提とした設計にあります。
@@ -504,7 +551,9 @@
               </div>
             </section>
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">🎯 上書きが容易</h3>
+              <h3 class="FeaturesCards__Heading">
+                <span aria-hidden="true">🎯</span>上書きが容易
+              </h3>
               <div class="FeaturesCards__Description">
                 <p>
                   kiso.cssでは、疑似要素や<code>!important</code>が明示的に指定されたスタイルを除き、すべてのセレクタを<code>:where()</code>擬似クラスで囲むことで詳細度を0にしています。
@@ -515,7 +564,9 @@
               </div>
             </section>
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">♿ アクセシビリティ重視</h3>
+              <h3 class="FeaturesCards__Heading">
+                <span aria-hidden="true">♿</span>アクセシビリティ重視
+              </h3>
               <div class="FeaturesCards__Description">
                 <p>
                   リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
@@ -526,15 +577,16 @@
               </div>
             </section>
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">🚀 モダンCSS</h3>
+              <h3 class="FeaturesCards__Heading">
+                <span aria-hidden="true">🚀</span>最新のHTML/CSSをサポート
+              </h3>
               <div class="FeaturesCards__Description">
-                <p>最新のHTML/CSS仕様をサポートしています。</p>
                 <p>
                   <code>text-wrap</code
                   >、<code>text-autospace</code>、<code>text-spacing-trim</code>、<code
                     >scrollbar-gutter</code
                   >
-                  などのプログレッシブ・エンハンスメントで利用できる新しいプロパティを活用しています。
+                  などのプログレッシブ・エンハンスメントで利用できる新しいCSSプロパティを活用しています。
                 </p>
                 <p>
                   <code>&lt;dialog&gt;</code>、<code>&lt;model&gt;</code>、
@@ -544,7 +596,9 @@
               </div>
             </section>
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">👀 厳選されたリセット</h3>
+              <h3 class="FeaturesCards__Heading">
+                <span aria-hidden="true">👀</span>厳選されたリセット
+              </h3>
               <div class="FeaturesCards__Description">
                 <p>
                   kiso.cssは闇雲にリセットするのではなく、リセットするスタイルを厳選しています。
@@ -558,7 +612,9 @@
               </div>
             </section>
             <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">🔧 簡単導入</h3>
+              <h3 class="FeaturesCards__Heading">
+                <span aria-hidden="true">🔧</span>簡単導入
+              </h3>
               <div class="FeaturesCards__Description">
                 <p>
                   npm、CDN、直接ダウンロードに対応。1行のインポートですぐに使用開始できます。
@@ -613,7 +669,7 @@
         <ul class="Footer__Nav" lang="en" translate="no">
           <li>
             <a
-              class="Footer__Link"
+              class="text-link"
               href="https://github.com/tak-dcxi/kiso.css/"
               lang="en"
               translate="no"
@@ -622,7 +678,7 @@
           </li>
           <li>
             <a
-              class="Footer__Link"
+              class="text-link"
               href="https://www.npmjs.com/package/kiso.css"
               lang="en"
               translate="no"
@@ -631,7 +687,7 @@
           </li>
           <li>
             <a
-              class="Footer__Link"
+              class="text-link"
               href="https://github.com/tak-dcxi/kiso.css/blob/main/LICENSE"
               lang="en"
               >MIT License</a
