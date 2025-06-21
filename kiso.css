@@ -186,6 +186,12 @@
 
   /* Resets the `font-size` specified in the UA stylesheet to allow inheritance. */
   font-size: unset;
+
+  /*
+  * Disables font ligatures for programming fonts (like Fira Code)
+  * to prevent character combinations like `=>` from being rendered as a single symbol (e.g., `⇒`).
+  */
+  font-variant-ligatures: none;
 }
 
 :where(abbr[title]) {
