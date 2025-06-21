@@ -1,4 +1,4 @@
-/*! kiso.css v1.1.6 | MIT License | https://github.com/tak-dcxi/kiso.css */
+/*! kiso.css v1.2.0 | MIT License | https://github.com/tak-dcxi/kiso.css */
 
 /* ======================================================
 //  MARK: Universal
@@ -377,8 +377,8 @@
         [type="button" i],
         [type="submit" i],
         [type="reset" i],
-        [type="checkbox" i],
-        [type="radio" i]
+        [type="radio" i],
+        [type="checkbox" i]
       ):enabled,
     [role="tab" i],
     [role="button" i],
