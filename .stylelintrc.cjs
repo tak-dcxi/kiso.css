@@ -160,6 +160,12 @@ module.exports = {
     ],
     "selector-nested-pattern": /&/,
     "selector-pseudo-element-colon-notation": "double",
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        ignorePseudoElements: ["scroll-button"],
+      },
+    ],
     "value-keyword-case": [
       "lower",
       {

@@ -222,7 +222,7 @@
   /*
   * While link underlines can be useful, they are often obstructive.
   * They are disabled by default.
-  * If needed, restore them using `revert`.
+  * If needed, restore them using `text-decoration-line: revert;`.
   */
   text-decoration-line: unset;
 
@@ -257,14 +257,14 @@
   border-collapse: collapse;
 }
 
-:where(caption) {
+:where(caption, th) {
   /* The `text-align` specified in the UA stylesheet is often unnecessary, so it is reset. */
   text-align: unset;
 }
 
-:where(th) {
-  /* The `text-align` specified in the UA stylesheet is often unnecessary, so it is reset. */
-  text-align: unset;
+:where(caption) {
+  /* Prevents the last line of text from ending with a single word, which can look awkward (known as an orphan). */
+  text-wrap: pretty;
 }
 
 /* ======================================================
@@ -289,32 +289,35 @@
   text-align: unset;
 }
 
-:where([type="radio"], [type="checkbox"]) {
+:where([type="radio" i], [type="checkbox" i]) {
   /* The `margin` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   margin: unset;
 }
 
-:where([type="file"]) {
+:where([type="file" i]) {
   /* The `border` is often unnecessary, so it is reset here. */
   border: unset;
 }
 
-:where([type="search"]) {
+:where([type="search" i]) {
   /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
 }
 
 @supports (-webkit-touch-callout: none) {
-  :where([type="search"]) {
+  :where([type="search" i]) {
     /* normalize the background color on iOS. */
     background-color: Canvas;
   }
 }
 
 :where(
-    :is([type="tel"], [type="url"], [type="email"], [type="number"]):not(
-        :placeholder-shown
-      )
+    :is(
+        [type="tel" i],
+        [type="url" i],
+        [type="email" i],
+        [type="number" i]
+      ):not(:placeholder-shown)
   ) {
   /*
   * Certain input types need to maintain left alignment even in right-to-left (RTL) languages.
@@ -333,7 +336,7 @@
 }
 
 :where(
-    input:not([type="button"], [type="submit"], [type="reset"]),
+    input:not([type="button" i], [type="submit" i], [type="reset" i]),
     textarea,
     [contenteditable]
   ) {
@@ -341,14 +344,26 @@
   text-autospace: no-autospace;
 }
 
-:where(button, [type="button"], [type="submit"], [type="reset"]),
+:where(button, [type="button" i], [type="submit" i], [type="reset" i]),
 ::file-selector-button {
   /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   background-color: unset;
+}
 
+:where(
+    button,
+    [type="button" i],
+    [type="submit" i],
+    [type="reset" i],
+    [role="tab" i],
+    [role="button" i],
+    [role="option" i]
+  ),
+::file-selector-button {
   /*
   * On iOS, double-tapping a button can cause zooming, which harms usability.
   * `touch-action: manipulation` is specified to disable zooming on double-tap.
+  * Third-party plugins such as Swiper sometimes use div elements with these roles as buttons, since double-tapping a div can still trigger zooming, it's advisable to specify this property.
   */
   touch-action: manipulation;
 }
@@ -357,12 +372,12 @@
     button,
     label[for],
     select,
-    [type="button"],
-    [type="submit"],
-    [type="reset"],
-    [role="tab"],
-    [role="button"],
-    [role="option"]
+    [type="button" i],
+    [type="submit" i],
+    [type="reset" i],
+    [role="tab" i],
+    [role="button" i],
+    [role="option" i]
   ),
 ::file-selector-button {
   /* Indicate clickable elements with a pointer cursor. */
@@ -476,12 +491,33 @@
 /* ======================================================
 //  MARK: Misc
 // ====================================================== */
-:where(:disabled, [aria-disabled="true"]) {
+:where(:disabled, [aria-disabled="true" i]) {
   /* Display the default cursor on disabled elements to reflect their non-interactive state. */
   cursor: default;
 }
 
-[hidden]:not([hidden="until-found"]) {
+[hidden]:not([hidden="until-found" i]) {
   /* Ensure that elements intended to be hidden are not displayed, improving clarity and layout control. */
   display: none !important;
+}
+
+@supports selector(::scroll-button(*)) {
+  ::scroll-button(*) {
+    /* Apply the same reset as for `<button>` elements. */
+    border-width: 1px;
+    border-style: solid;
+    border-color: unset;
+    border-radius: unset;
+    background-color: unset;
+    color: unset;
+    font: unset;
+    letter-spacing: unset;
+    text-align: unset;
+    touch-action: manipulation;
+  }
+
+  ::scroll-button(*):enabled {
+    /* Make the scroll button indicate interactivity when enabled. */
+    cursor: pointer;
+  }
 }
