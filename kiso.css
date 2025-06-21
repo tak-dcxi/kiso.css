@@ -1,4 +1,4 @@
-/*! kiso.css v1.1.6 | MIT License | https://github.com/tak-dcxi/kiso.css */
+/*! kiso.css v1.2.0 | MIT License | https://github.com/tak-dcxi/kiso.css */
 
 /* ======================================================
 //  MARK: Universal
@@ -127,6 +127,7 @@
   /*
   * In Safari, using `list-style: none` prevents screen readers from announcing lists.
   * `list-style-type: ""` is used to hide markers without affecting accessibility.
+  * @see https://matuzo.at/blog/2023/removing-list-styles-without-affecting-semantics
   */
   list-style-type: "";
 }
@@ -186,16 +187,22 @@
 
   /* Resets the `font-size` specified in the UA stylesheet to allow inheritance. */
   font-size: unset;
+
+  /*
+  * Disables font ligatures for programming fonts (like Fira Code)
+  * to prevent character combinations like `=>` from being rendered as a single symbol (e.g., `⇒`).
+  */
+  font-variant-ligatures: none;
 }
 
 :where(abbr[title]) {
-  /* Display an underline. */
+  /*
+  * The `<abbr>` element with the `title` attribute isn't helpful regarding accessibility because support is inconsistent, and it's only accessible to some users.
+  * This rule shows a dotted underline on abbreviations in all browsers (there's a bug in Safari) and changes the cursor.
+  * @see https://adrianroselli.com/2024/01/using-abbr-element-with-title-attribute.html
+  */
   text-decoration-line: underline;
-
-  /* Set the underline style to dotted. */
   text-decoration-style: dotted;
-
-  /* Display a tooltip on mouse hover. */
   cursor: help;
 }
 
@@ -206,9 +213,23 @@
 
 @media (forced-colors: active) {
   :where(mark) {
-    /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode. */
+    /*
+    * In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode.
+    * @see https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkWHCM
+    */
     background-color: Highlight;
     color: HighlightText;
+  }
+}
+
+@media print {
+  :where(mark) {
+    /*
+    * Not all printers support color, and users might print in grayscale.
+    * It's worth adding a non-disruptive style that scales with the text, as an alternative to relying only on background color.
+    * @see https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkPrint
+    */
+    border: 1px dotted;
   }
 }
 
@@ -222,7 +243,7 @@
   /*
   * While link underlines can be useful, they are often obstructive.
   * They are disabled by default.
-  * If needed, restore them using `revert`.
+  * If needed, restore them using `text-decoration-line: revert;`.
   */
   text-decoration-line: unset;
 
@@ -257,14 +278,14 @@
   border-collapse: collapse;
 }
 
-:where(caption) {
+:where(caption, th) {
   /* The `text-align` specified in the UA stylesheet is often unnecessary, so it is reset. */
   text-align: unset;
 }
 
-:where(th) {
-  /* The `text-align` specified in the UA stylesheet is often unnecessary, so it is reset. */
-  text-align: unset;
+:where(caption) {
+  /* Prevents the last line of text from ending with a single word, which can look awkward (known as an orphan). */
+  text-wrap: pretty;
 }
 
 /* ======================================================
@@ -289,32 +310,35 @@
   text-align: unset;
 }
 
-:where([type="radio"], [type="checkbox"]) {
+:where(input:is([type="radio" i], [type="checkbox" i])) {
   /* The `margin` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   margin: unset;
 }
 
-:where([type="file"]) {
+:where(input[type="file" i]) {
   /* The `border` is often unnecessary, so it is reset here. */
   border: unset;
 }
 
-:where([type="search"]) {
+:where(input[type="search" i]) {
   /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
 }
 
 @supports (-webkit-touch-callout: none) {
-  :where([type="search"]) {
+  :where(input[type="search" i]) {
     /* normalize the background color on iOS. */
     background-color: Canvas;
   }
 }
 
 :where(
-    :is([type="tel"], [type="url"], [type="email"], [type="number"]):not(
-        :placeholder-shown
-      )
+    input:is(
+        [type="tel" i],
+        [type="url" i],
+        [type="email" i],
+        [type="number" i]
+      ):not(:placeholder-shown)
   ) {
   /*
   * Certain input types need to maintain left alignment even in right-to-left (RTL) languages.
@@ -333,7 +357,7 @@
 }
 
 :where(
-    input:not([type="button"], [type="submit"], [type="reset"]),
+    input:not([type="button" i], [type="submit" i], [type="reset" i]),
     textarea,
     [contenteditable]
   ) {
@@ -341,30 +365,47 @@
   text-autospace: no-autospace;
 }
 
-:where(button, [type="button"], [type="submit"], [type="reset"]),
+:where(
+    button,
+    input:is([type="button" i], [type="submit" i], [type="reset" i])
+  ),
 ::file-selector-button {
   /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   background-color: unset;
+}
 
+:where(
+    button,
+    input:is([type="button" i], [type="submit" i], [type="reset" i]),
+    [role="tab" i],
+    [role="button" i],
+    [role="option" i]
+  ),
+::file-selector-button {
   /*
   * On iOS, double-tapping a button can cause zooming, which harms usability.
   * `touch-action: manipulation` is specified to disable zooming on double-tap.
+  * Third-party plugins such as Swiper sometimes use div elements with these roles as buttons, since double-tapping a div can still trigger zooming, it's advisable to specify this property.
   */
   touch-action: manipulation;
 }
 
 :where(
-    button,
+    button:enabled,
     label[for],
-    select,
-    [type="button"],
-    [type="submit"],
-    [type="reset"],
-    [role="tab"],
-    [role="button"],
-    [role="option"]
+    select:enabled,
+    input:is(
+        [type="button" i],
+        [type="submit" i],
+        [type="reset" i],
+        [type="radio" i],
+        [type="checkbox" i]
+      ):enabled,
+    [role="tab" i],
+    [role="button" i],
+    [role="option" i]
   ),
-::file-selector-button {
+:where(:enabled)::file-selector-button {
   /* Indicate clickable elements with a pointer cursor. */
   cursor: pointer;
 }
@@ -373,6 +414,7 @@
   /*
   * Prevent fieldset from causing overflow.
   * Reset the default `min-inline-size: min-content` to prevent children from stretching fieldset.
+  * @see https://github.com/twbs/bootstrap/issues/12359
   */
   min-inline-size: 0;
 
@@ -476,12 +518,33 @@
 /* ======================================================
 //  MARK: Misc
 // ====================================================== */
-:where(:disabled, [aria-disabled="true"]) {
+:where(:disabled, [aria-disabled="true" i]) {
   /* Display the default cursor on disabled elements to reflect their non-interactive state. */
   cursor: default;
 }
 
-[hidden]:not([hidden="until-found"]) {
+[hidden]:not([hidden="until-found" i]) {
   /* Ensure that elements intended to be hidden are not displayed, improving clarity and layout control. */
   display: none !important;
+}
+
+@supports selector(::scroll-button(*)) {
+  ::scroll-button(*) {
+    /* Apply the same reset as for `<button>` elements. */
+    border-width: 1px;
+    border-style: solid;
+    border-color: unset;
+    border-radius: unset;
+    background-color: unset;
+    color: unset;
+    font: unset;
+    letter-spacing: unset;
+    text-align: unset;
+    touch-action: manipulation;
+  }
+
+  ::scroll-button(*):enabled {
+    /* Make the scroll button indicate interactivity when enabled. */
+    cursor: pointer;
+  }
 }
