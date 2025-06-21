@@ -195,13 +195,13 @@
 }
 
 :where(abbr[title]) {
-  /* Display an underline. */
+  /*
+  * The `<abbr>` element with the `title` attribute isn't helpful regarding accessibility because support is inconsistent, and it's only accessible to some users.
+  * This rule shows a dotted underline on abbreviations in all browsers (there's a bug in Safari) and changes the cursor.
+  * @see https://adrianroselli.com/2024/01/using-abbr-element-with-title-attribute.html
+  */
   text-decoration-line: underline;
-
-  /* Set the underline style to dotted. */
   text-decoration-style: dotted;
-
-  /* Display a tooltip on mouse hover. */
   cursor: help;
 }
 
@@ -212,9 +212,23 @@
 
 @media (forced-colors: active) {
   :where(mark) {
-    /* In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode. */
+    /*
+    * In forced-colors mode, the color of the mark element may not change, which can be problematic. Use system colors in forced-colors mode.
+    * @see https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkWHCM
+    */
     background-color: Highlight;
     color: HighlightText;
+  }
+}
+
+@media print {
+  :where(mark) {
+    /*
+    * Not all printers support color, and users might print in grayscale.
+    * It's worth adding a non-disruptive style that scales with the text, as an alternative to relying only on background color.
+    * @see https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkPrint
+    */
+    border: 1px dotted;
   }
 }
 
@@ -399,6 +413,7 @@
   /*
   * Prevent fieldset from causing overflow.
   * Reset the default `min-inline-size: min-content` to prevent children from stretching fieldset.
+  * @see https://github.com/twbs/bootstrap/issues/12359
   */
   min-inline-size: 0;
 
