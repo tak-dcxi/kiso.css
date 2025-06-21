@@ -127,6 +127,7 @@
   /*
   * In Safari, using `list-style: none` prevents screen readers from announcing lists.
   * `list-style-type: ""` is used to hide markers without affecting accessibility.
+  * @see https://matuzo.at/blog/2023/removing-list-styles-without-affecting-semantics
   */
   list-style-type: "";
 }
