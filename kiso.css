@@ -289,30 +289,30 @@
   text-align: unset;
 }
 
-:where([type="radio" i], [type="checkbox" i]) {
+:where(input:is([type="radio" i], [type="checkbox" i])) {
   /* The `margin` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   margin: unset;
 }
 
-:where([type="file" i]) {
+:where(input[type="file" i]) {
   /* The `border` is often unnecessary, so it is reset here. */
   border: unset;
 }
 
-:where([type="search" i]) {
+:where(input[type="search" i]) {
   /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
 }
 
 @supports (-webkit-touch-callout: none) {
-  :where([type="search" i]) {
+  :where(input[type="search" i]) {
     /* normalize the background color on iOS. */
     background-color: Canvas;
   }
 }
 
 :where(
-    :is(
+    input:is(
         [type="tel" i],
         [type="url" i],
         [type="email" i],
@@ -344,7 +344,10 @@
   text-autospace: no-autospace;
 }
 
-:where(button, [type="button" i], [type="submit" i], [type="reset" i]),
+:where(
+    button,
+    input:is([type="button" i], [type="submit" i], [type="reset" i])
+  ),
 ::file-selector-button {
   /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   background-color: unset;
@@ -352,9 +355,7 @@
 
 :where(
     button,
-    [type="button" i],
-    [type="submit" i],
-    [type="reset" i],
+    input:is([type="button" i], [type="submit" i], [type="reset" i]),
     [role="tab" i],
     [role="button" i],
     [role="option" i]
@@ -369,17 +370,21 @@
 }
 
 :where(
-    button,
+    button:enabled,
     label[for],
-    select,
-    [type="button" i],
-    [type="submit" i],
-    [type="reset" i],
+    select:enabled,
+    input:is(
+        [type="button" i],
+        [type="submit" i],
+        [type="reset" i],
+        [type="checkbox" i],
+        [type="radio" i]
+      ):enabled,
     [role="tab" i],
     [role="button" i],
     [role="option" i]
   ),
-::file-selector-button {
+:where(:enabled)::file-selector-button {
   /* Indicate clickable elements with a pointer cursor. */
   cursor: pointer;
 }
