@@ -3,8 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <title>kiso.css - 日本のWebサイトのための「基礎」となるリセットCSS</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="email=no,telephone=no,address=no" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script>
+      (() => {
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (!viewport) return;
+        const MIN_WIDTH = 375;
+        function onResize() {
+          const value =
+            window.innerWidth > MIN_WIDTH
+              ? "width=device-width,initial-scale=1"
+              : `width=${MIN_WIDTH}`;
+          if (viewport.getAttribute("content") !== value) {
+            viewport.setAttribute("content", value);
+          }
+        }
+        window.addEventListener("resize", onResize);
+        onResize();
+      })();
+    </script>
     <meta
       name="description"
       content="kiso.css は、日本のWebサイトのための「基礎」となるリセットCSSです。日本語に最適化しつつ、アクセシビリティやカスタマイズのし易さを重視しています。"
@@ -17,7 +35,7 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:image"
-      content="https://tak-dcxi.github.io/kiso.css/public/ogp.jpg"
+      content="https://tak-dcxi.github.io/kiso.css/lp/ogp.jpg"
     />
     <meta property="og:url" content="https://tak-dcxi.github.io/kiso.css/" />
     <meta
@@ -27,17 +45,17 @@
     <meta property="og:locale" content="ja_JP" />
     <link
       rel="icon"
-      href="https://tak-dcxi.github.io/kiso.css/public/favicon.ico"
+      href="https://tak-dcxi.github.io/kiso.css/lp/favicon.ico"
       sizes="32x32"
     />
     <link
       rel="icon"
-      href="https://tak-dcxi.github.io/kiso.css/public/favicon.svg"
+      href="https://tak-dcxi.github.io/kiso.css/lp/favicon.svg"
       type="image/svg+xml"
     />
     <link
       rel="apple-touch-icon"
-      href="https://tak-dcxi.github.io/kiso.css/public/apple-touch-icon.png"
+      href="https://tak-dcxi.github.io/kiso.css/lp/apple-touch-icon.png"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -49,6 +67,8 @@
     <meta name="color-scheme" content="light dark" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="kiso.css" />
+    <link rel="stylesheet" href="lp/style.css" />
     <link
       rel="preload"
       as="style"
@@ -62,430 +82,6 @@
         rel="stylesheet"
       />
     </noscript>
-    <link rel="stylesheet" href="kiso.css" />
-    <style>
-      @property --color-white {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #f7f7f7;
-      }
-
-      @property --color-black {
-        syntax: "<color>";
-        inherits: false;
-        initial-value: #000;
-      }
-
-      @property --leading-tight {
-        syntax: "<number>";
-        inherits: false;
-        initial-value: 1.25;
-      }
-
-      @property --leading-normal {
-        syntax: "<number>";
-        inherits: false;
-        initial-value: 1.5;
-      }
-
-      @property --leading-relaxed {
-        syntax: "<number>";
-        inherits: false;
-        initial-value: 1.75;
-      }
-
-      @property --rounded-md {
-        syntax: "<length>";
-        inherits: false;
-        initial-value: 12px;
-      }
-
-      @property --rounded-lg {
-        syntax: "<length>";
-        inherits: false;
-        initial-value: 32px;
-      }
-
-      @property --gradient-alpha {
-        syntax: "<percentage>";
-        inherits: false;
-        initial-value: 100%;
-      }
-
-      :root {
-        --foreground-base: light-dark(#1f2937, #f3f4f6);
-        --foreground-primary: light-dark(#0097d3, #60a5fa);
-        --foreground-secondary: light-dark(#1e40af, #3b82f6);
-        --background-base: light-dark(var(--color-white), #111827);
-        --background-lighten: light-dark(#f9fafb, #1f2937);
-        --code-background: light-dark(#f3f4f6, #1f2937);
-        --border-color: light-dark(#e5e7eb, #374151);
-
-        font-family: "Montserrat", sans-serif;
-        background-color: var(--background-base);
-        color: var(--foreground-base);
-        text-underline-offset: calc((1lh - 1cap) / 2 / 2);
-        -webkit-font-smoothing: antialiased;
-
-        /*
-        * @prompt o3
-        * https://webkit.org/blog/16993/news-from-wwdc25-web-technology-coming-this-fall-in-safari-26-beta/
-        * Progress関数で1280pxの時に100%、375pxの時に87.5%を返す実装を提案してください。
-        */
-        font-size: clamp(
-          87.5%,
-          calc(87.5% + progress(100svi, 375px, 1280px) * 12.5%),
-          100%
-        );
-
-        @supports not (
-          font-size:
-            clamp(
-              87.5%,
-              calc(87.5% + progress(100svi, 375px, 1280px) * 12.5%),
-              100%
-            )
-        ) {
-          @media (width >= 0) {
-            font-size: 87.5%;
-          }
-
-          @media (width >= 640px) {
-            font-size: 100%;
-          }
-        }
-
-        &:lang(en) {
-          font-kerning: normal;
-        }
-
-        &:lang(ja) {
-          font-kerning: none;
-        }
-      }
-
-      .HomeTemplate {
-        --_min-width: 64rem;
-        --_gutter: clamp(1ic, 14 / 375 * 100%, 2ic);
-
-        display: block grid;
-        grid-template-columns:
-          [full-start]
-          minmax(var(--_gutter), 1fr)
-          [content-start] minmax(auto, var(--_min-width)) [content-end]
-          minmax(var(--_gutter), 1fr)
-          [full-end];
-        row-gap: 3rlh;
-
-        & > :where(main) > * {
-          grid-column: content;
-        }
-
-        & > :where(.HomeTemplate__Header, footer) {
-          grid-column: full;
-        }
-      }
-
-      .HomeTemplate__Header {
-        display: block grid;
-        grid-template-columns: subgrid;
-        border-block-end: 1px solid var(--border-color);
-        background-color: var(--background-lighten);
-
-        & > * {
-          grid-column: content;
-        }
-      }
-
-      .HomeTemplate__Footer {
-        display: block grid;
-        grid-template-columns: subgrid;
-        border-block-start: 1px solid var(--border-color);
-        background-color: var(--background-lighten);
-
-        & > * {
-          grid-column: content;
-        }
-      }
-
-      .Hero {
-        container: hero / inline-size;
-      }
-
-      .Hero__Layout {
-        display: block grid;
-        row-gap: 2rlh;
-        padding-block: 3rlh;
-      }
-
-      .Hero__Heading {
-        line-height: var(--leading-tight);
-        text-align: center;
-        text-wrap: balance;
-
-        & > * + * {
-          margin-block-start: 1rlh;
-        }
-
-        & > :where(.Hero__Title) {
-          margin: unset;
-        }
-      }
-
-      .Hero__Title {
-        font-size: 3rem;
-        font-kerning: normal;
-
-        @media (forced-colors: none) {
-          background-image: linear-gradient(
-            135deg,
-            oklch(from var(--foreground-primary) calc(l - 0.1) c h),
-            oklch(from var(--foreground-primary) calc(l + 0.1) c h)
-          );
-          background-clip: text;
-          color: transparent;
-        }
-      }
-
-      .Hero__Tagline {
-        font-size: 1.25rem;
-        font-kerning: normal;
-
-        &:lang(ja) {
-          font-feature-settings: "palt";
-          word-break: auto-phrase;
-        }
-      }
-
-      .Hero__ActionsList {
-        display: block flex;
-        flex-wrap: wrap;
-        gap: 2ex 1ch;
-        justify-content: center;
-      }
-
-      .BaseButton {
-        --_accent-primary: #8474fe;
-        --_accent-secondary: #4d36d0;
-
-        display: inline flow-root;
-        padding-block: 1cap;
-        padding-inline: 2ch;
-        border-radius: var(--rounded-md);
-        box-shadow: 0 12px 20px -8px oklch(from var(--_accent-secondary) l c h /
-              10%);
-        background: linear-gradient(
-            to bottom,
-            oklch(from var(--_accent-primary) l c h / var(--gradient-alpha)),
-            oklch(from var(--_accent-secondary) l c h / var(--gradient-alpha))
-          ),
-          var(--_accent-secondary);
-        color: var(--color-white);
-        vertical-align: bottom;
-        transition-duration: 300ms;
-        transition-property: --gradient-alpha;
-
-        @supports (corner-shape: squircle) {
-          border-radius: var(--rounded-lg);
-          corner-shape: squircle;
-        }
-
-        @media (forced-colors: active) {
-          border: 1px solid transparent;
-        }
-
-        &:focus-visible {
-          --gradient-alpha: 0%;
-        }
-
-        &:any-link:hover {
-          @media (any-hover: hover) {
-            --gradient-alpha: 0%;
-          }
-        }
-      }
-
-      .GithubButton {
-        --_background-default: var(--color-black);
-        --_background-hover: #1c1c1c;
-
-        display: inline grid;
-        grid-template-columns: 2ch 1fr;
-        column-gap: 0.5ch;
-        align-items: center;
-        padding-block: 1cap;
-        padding-inline: 2ch;
-        border-radius: var(--rounded-md);
-        box-shadow: 0 12px 20px -8px oklch(from var(--color-black) l c h / 10%);
-        background-color: var(--_background-default);
-        color: var(--color-white);
-        vertical-align: bottom;
-        transition-duration: 300ms;
-        transition-property: background-color;
-
-        @supports (corner-shape: squircle) {
-          border-radius: var(--rounded-lg);
-          corner-shape: squircle;
-        }
-
-        @media (forced-colors: active) {
-          border: 1px solid transparent;
-        }
-
-        &:focus-visible {
-          background-color: var(--_background-hover);
-        }
-
-        &:any-link:hover {
-          @media (any-hover: hover) {
-            background-color: var(--_background-hover);
-          }
-        }
-
-        & :where(svg) {
-          inline-size: -webkit-fill-available;
-          inline-size: -moz-available;
-          inline-size: stretch;
-        }
-      }
-
-      .SectionHeading {
-        font-size: 2rem;
-        text-align: center;
-        text-wrap: balance;
-      }
-
-      .FeaturesCards {
-        --_min-width: 25ic;
-
-        container: features-cards / inline-size;
-      }
-
-      .FeaturesCards__Layout {
-        display: block grid;
-        grid-template-columns: repeat(
-          auto-fit,
-          minmax(min(var(--_min-width), 100%), 1fr)
-        );
-        gap: clamp(1ic, tan(atan2(1ic, var(--_min-width))) * 100cqi, 1.5ic);
-      }
-
-      .FeaturesCards__Item {
-        display: block grid;
-        grid-template-columns: subgrid;
-        grid-row: span 2;
-        gap: 1rlh 0;
-        align-content: start;
-        padding-block: 1.5rlh;
-        padding-inline: clamp(
-          1.5ic,
-          tan(atan2(1.5ic, var(--_min-width))) * 100%,
-          2ic
-        );
-        border: 1px solid var(--border-color);
-        border-radius: var(--rounded-md);
-        background-color: var(--background-lighten);
-
-        @supports (corner-shape: squircle) {
-          border-radius: var(--rounded-lg);
-          corner-shape: squircle;
-        }
-      }
-
-      .FeaturesCards__Heading {
-        display: block flex;
-        column-gap: 0.5ic;
-        color: var(--foreground-primary);
-        font-size: 1.25rem;
-        font-kerning: normal;
-        line-height: var(--leading-tight);
-
-        &:lang(ja) {
-          font-feature-settings: "palt";
-          word-break: auto-phrase;
-        }
-      }
-
-      .FeaturesCards__Description {
-        line-height: var(--leading-relaxed);
-        hanging-punctuation: last allow-end;
-
-        & > :where(p) {
-          inline-size: round(down, 100%, 1ic);
-          inline-size: calc-size(auto, round(down, size, 1ic));
-        }
-
-        & > :where(p + p) {
-          margin-block-start: 1rlh;
-        }
-      }
-
-      .Section {
-        display: block grid;
-        row-gap: 1.5rlh;
-      }
-
-      .InstallationMethod {
-        display: block grid;
-        row-gap: 1rlh;
-      }
-
-      .InstallationMethod__Heading {
-        font-size: 1.125rem;
-        font-kerning: normal;
-
-        &:lang(ja) {
-          font-feature-settings: "palt";
-          word-break: auto-phrase;
-        }
-      }
-
-      .InstallationMethod__Code {
-        display: block grid;
-        overflow-x: auto;
-        overflow-y: clip;
-        padding-block: 1rlh;
-        padding-inline: 3ch;
-        border: 1px solid var(--border-color);
-        border-radius: var(--rounded-md);
-        corner-shape: squircle;
-        background-color: var(--code-background);
-        text-wrap: nowrap;
-      }
-
-      .Footer {
-        display: block grid;
-        row-gap: 1rlh;
-        padding-block: 2rlh;
-      }
-
-      .Footer__Copyright {
-        text-align: center;
-        text-wrap: balance;
-      }
-
-      .Footer__Nav {
-        display: block flex;
-        flex-wrap: wrap;
-        gap: 1ex 2ch;
-        justify-content: center;
-      }
-
-      .text-link {
-        color: var(--foreground-primary);
-        text-decoration-line: revert;
-
-        &:focus-visible {
-          text-decoration: unset;
-        }
-
-        &:any-link:hover {
-          @media (any-hover: hover) {
-            text-decoration: unset;
-          }
-        }
-      }
-    </style>
   </head>
   <body class="HomeTemplate">
     <header class="HomeTemplate__Header">
@@ -529,7 +125,7 @@
       </div>
     </header>
 
-    <main style="display: contents">
+    <main class="HomeTemplate__Main">
       <section id="features" class="Section">
         <h2 class="SectionHeading">特徴</h2>
         <div class="FeaturesCards">
@@ -630,25 +226,25 @@
 
         <section class="InstallationMethod">
           <h3 class="InstallationMethod__Heading">npm / yarn</h3>
-          <div class="InstallationMethod__Code">
+          <pre class="InstallationMethod__Code">
             <code>npm install kiso.css</code>
             <code># or</code>
             <code>yarn add kiso.css</code>
-          </div>
-          <div class="InstallationMethod__Code">
+          </pre>
+          <pre class="InstallationMethod__Code">
             <code>/* import your CSS file */</code>
             <code>@import "kiso.css";</code>
-          </div>
+          </pre>
         </section>
 
         <section class="InstallationMethod">
           <h3 class="InstallationMethod__Heading">CDN</h3>
-          <div class="InstallationMethod__Code">
+          <pre class="InstallationMethod__Code">
             <code
               >&lt;link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code
             >
-          </div>
+          </pre>
         </section>
 
         <section class="InstallationMethod">
@@ -698,7 +294,7 @@
           <small>
             © 2025 TAK (
             <a
-              class="Footer__Link"
+              class="text-link"
               href="https://www.tak-dcxi.com/"
               target="_blank"
             >

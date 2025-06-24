@@ -64,16 +64,8 @@ module.exports = {
       true,
       {
         ignoreProperties: {
-          "margin-trim": "/.+/",
           "word-break": "auto-phrase",
-          "/^background/": "/.+/",
-          "box-shadow": "/.+/",
-          "/^inset/": "/^anchor\\(/",
-          "inline-size": "/^anchor-size\\(/",
-          "block-size": "/^anchor-size\\(/",
-          "/.+/": "/^round\\(/",
-          "container-type": ["scroll-state"],
-          "text-decoration-color": ["/^oklch\\(/", "/^oklch\\(from /"],
+          "inline-size": ["/^round\\(/", "/^calc-size\\(/"],
         },
       },
     ],
