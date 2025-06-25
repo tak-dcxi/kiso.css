@@ -153,13 +153,6 @@
   text-autospace: no-autospace;
 }
 
-@media print {
-  :where(pre) {
-    /* Wraps text when printing. */
-    white-space: pre-wrap;
-  }
-}
-
 /* ======================================================
 //  MARK: Text-level semantics
 // ====================================================== */
@@ -229,7 +222,8 @@
     * It's worth adding a non-disruptive style that scales with the text, as an alternative to relying only on background color.
     * @see https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkPrint
     */
-    border: 1px dotted;
+    border-width: 1px;
+    border-style: dotted;
   }
 }
 
@@ -492,7 +486,7 @@
 :where([popover]) {
   /*
   * While the UA stylesheet's `margin` for `<dialog>` elements is useful for centering with `inset: 0`,
-  * But `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning.
+  * but `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning.
   */
   margin: unset;
 }
@@ -500,17 +494,12 @@
 /* ======================================================
 //  MARK: Focus Styles
 // ====================================================== */
-:where(:focus:not(:focus-visible)) {
-  /* Hide the focus outline to reduce visual clutter unless the element is explicitly `:focus-visible`. */
-  outline: none;
-}
-
 :where(:focus-visible) {
   /* Add space between the content and the focus outline. */
   outline-offset: 3px;
 }
 
-[tabindex="-1"]:focus-visible {
+[tabindex="-1"]:focus {
   /* Prevent programmatically focused elements from displaying an outline unless they are naturally focusable. */
   outline: none !important;
 }
