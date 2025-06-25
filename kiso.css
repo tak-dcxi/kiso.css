@@ -153,13 +153,6 @@
   text-autospace: no-autospace;
 }
 
-@media print {
-  :where(pre) {
-    /* Wraps text when printing. */
-    white-space: pre-wrap;
-  }
-}
-
 /* ======================================================
 //  MARK: Text-level semantics
 // ====================================================== */
@@ -304,6 +297,7 @@
   /* These styles specified in the UA stylesheet are often unnecessary, so they are reset to allow for inheritance. */
   border-color: unset;
   border-radius: unset;
+  background-color: unset;
   color: unset;
   font: unset;
   letter-spacing: unset;
@@ -323,13 +317,6 @@
 :where(input[type="search" i]) {
   /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
-}
-
-@supports (-webkit-touch-callout: none) {
-  :where(input[type="search" i]) {
-    /* normalize the background color on iOS. */
-    background-color: Canvas;
-  }
 }
 
 :where(
@@ -363,15 +350,6 @@
   ) {
   /* Set to `no-autospace` because `text-autospace` can insert spaces during input, potentially causing erratic behavior. */
   text-autospace: no-autospace;
-}
-
-:where(
-    button,
-    input:is([type="button" i], [type="submit" i], [type="reset" i])
-  ),
-::file-selector-button {
-  /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
-  background-color: unset;
 }
 
 :where(
@@ -492,7 +470,7 @@
 :where([popover]) {
   /*
   * While the UA stylesheet's `margin` for `<dialog>` elements is useful for centering with `inset: 0`,
-  * But `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning.
+  * but `margin` for `popover` elements is often obstructive as they frequently use Anchor Positioning.
   */
   margin: unset;
 }
