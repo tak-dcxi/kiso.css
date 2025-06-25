@@ -222,7 +222,8 @@
     * It's worth adding a non-disruptive style that scales with the text, as an alternative to relying only on background color.
     * @see https://adrianroselli.com/2017/12/tweaking-text-level-styles.html#MarkPrint
     */
-    border: 1px dotted;
+    border-width: 1px;
+    border-style: dotted;
   }
 }
 
@@ -297,7 +298,6 @@
   /* These styles specified in the UA stylesheet are often unnecessary, so they are reset to allow for inheritance. */
   border-color: unset;
   border-radius: unset;
-  background-color: unset;
   color: unset;
   font: unset;
   letter-spacing: unset;
@@ -317,6 +317,13 @@
 :where(input[type="search" i]) {
   /* Remove the rounded corners of search inputs on macOS and normalize the background color. */
   -webkit-appearance: textfield;
+}
+
+@supports (-webkit-touch-callout: none) {
+  :where(input[type="search" i]) {
+    /* normalize the background color on iOS. */
+    background-color: Canvas;
+  }
 }
 
 :where(
@@ -350,6 +357,15 @@
   ) {
   /* Set to `no-autospace` because `text-autospace` can insert spaces during input, potentially causing erratic behavior. */
   text-autospace: no-autospace;
+}
+
+:where(
+    button,
+    input:is([type="button" i], [type="submit" i], [type="reset" i])
+  ),
+::file-selector-button {
+  /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
+  background-color: unset;
 }
 
 :where(
@@ -478,17 +494,12 @@
 /* ======================================================
 //  MARK: Focus Styles
 // ====================================================== */
-:where(:focus:not(:focus-visible)) {
-  /* Hide the focus outline to reduce visual clutter unless the element is explicitly `:focus-visible`. */
-  outline: none;
-}
-
 :where(:focus-visible) {
   /* Add space between the content and the focus outline. */
   outline-offset: 3px;
 }
 
-[tabindex="-1"]:focus-visible {
+[tabindex="-1"]:focus {
   /* Prevent programmatically focused elements from displaying an outline unless they are naturally focusable. */
   outline: none !important;
 }
