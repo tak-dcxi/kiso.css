@@ -154,7 +154,7 @@
     ),
     var(--_font-size-max)
   );
-  text-underline-offset: calc((1lh - 1cap) / 2 / 2);
+  text-underline-offset: calc((1lh - 1em) / 2);
   -webkit-font-smoothing: antialiased;
 
   /* progress()関数がサポートされていない場合 */
@@ -195,6 +195,7 @@
     minmax(var(--_gutter), 1fr)
     [full-end];
   row-gap: 3rlh;
+  align-content: start;
 
   & > :where(.HomeTemplate__Main) > * {
     grid-column: content;
