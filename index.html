@@ -6,13 +6,15 @@
     <meta name="format-detection" content="email=no,telephone=no,address=no" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <script>
-      (() => {
+      (function () {
+        "use strict";
+
         const viewport = document.querySelector('meta[name="viewport"]');
         if (!viewport) return;
         const MIN_WIDTH = 375;
         function onResize() {
           const value =
-            window.innerWidth > MIN_WIDTH
+            window.outerWidth > MIN_WIDTH
               ? "width=device-width,initial-scale=1"
               : `width=${MIN_WIDTH}`;
           if (viewport.getAttribute("content") !== value) {
