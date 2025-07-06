@@ -470,6 +470,7 @@
 }
 
 .InstallationMethod__Code {
+  display: block grid;
   overflow: auto clip;
   overscroll-behavior-inline: contain;
   padding-block: 1rlh;
