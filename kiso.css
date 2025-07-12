@@ -516,24 +516,3 @@
   /* Ensure that elements intended to be hidden are not displayed, improving clarity and layout control. */
   display: none !important;
 }
-
-@supports selector(::scroll-button(*)) {
-  ::scroll-button(*) {
-    /* Apply the same reset as for `<button>` elements. */
-    border-width: 1px;
-    border-style: solid;
-    border-color: unset;
-    border-radius: unset;
-    background-color: unset;
-    color: unset;
-    font: unset;
-    letter-spacing: unset;
-    text-align: unset;
-    touch-action: manipulation;
-  }
-
-  ::scroll-button(*):enabled {
-    /* Make the scroll button indicate interactivity when enabled. */
-    cursor: pointer;
-  }
-}
