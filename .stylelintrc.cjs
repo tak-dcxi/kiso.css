@@ -127,6 +127,7 @@ module.exports = {
           "text-box",
           "interactivity",
           "corner-shape",
+          "text-decoration-inset",
         ],
       },
     ],

@@ -66,7 +66,7 @@
 /* ======================================================
 // MARK: Sections
 // ------------------------------------------------------ */
-:where(h1, h2, h3, h4, h5, h6) {
+:where(:is(h1, h2, h3, h4, h5, h6):lang(en)) {
   /* Prevents the last line of text from ending with a single word, which can look awkward (known as an orphan). */
   text-wrap: pretty;
 }
@@ -166,6 +166,11 @@
   font-style: unset;
 }
 
+:where(:is(u, s, del, ins)) {
+  /* Set the underline inset to `auto` and separate only the horizontal lines when underlines are consecutive. */
+  text-decoration-inset: auto;
+}
+
 :where(code, kbd, samp) {
   /*
   * Set a monospace font family referencing Tailwind.
@@ -196,6 +201,7 @@
   */
   text-decoration-line: underline;
   text-decoration-style: dotted;
+  text-decoration-inset: auto;
   cursor: help;
 }
 
@@ -243,6 +249,9 @@
 
   /* Set the underline thickness to the font's default thickness. */
   text-decoration-thickness: from-font;
+
+  /* Set the underline inset to `auto` and separate only the horizontal lines when underlines are consecutive. */
+  text-decoration-inset: auto;
 }
 
 /* ======================================================
