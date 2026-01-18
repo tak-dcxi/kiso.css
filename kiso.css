@@ -45,7 +45,10 @@
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 
-  /* Prevents layout shift caused by the appearance or disappearance of the scrollbar. */
+  /*
+  * Prevents layout shift caused by the appearance or disappearance of the scrollbar.
+  * Starting with Chrome 145, specifying `scrollbar-gutter: stable` will cause vw to be calculated without considering the scrollbar, which will also prevent horizontal scrolling.
+  */
   scrollbar-gutter: stable;
 
   /* Suppresses the tap highlight on iOS. */

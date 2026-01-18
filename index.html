@@ -25,7 +25,6 @@
         onResize();
       })();
     </script>
-    <meta name="text-scale" content="scale" />
     <meta
       name="description"
       content="kiso.css は、日本のWebサイトのための「基礎」となるリセットCSSです。日本語に最適化しつつ、アクセシビリティやカスタマイズのし易さを重視しています。"
@@ -68,9 +67,9 @@
     <meta name="twitter:site" content="@tak_dcxi" />
     <meta name="theme-color" content="#0097d3" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="text-scale" content="scale" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="kiso.css" />
     <link rel="stylesheet" href="lp/style.css" />
     <link
       rel="preload"
@@ -86,226 +85,239 @@
       />
     </noscript>
   </head>
-  <body class="HomeTemplate">
-    <header class="HomeTemplate__Header">
-      <div class="Hero">
-        <div class="Hero__Layout">
-          <hgroup class="Hero__Heading">
-            <h1 class="Hero__Title" lang="en" translate="no">kiso.css</h1>
-            <p class="Hero__Tagline">
-              日本のWebサイトのための「基礎」となるリセットCSS
-            </p>
-          </hgroup>
-          <nav class="Hero__Actions" aria-label="ダウンロードリンク">
-            <ul class="Hero__ActionsList">
-              <li>
-                <a href="#installation" class="BaseButton">今すぐ使い始める</a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/tak-dcxi/kiso.css/"
-                  class="GithubButton"
-                  lang="en"
-                  translate="no"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 496 512"
-                    aria-hidden="true"
-                    fill="currentcolor"
+  <body class="scope home-page | -fluid-text">
+    <div class="_full-bleed | composable-full-bleed">
+      <div class="_header">
+        <header class="scope site-header">
+          <div class="_full-bleed | composable-full-bleed">
+            <hgroup class="_heading | composable-flow | -text-center">
+              <h1 class="_title | -fluid-text" lang="en" translate="no">
+                kiso.css
+              </h1>
+              <p class="_tagline | -fluid-text -kerning -auto-phrase">
+                日本のWebサイトのための「基礎」となるリセットCSS
+              </p>
+            </hgroup>
+            <nav class="_actions" aria-label="ダウンロードリンク">
+              <ul class="_actions-list | composable-cluster">
+                <li class="scope shared-button">
+                  <a href="#installation" class="_body">今すぐ使い始める</a>
+                </li>
+                <li class="scope shared-github-button">
+                  <a
+                    href="https://github.com/tak-dcxi/kiso.css/"
+                    class="_body"
+                    lang="en"
+                    translate="no"
                   >
-                    <path
-                      d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
-                    />
-                  </svg>
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 496 512"
+                      aria-hidden="true"
+                      fill="currentcolor"
+                    >
+                      <path
+                        d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
+                      />
+                    </svg>
+                    GitHub
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
       </div>
-    </header>
 
-    <main class="HomeTemplate__Main">
-      <section id="features" class="Section">
-        <h2 class="SectionHeading">特徴</h2>
-        <div class="FeaturesCards">
-          <div class="FeaturesCards__Layout">
-            <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">
-                <span aria-hidden="true">🇯🇵</span>日本向けの設計
-              </h3>
-              <div class="FeaturesCards__Description">
-                <p>
-                  kiso.cssの最大の特徴は、日本語環境での使用を前提とした設計にあります。
-                </p>
-                <p>
-                  多くのリセットCSSは欧文を前提としており、日本語のWebサイトで使用する際には追加の調整が必要になることが少なくありません。
-                </p>
-                <p>
-                  kiso.cssでは、副作用が少ない範囲で日本語に特化したスタイル調整を加えています。もちろん、英語圏の方にも配慮しています。
-                </p>
+      <main class="composable-flow">
+        <section id="features" class="scope shared-section">
+          <div class="composable-flow">
+            <div class="scope shared-heading">
+              <h2 class="_body | -fluid-text -text-center">特徴</h2>
+            </div>
+            <div class="scope features-cards">
+              <div class="_main-grid | composable-grid">
+                <section class="_card">
+                  <h3 class="_heading | -fluid-text">
+                    <span aria-hidden="true">🇯🇵</span>日本向けの設計
+                  </h3>
+                  <div class="_description | composable-flow | -hanging">
+                    <p>
+                      kiso.cssの最大の特徴は、日本語環境での使用を前提とした設計にあります。
+                    </p>
+                    <p>
+                      多くのリセットCSSは欧文を前提としており、日本語のWebサイトで使用する際には追加の調整が必要になることが少なくありません。
+                    </p>
+                    <p>
+                      kiso.cssでは、副作用が少ない範囲で日本語に特化したスタイル調整を加えています。もちろん、英語圏の方にも配慮しています。
+                    </p>
+                  </div>
+                </section>
+                <section class="_card">
+                  <h3 class="_heading | -fluid-text">
+                    <span aria-hidden="true">🎯</span>上書きが容易
+                  </h3>
+                  <div class="_description | composable-flow | -hanging">
+                    <p>
+                      kiso.cssでは、疑似要素や<code>!important</code>が明示的に指定されたスタイルを除き、すべてのセレクタを<code>:where()</code>擬似クラスで囲むことで詳細度を0にしています。
+                    </p>
+                    <p>
+                      kiso.cssはスタイルを容易に上書きできるため、カスタマイズ性の高いリセットCSSとなっています。
+                    </p>
+                  </div>
+                </section>
+                <section class="_card">
+                  <h3 class="_heading | -fluid-text">
+                    <span aria-hidden="true">♿</span>アクセシビリティ重視
+                  </h3>
+                  <div class="_description | composable-flow | -hanging">
+                    <p>
+                      リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
+                    </p>
+                    <p>
+                      SafariとVoiceOverの組み合わせでは<code>list-style:none</code>が指定された<code>&lt;ul&gt;</code>や<code>&lt;ol&gt;</code>を「リスト」として認識しない仕様がありますが、kiso.cssは他のリセットCSSとの差別点として「リスト」として認識できるように配慮しています。
+                    </p>
+                  </div>
+                </section>
+                <section class="_card">
+                  <h3 class="_heading | -fluid-text">
+                    <span aria-hidden="true">🚀</span>最新のHTML/CSSをサポート
+                  </h3>
+                  <div class="_description | composable-flow | -hanging">
+                    <p>
+                      <code>text-wrap</code
+                      >、<code>text-autospace</code>、<code>text-spacing-trim</code>、<code
+                        >scrollbar-gutter</code
+                      >
+                      などのプログレッシブ・エンハンスメントで利用できる新しいCSSプロパティを活用しています。
+                    </p>
+                    <p>
+                      <code>&lt;dialog&gt;</code>、<code>&lt;model&gt;</code>、
+                      <code>&lt;search&gt;</code>、
+                      ポップオーバー属性などの新しいHTMLもサポートしています。
+                    </p>
+                  </div>
+                </section>
+                <section class="_card">
+                  <h3 class="_heading | -fluid-text">
+                    <span aria-hidden="true">👀</span>厳選されたリセット
+                  </h3>
+                  <div class="_description | composable-flow | -hanging">
+                    <p>
+                      kiso.cssは闇雲にリセットするのではなく、リセットするスタイルを厳選しています。
+                    </p>
+                    <p>
+                      過去の経験を基に、リセットする方が都合の良いスタイルとそうでないものを洗い出し、前者を選択的にリセットする方針を取りました。
+                    </p>
+                    <p>
+                      残すところは残しつつ、普段の実装では無しにしたほうが都合の良いUAスタイルはリセットしています。
+                    </p>
+                  </div>
+                </section>
+                <section class="_card">
+                  <h3 class="_heading | -fluid-text">
+                    <span aria-hidden="true">🔧</span>簡単導入
+                  </h3>
+                  <div class="_description | composable-flow | -hanging">
+                    <p>
+                      npm、CDN、直接ダウンロードに対応。1行のインポートですぐに使用開始できます。
+                    </p>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="scope shared-section">
+          <div class="composable-flow">
+            <div class="scope shared-heading">
+              <h2 class="_body | -fluid-text -text-center">インストール</h2>
+            </div>
+
+            <section class="scope installation-method">
+              <div class="composable-flow">
+                <h3 class="_heading | -fluid-text">npm / yarn</h3>
+                <pre class="_code">
+                  <code>npm install kiso.css</code>
+                  <code># or</code>
+                  <code>yarn add kiso.css</code>
+                </pre>
               </div>
             </section>
-            <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">
-                <span aria-hidden="true">🎯</span>上書きが容易
-              </h3>
-              <div class="FeaturesCards__Description">
-                <p>
-                  kiso.cssでは、疑似要素や<code>!important</code>が明示的に指定されたスタイルを除き、すべてのセレクタを<code>:where()</code>擬似クラスで囲むことで詳細度を0にしています。
-                </p>
-                <p>
-                  kiso.cssはスタイルを容易に上書きできるため、カスタマイズ性の高いリセットCSSとなっています。
-                </p>
+
+            <section class="scope installation-method">
+              <div class="composable-flow">
+                <h3 class="_heading | -fluid-text">CDN</h3>
+                <pre class="_code">
+                  <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
+                </pre>
               </div>
             </section>
-            <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">
-                <span aria-hidden="true">♿</span>アクセシビリティ重視
-              </h3>
-              <div class="FeaturesCards__Description">
-                <p>
-                  リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
-                </p>
-                <p>
-                  SafariとVoiceOverの組み合わせでは<code>list-style:none</code>が指定された<code>&lt;ul&gt;</code>や<code>&lt;ol&gt;</code>を「リスト」として認識しない仕様がありますが、kiso.cssは他のリセットCSSとの差別点として「リスト」として認識できるように配慮しています。
-                </p>
-              </div>
-            </section>
-            <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">
-                <span aria-hidden="true">🚀</span>最新のHTML/CSSをサポート
-              </h3>
-              <div class="FeaturesCards__Description">
-                <p>
-                  <code>text-wrap</code
-                  >、<code>text-autospace</code>、<code>text-spacing-trim</code>、<code
-                    >scrollbar-gutter</code
-                  >
-                  などのプログレッシブ・エンハンスメントで利用できる新しいCSSプロパティを活用しています。
-                </p>
-                <p>
-                  <code>&lt;dialog&gt;</code>、<code>&lt;model&gt;</code>、
-                  <code>&lt;search&gt;</code>、
-                  ポップオーバー属性などの新しいHTMLもサポートしています。
-                </p>
-              </div>
-            </section>
-            <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">
-                <span aria-hidden="true">👀</span>厳選されたリセット
-              </h3>
-              <div class="FeaturesCards__Description">
-                <p>
-                  kiso.cssは闇雲にリセットするのではなく、リセットするスタイルを厳選しています。
-                </p>
-                <p>
-                  過去の経験を基に、リセットする方が都合の良いスタイルとそうでないものを洗い出し、前者を選択的にリセットする方針を取りました。
-                </p>
-                <p>
-                  残すところは残しつつ、普段の実装では無しにしたほうが都合の良いUAスタイルはリセットしています。
-                </p>
-              </div>
-            </section>
-            <section class="FeaturesCards__Item">
-              <h3 class="FeaturesCards__Heading">
-                <span aria-hidden="true">🔧</span>簡単導入
-              </h3>
-              <div class="FeaturesCards__Description">
-                <p>
-                  npm、CDN、直接ダウンロードに対応。1行のインポートですぐに使用開始できます。
+
+            <section class="scope installation-method">
+              <div class="composable-flow">
+                <h3 class="_heading | -fluid-text">ダウンロード</h3>
+                <p class="-hanging">
+                  <a
+                    class="-text-link"
+                    href="https://tak-dcxi.github.io/kiso.css/kiso.css"
+                    >GitHub</a
+                  >から直接ダウンロードして、プロジェクトに含めることもできます。
                 </p>
               </div>
             </section>
           </div>
-        </div>
-      </section>
-
-      <section id="installation" class="Section">
-        <h2 class="SectionHeading">インストール</h2>
-
-        <section class="InstallationMethod">
-          <h3 class="InstallationMethod__Heading">npm / yarn</h3>
-          <pre class="InstallationMethod__Code">
-            <code>npm install kiso.css</code>
-            <code># or</code>
-            <code>yarn add kiso.css</code>
-          </pre>
-          <pre class="InstallationMethod__Code">
-            <code>/* import your CSS file */</code>
-            <code>@import "kiso.css";</code>
-          </pre>
         </section>
+      </main>
 
-        <section class="InstallationMethod">
-          <h3 class="InstallationMethod__Heading">CDN</h3>
-          <pre class="InstallationMethod__Code">
-            <code
-              >&lt;link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code
-            >
-          </pre>
-        </section>
-
-        <section class="InstallationMethod">
-          <h3 class="InstallationMethod__Heading">ダウンロード</h3>
-          <p>
-            <a
-              class="text-link"
-              href="https://tak-dcxi.github.io/kiso.css/kiso.css"
-              >GitHub</a
-            >から直接ダウンロードして、プロジェクトに含めることもできます。
-          </p>
-        </section>
-      </section>
-    </main>
-
-    <footer class="HomeTemplate__Footer">
-      <div class="Footer">
-        <ul class="Footer__Nav" lang="en" translate="no">
-          <li>
-            <a
-              class="text-link"
-              href="https://github.com/tak-dcxi/kiso.css/"
-              lang="en"
-              translate="no"
-              >GitHub</a
-            >
-          </li>
-          <li>
-            <a
-              class="text-link"
-              href="https://www.npmjs.com/package/kiso.css"
-              lang="en"
-              translate="no"
-              >npm</a
-            >
-          </li>
-          <li>
-            <a
-              class="text-link"
-              href="https://github.com/tak-dcxi/kiso.css/blob/main/LICENSE"
-              lang="en"
-              >MIT License</a
-            >
-          </li>
-        </ul>
-        <p class="Footer__Copyright" lang="en" translate="no">
-          <small>
-            © 2025 TAK (
-            <a
-              class="text-link"
-              href="https://www.tak-dcxi.com/"
-              target="_blank"
-            >
-              TAKLOG </a
-            >)
-          </small>
-        </p>
+      <div class="_footer">
+        <footer class="scope site-footer">
+          <div class="_full-bleed | composable-full-bleed">
+            <ul class="_nav-list | composable-cluster" lang="en" translate="no">
+              <li>
+                <a
+                  class="-text-link"
+                  href="https://github.com/tak-dcxi/kiso.css/"
+                  lang="en"
+                  translate="no"
+                  >GitHub</a
+                >
+              </li>
+              <li>
+                <a
+                  class="-text-link"
+                  href="https://www.npmjs.com/package/kiso.css"
+                  lang="en"
+                  translate="no"
+                  >npm</a
+                >
+              </li>
+              <li>
+                <a
+                  class="-text-link"
+                  href="https://github.com/tak-dcxi/kiso.css/blob/main/LICENSE"
+                  lang="en"
+                  >MIT License</a
+                >
+              </li>
+            </ul>
+            <p class="_copyright | -text-center" lang="en" translate="no">
+              <small>
+                © 2026 TAK (
+                <a
+                  class="-text-link"
+                  href="https://www.tak-dcxi.com/"
+                  target="_blank"
+                >
+                  TAKLOG </a
+                >)
+              </small>
+            </p>
+          </div>
+        </footer>
       </div>
-    </footer>
+    </div>
   </body>
 </html>

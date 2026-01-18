@@ -22,7 +22,6 @@ module.exports = {
     "block-no-empty": null,
     "color-hex-alpha": "never",
     "color-named": "never",
-    "custom-property-pattern": /^_?([a-zA-Z][a-zA-Z0-9]*)(-[a-z0-9]+)*$/,
     "declaration-block-no-redundant-longhand-properties": [
       true,
       {
