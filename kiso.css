@@ -161,12 +161,12 @@
   font-weight: bolder;
 }
 
-:where(:is(i, cite, em, dfn, var):lang(ja)) {
+:where(:is(i, cite, em, dfn):lang(ja)) {
   /* Italic style is not common in Japanese, so the `font-style` is reset. */
   font-style: unset;
 }
 
-:where(:is(u, s, del, ins)) {
+:where(u, s, del, ins) {
   /* Set the underline inset to `auto` and separate only the horizontal lines when underlines are consecutive. */
   text-decoration-inset: auto;
 }
@@ -236,10 +236,16 @@
 /* ======================================================
 //  MARK: Links
 // ====================================================== */
-:where(a:any-link) {
-  /* The default `color` from the UA stylesheet is rarely used as is, so it's reset to allow inheritance. */
+:where(a) {
+  /*
+  * The default `color` from the UA stylesheet is rarely used as is, so it's reset to allow inheritance.
+  * In Firefox on iOS, the user agent stylesheet’s text color is applied even when the text is not a link.
+  * @see https://github.com/darkreader/darkreader/issues/9836
+  */
   color: unset;
+}
 
+:where(a:any-link) {
   /*
   * While link underlines can be useful, they are often obstructive.
   * They are disabled by default.
@@ -257,15 +263,21 @@
 /* ======================================================
 //  MARK: Embedded content
 // ====================================================== */
-:where(img, svg, picture, video, canvas, model, audio, iframe, embed, object) {
-  /* Automatically adjust block size based on content. */
-  block-size: auto;
-
+:where(img, svg, picture, video, audio, canvas, model, iframe, embed, object) {
   /* Prevents overflow by setting the maximum width to `100%`. */
   max-inline-size: 100%;
 
   /* Prevents extra space from appearing at the bottom of the element. */
   vertical-align: bottom;
+}
+
+:where(img, svg, picture, video, canvas, model, iframe, embed, object) {
+  /*
+  * Automatically adjust block size based on content.
+  * Exclude the <audio> element as it disappears when block-size is auto.
+  * @see https://github.com/tak-dcxi/kiso.css/issues/5
+  */
+  block-size: auto;
 }
 
 :where(iframe) {
@@ -286,7 +298,7 @@
   text-align: unset;
 }
 
-:where(caption) {
+:where(caption:lang(en)) {
   /* Prevents the last line of text from ending with a single word, which can look awkward (known as an orphan). */
   text-wrap: pretty;
 }
