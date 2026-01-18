@@ -88,6 +88,7 @@
 
   :where(h1, h2, h3, h4, h5, h6, caption) {
     font-kerning: normal;
+    line-height: var(--leading-tight);
 
     &:lang(ja) {
       font-feature-settings: "palt";
@@ -97,6 +98,26 @@
 
   :where(h1) {
     margin-block: unset;
+  }
+
+  :where(pre) {
+    overflow-inline: auto;
+    overflow-block: clip;
+    overscroll-behavior-inline: contain;
+
+    @supports not (overflow-inline: auto) {
+      overflow: auto clip;
+    }
+  }
+
+  :where(:focus-visible) {
+    --_b-ring-thickness: 3px;
+    --_b-ring-offset: 3px;
+
+    box-shadow: 0 0 0 calc(var(--_b-ring-offset) + var(--_b-ring-thickness))
+      Canvas !important;
+    outline: var(--_b-ring-thickness) solid CanvasText;
+    outline-offset: var(--_b-ring-offset);
   }
 }
 
@@ -206,8 +227,6 @@
     :scope {
       --fluid-text--min-font-size: 20;
       --fluid-text--max-font-size: 24;
-
-      line-height: var(--leading-tight);
     }
 
     ._body {
@@ -336,8 +355,6 @@
 
     ._heading {
       --composable-flow--space: 1rlh;
-
-      line-height: var(--leading-tight);
     }
 
     ._title {
@@ -346,13 +363,12 @@
 
       font-family: var(--font-montserrat);
       font-size-adjust: cap-height from-font;
-      line-height: var(--leading-tight);
 
       @media (forced-colors: none) {
         background-image: linear-gradient(
-          135deg,
-          oklch(from var(--foreground-primary) calc(l - 0.1) c h),
-          oklch(from var(--foreground-primary) calc(l + 0.1) c h)
+          135deg in oklab,
+          oklch(from var(--foreground-primary) calc(l - 0.2) c h),
+          oklch(from var(--foreground-primary) calc(l + 0.2) c h)
         );
         background-clip: text;
         color: transparent;
@@ -417,7 +433,6 @@
       display: block flex;
       column-gap: 0.5em;
       color: var(--foreground-primary);
-      line-height: var(--leading-tight);
     }
 
     ._description {
@@ -448,8 +463,6 @@
 
     ._code {
       display: block grid;
-      overflow: auto clip;
-      overscroll-behavior-inline: contain;
       padding-block: 1rlh;
       padding-inline: 3ch;
       border: 1px solid var(--border-color);
@@ -463,7 +476,7 @@
   @scope (.site-footer.scope) to (.scope) {
     :scope {
       container: --site-footer / inline-size;
-      border-block-end: 1px solid var(--border-color);
+      border-block-start: 1px solid var(--border-color);
       background-color: var(--background-lighten);
       font-family: var(--font-montserrat);
     }
@@ -516,36 +529,32 @@
 
 @layer utilities {
   .-fluid-text {
-    --_fluid-text--min-width: var(--fluid-text--min-width, 375);
-    --_fluid-text--max-width: var(--fluid-text--max-width, 1280);
-    --_fluid-text--min-font-size: var(--fluid-text--min-font-size, 14);
-    --_fluid-text--max-font-size: var(--fluid-text--max-font-size, 16);
-    --_fluid-text--base-font-size: var(--fluid-text--base-font-size, 16);
-    --_fluid-text--relative-unit: var(
+    --_u-relative-min-width: var(--fluid-text--relative-min-width, 375);
+    --_u-relative-max-width: var(--fluid-text--relative-max-width, 1280);
+    --_u-min-font-size: var(--fluid-text--min-font-size, 14);
+    --_u-max-font-size: var(--fluid-text--max-font-size, 16);
+    --_u-base-font-size: var(--fluid-text--base-font-size, 16);
+    --_u-relative-unit: var(
       --fluid-text--relative-unit,
       100svi
     ); /* 100svi or 100cqi */
 
     /* slope and intercept calculations */
-    --_fluid-text--slope: calc(
-      (var(--_fluid-text--max-font-size) - var(--_fluid-text--min-font-size)) /
-        (var(--_fluid-text--max-width) - var(--_fluid-text--min-width))
+    --_u-fluid-slope: calc(
+      (var(--_u-max-font-size) - var(--_u-min-font-size)) /
+        (var(--_u-relative-max-width) - var(--_u-relative-min-width))
     );
-    --_fluid-text--intercept: calc(
-      var(--_fluid-text--min-font-size) - var(--_fluid-text--slope) *
-        var(--_fluid-text--min-width)
-    );
-    --_fluid-text--font-size: clamp(
-      var(--_fluid-text--min-font-size) / var(--_fluid-text--base-font-size) *
-        1rem,
-      var(--_fluid-text--slope) * var(--_fluid-text--relative-unit) +
-        var(--_fluid-text--intercept) / var(--_fluid-text--base-font-size) *
-        1rem,
-      var(--_fluid-text--max-font-size) / var(--_fluid-text--base-font-size) *
-        1rem
+    --_u-fluid-intercept: calc(
+      var(--_u-min-font-size) - var(--_u-fluid-slope) *
+        var(--_u-relative-min-width)
     );
 
-    font-size: var(--_fluid-text--font-size);
+    font-size: clamp(
+      var(--_u-min-font-size) / var(--_u-base-font-size) * 1rem,
+      var(--_u-fluid-slope) * var(--_u-relative-unit) +
+        var(--_u-fluid-intercept) / var(--_u-base-font-size) * 1rem,
+      var(--_u-max-font-size) / var(--_u-base-font-size) * 1rem
+    );
   }
 
   .-text-center {
