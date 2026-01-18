@@ -156,6 +156,13 @@
   text-autospace: no-autospace;
 }
 
+@media print {
+  :where(pre) {
+    /* Prevent text wrapping in print media. */
+    text-wrap-mode: unset;
+  }
+}
+
 /* ======================================================
 //  MARK: Text-level semantics
 // ====================================================== */
