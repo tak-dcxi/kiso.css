@@ -4,7 +4,8 @@ A modern reset CSS designed with Japanese websites in mind.
 
 kiso.css provides better defaults for modern web development. It standardizes browser styles, offering a consistent and solid foundation for your project.
 
-[**Demo Site**](https://tak-dcxi.github.io/kiso.css/)
+- [**Demo Site**](https://tak-dcxi.github.io/kiso.css/)
+- [**Test Page**](https://tak-dcxi.github.io/kiso.css/test.html)
 
 ## Key Features
 
