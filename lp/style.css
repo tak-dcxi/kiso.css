@@ -63,8 +63,8 @@
     --leading-relaxed: 1.75;
     --rounded-md: 12px;
     --rounded-lg: 32px;
-    --content-max-width: 64rem;
-    --content-padding-inline: clamp(16px, 16 / 375 * 100svi, 32px);
+    --design-base-max-width: 1280px;
+    --design-base-min-width: 375px;
 
     background-color: var(--background-base);
     color: var(--foreground-base);
@@ -174,15 +174,15 @@
   .composable-full-bleed {
     --_c-content-max-width: var(
       --composable-full-bleed--content-max-width,
-      var(--content-max-width)
+      64rem
     );
     --_c-breakout-max-width: var(
       --composable-full-bleed--breakout-max-width,
-      calc(var(--content-max-width) + 10rem * 2)
+      calc(var(--_c-content-max-width) + 10rem * 2)
     );
     --_c-padding-inline: var(
       --composable-full-bleed--padding-inline,
-      var(--content-padding-inline)
+      max(16px, 5%)
     );
     --_c-row-gap: var(--composable-full-bleed--row-gap, 0px);
 
@@ -341,14 +341,11 @@
 
     ._full-bleed {
       --length: 3rlh;
-      --composable-full-bleed--content-max-width: var(--content-max-width);
-      --composable-full-bleed--padding-inline: var(--content-padding-inline);
       --composable-full-bleed--row-gap: 2rlh;
-      --composable-full-bleed--column: initial;
 
       padding-block: clamp(
         3rlh,
-        tan(atan2(var(--length), 375px)) * 100cqi,
+        tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
         6rlh
       );
     }
@@ -397,8 +394,16 @@
     }
 
     ._main-grid {
-      --composable-grid--row-gap: clamp(16px, 16 / 375 * 100cqi, 24px);
-      --composable-grid--column-gap: clamp(16px, 16 / 375 * 100cqi, 24px);
+      --composable-grid--row-gap: clamp(
+        16px,
+        tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
+        24px
+      );
+      --composable-grid--column-gap: clamp(
+        16px,
+        tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
+        24px
+      );
       --composable-grid--column-max-count: 2;
       --composable-grid--column-min-width: var(--_column-min-width);
 
@@ -408,14 +413,12 @@
     }
 
     ._card {
-      --length: var(--_column-min-width);
-
       display: block grid;
       grid-template-columns: subgrid;
       gap: 1rlh 0;
       align-content: start;
       padding-block: 1.5rlh;
-      padding-inline: clamp(24px, tan(atan2(24px, var(--length))) * 100%, 32px);
+      padding-inline: max(24px, 5%);
       border: 1px solid var(--border-color);
       border-radius: var(--rounded-md);
       background-color: var(--background-lighten);
@@ -469,7 +472,7 @@
       border-radius: var(--rounded-md);
       corner-shape: squircle;
       background-color: var(--code-background);
-      white-space: nowrap;
+      text-wrap-mode: nowrap;
     }
   }
 
@@ -479,18 +482,20 @@
       border-block-start: 1px solid var(--border-color);
       background-color: var(--background-lighten);
       font-family: var(--font-montserrat);
+
+      body & {
+        position: sticky;
+        inset-block-start: 100%;
+      }
     }
 
     ._full-bleed {
       --length: 2rlh;
-      --composable-full-bleed--content-max-width: var(--content-max-width);
-      --composable-full-bleed--padding-inline: var(--content-padding-inline);
       --composable-full-bleed--row-gap: 1.5rlh;
-      --composable-full-bleed--column: initial;
 
       padding-block: clamp(
         2rlh,
-        tan(atan2(var(--length), 375px)) * 100cqi,
+        tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
         3rlh
       );
     }
@@ -506,31 +511,24 @@
 @layer pages {
   @scope (.home-page.scope) to (.scope) {
     main {
-      --composable-flow--space: 3rlh;
-    }
-
-    ._full-bleed {
-      --length: 2rlh;
-      --composable-full-bleed--content-max-width: var(--content-max-width);
-      --composable-full-bleed--padding-inline: var(--content-padding-inline);
-      --composable-full-bleed--row-gap: clamp(
-        2rlh,
-        tan(atan2(var(--length), 375px)) * 100svi,
-        3rlh
+      --length: 3rlh;
+      --_gutter: clamp(
+        3lh,
+        tan(atan2(var(--length), var(--design-base-min-width))) * 100svi,
+        5rlh
       );
 
-      & > ._header,
-      & > ._footer {
-        --composable-full-bleed--column: --full;
-      }
+      --composable-full-bleed--row-gap: var(--_gutter);
+
+      padding-block: var(--_gutter);
     }
   }
 }
 
 @layer utilities {
   .-fluid-text {
-    --_u-relative-min-width: var(--fluid-text--relative-min-width, 375);
     --_u-relative-max-width: var(--fluid-text--relative-max-width, 1280);
+    --_u-relative-min-width: var(--fluid-text--relative-min-width, 375);
     --_u-min-font-size: var(--fluid-text--min-font-size, 14);
     --_u-max-font-size: var(--fluid-text--max-font-size, 16);
     --_u-base-font-size: var(--fluid-text--base-font-size, 16);
