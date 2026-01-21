@@ -88,11 +88,18 @@
 
   :where(h1, h2, h3, h4, h5, h6, caption) {
     font-kerning: normal;
-    line-height: var(--leading-tight);
+
+    &:lang(en) {
+      text-wrap: balance;
+    }
 
     &:lang(ja) {
       font-feature-settings: "palt";
-      word-break: auto-phrase;
+
+      @supports (word-break: auto-phrase) {
+        text-wrap: balance;
+        word-break: auto-phrase;
+      }
     }
   }
 
@@ -612,7 +619,10 @@
 
   .-auto-phrase {
     &:lang(ja) {
-      word-break: auto-phrase;
+      @supports (word-break: auto-phrase) {
+        text-wrap: balance;
+        word-break: auto-phrase;
+      }
     }
   }
 
