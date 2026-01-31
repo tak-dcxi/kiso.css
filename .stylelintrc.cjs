@@ -22,6 +22,7 @@ module.exports = {
     "block-no-empty": null,
     "color-hex-alpha": "never",
     "color-named": "never",
+    "custom-property-pattern": null,
     "declaration-block-no-redundant-longhand-properties": [
       true,
       {

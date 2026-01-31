@@ -15,6 +15,12 @@
 }
 
 @layer base {
+  *,
+  ::before,
+  ::after {
+    min-inline-size: 0;
+  }
+
   :root {
     --ON: initial;
     --OFF: ;
@@ -71,6 +77,10 @@
     text-underline-offset: calc((1lh - 1em) / 2);
     -webkit-font-smoothing: antialiased;
 
+    &:lang(ja) {
+      font-kerning: none;
+    }
+
     &:has(:target):not(:has(:focus-visible)) {
       @media (prefers-reduced-motion: no-preference) {
         scroll-behavior: smooth;
@@ -79,11 +89,9 @@
   }
 
   :where(:lang(en)) {
+    font-family: var(--font-montserrat);
+    font-size-adjust: cap-height from-font;
     font-kerning: normal;
-  }
-
-  :where(:lang(ja)) {
-    font-kerning: none;
   }
 
   :where(h1, h2, h3, h4, h5, h6, caption) {
@@ -129,20 +137,20 @@
 }
 
 @layer compositions {
-  .composable-flow {
+  .flow {
     display: block flow-root;
 
     & > * + * {
-      margin-block-start: var(--composable-flow--space, 1.5rlh);
+      margin-block-start: var(--flow--space, 1.5rlh);
     }
   }
 
-  .composable-grid {
-    --_c-fill-mode: var(--composable-grid--fill-mode, auto-fit);
-    --_c-row-gap: var(--composable-grid--row-gap, 1.5rem);
-    --_c-column-gap: var(--composable-grid--column-gap, 1.5rem);
-    --_c-column-max-count: var(--composable-grid--column-max-count, 5);
-    --_c-column-min-width: var(--composable-grid--column-min-width, 20rem);
+  .grid {
+    --_c-mode: var(--grid--mode, auto-fit);
+    --_c-row-gap: var(--grid--row-gap, 1.5rem);
+    --_c-column-gap: var(--grid--column-gap, 1.5rem);
+    --_c-column-max-count: var(--grid--column-max-count, 5);
+    --_c-column-min-width: var(--grid--column-min-width, 20rem);
 
     /* コンテナの横幅からギャップの合計値を引いたものをn等分する */
     --_c-column-width-calculated: calc(
@@ -158,53 +166,47 @@
 
     display: block grid;
     grid-template-columns: repeat(
-      var(--_c-fill-mode),
+      var(--_c-mode),
       minmax(var(--_c-column-width), 1fr)
     );
     gap: var(--_c-row-gap) var(--_c-column-gap);
   }
 
-  .composable-cluster {
-    --_c-row-gap: var(--composable-cluster--row-gap, 1rem);
-    --_c-column-gap: var(--composable-cluster--column-gap, 1rem);
-    --_c-justify-content: var(--composable-cluster--justify-content, start);
-    --_c-align-items: var(--composable-cluster--align-items, center);
-    --_c-align-content: var(--composable-cluster--align-content, start);
+  .cluster {
+    --_c-row-gap: var(--cluster--row-gap, 1rem);
+    --_c-column-gap: var(--cluster--column-gap, 1rem);
+    --_c-justify: var(--cluster--justify, start);
+    --_c-items: var(--cluster--items, center);
+    --_c-content: var(--cluster--content, start);
 
     display: block flex;
     flex-wrap: wrap;
     gap: var(--_c-row-gap) var(--_c-column-gap);
-    place-content: var(--_c-align-content) var(--_c-justify-content);
-    align-items: var(--_c-align-items);
+    place-content: var(--_c-content) var(--_c-justify);
+    align-items: var(--_c-items);
   }
 
-  .composable-full-bleed {
-    --_c-content-max-width: var(
-      --composable-full-bleed--content-max-width,
-      64rem
-    );
+  .full-bleed {
+    --_c-content-max-width: var(--full-bleed--content-max-width, 64rem);
     --_c-breakout-max-width: var(
-      --composable-full-bleed--breakout-max-width,
+      --full-bleed--breakout-max-width,
       calc(var(--_c-content-max-width) + 10rem * 2)
     );
-    --_c-padding-inline: var(
-      --composable-full-bleed--padding-inline,
-      max(16px, 5%)
-    );
-    --_c-row-gap: var(--composable-full-bleed--row-gap, 0px);
+    --_c-gutter: var(--full-bleed--gutter, max(16px, 5%));
+    --_c-row-gap: var(--full-bleed--row-gap, 0px);
 
     --_c-breakout-area-width: calc(
       (var(--_c-breakout-max-width) - var(--_c-content-max-width)) / 2
     );
     --_c-content-area-width: min(
       var(--_c-content-max-width),
-      100% - var(--_c-padding-inline) * 2
+      100% - var(--_c-gutter) * 2
     );
 
     display: block grid;
     grid-template-columns:
       [--full-start]
-      minmax(var(--_c-padding-inline), 1fr)
+      minmax(var(--_c-gutter), 1fr)
       [--breakout-start]
       minmax(0, var(--_c-breakout-area-width))
       [--content-start]
@@ -212,328 +214,19 @@
       [--content-end]
       minmax(0, var(--_c-breakout-area-width))
       [--breakout-end]
-      minmax(var(--_c-padding-inline), 1fr)
+      minmax(var(--_c-gutter), 1fr)
       [--full-end];
     row-gap: var(--_c-row-gap);
     align-content: start;
 
     & > * {
-      grid-column: var(--composable-full-bleed--column, --content);
-    }
-  }
-}
-
-@layer shared {
-  @scope (.shared-section.scope) to (.scope) {
-    * {
-      --composable-flow--space: 2rlh;
-    }
-  }
-
-  @scope (.shared-heading.scope) to (.scope) {
-    :scope {
-      --fluid-text--min-font-size: 20;
-      --fluid-text--max-font-size: 24;
-    }
-
-    ._body {
-      &::after {
-        content: "";
-        display: block flow;
-        inline-size: min(2em, 100%);
-        margin-block-start: 0.75rlh;
-        margin-inline: auto;
-        border-block-end: 4px solid;
-      }
-    }
-  }
-
-  @scope (.shared-button.scope) to (.scope) {
-    :scope {
-      --_accent-primary: #8474fe;
-      --_accent-secondary: #4d36d0;
-
-      display: inline grid;
-      vertical-align: bottom;
-    }
-
-    ._body {
-      padding-block: 0.75em;
-      padding-inline: 1em;
-      border: 1px solid transparent;
-      border-radius: var(--rounded-md);
-      box-shadow: 0 12px 20px -8px oklch(from var(--_accent-secondary) l c h /
-            10%);
-      background-color: var(--_accent-secondary);
-      background-image: linear-gradient(
-        to bottom,
-        oklch(from var(--_accent-primary) l c h / var(--gradient-alpha)),
-        oklch(from var(--_accent-secondary) l c h / var(--gradient-alpha))
-      );
-      background-origin: border-box;
-      color: var(--color-lightest);
-      transition-duration: 300ms;
-      transition-property: --gradient-alpha;
-
-      @supports (corner-shape: squircle) {
-        border-radius: var(--rounded-lg);
-        corner-shape: squircle;
-      }
-
-      &:focus-visible {
-        --gradient-alpha: 0%;
-      }
-
-      &:any-link:hover {
-        @media (any-hover) {
-          --gradient-alpha: 0%;
-        }
-      }
-    }
-  }
-
-  @scope (.shared-github-button.scope) to (.scope) {
-    :scope {
-      --_background-default: var(--color-darkest);
-      --_background-hocus: oklch(from var(--_background-default) 30% c h);
-
-      display: inline grid;
-      vertical-align: bottom;
-    }
-
-    ._body {
-      display: inherit;
-      grid-template-columns: 1em 1fr;
-      column-gap: 0.5ch;
-      align-items: center;
-      padding-block: 0.75em;
-      padding-inline: 1em;
-      border: 1px solid transparent;
-      border-radius: var(--rounded-md);
-      box-shadow: 0 12px 20px -8px oklch(from var(--color-darkest) l c h / 10%);
-      background-color: var(--_background-default);
-      color: var(--color-lightest);
-      transition-duration: 300ms;
-      transition-property: background-color;
-
-      @supports (corner-shape: squircle) {
-        border-radius: var(--rounded-lg);
-        corner-shape: squircle;
-      }
-
-      &:focus-visible {
-        background-color: var(--_background-hocus);
-      }
-
-      &:any-link:hover {
-        @media (any-hover) {
-          background-color: var(--_background-hocus);
-        }
-      }
-
-      & > svg {
-        inline-size: 100%;
-      }
-    }
-  }
-}
-
-@layer features {
-  @scope (.site-header.scope) to (.scope) {
-    :scope {
-      container: --site-header / inline-size;
-      border-block-end: 1px solid var(--border-color);
-      background-color: var(--background-lighten);
-    }
-
-    ._full-bleed {
-      --length: 3rlh;
-      --composable-full-bleed--row-gap: 2rlh;
-
-      padding-block: clamp(
-        3rlh,
-        tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
-        6rlh
-      );
-    }
-
-    ._heading {
-      --composable-flow--space: 1rlh;
-    }
-
-    ._title {
-      --fluid-text--min-font-size: 40;
-      --fluid-text--max-font-size: 48;
-
-      font-family: var(--font-montserrat);
-      font-size-adjust: cap-height from-font;
-
-      @media (forced-colors: none) {
-        background-image: linear-gradient(
-          135deg in oklab,
-          oklch(from var(--foreground-primary) calc(l - 0.2) c h),
-          oklch(from var(--foreground-primary) calc(l + 0.2) c h)
-        );
-        background-clip: text;
-        color: transparent;
-      }
-    }
-
-    ._tagline {
-      --fluid-text--min-font-size: 16;
-      --fluid-text--max-font-size: 20;
-
-      letter-spacing: 0.03em;
-    }
-
-    ._actions-list {
-      --composable-cluster--row-gap: 1ex;
-      --composable-cluster--column-gap: 1rem;
-      --composable-cluster--justify-content: center;
-    }
-  }
-
-  @scope (.features-cards.scope) to (.scope) {
-    :scope {
-      --_column-min-width: 25rem;
-
-      container: --features-cards / inline-size;
-    }
-
-    ._main-grid {
-      --composable-grid--row-gap: clamp(
-        16px,
-        tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
-        24px
-      );
-      --composable-grid--column-gap: clamp(
-        16px,
-        tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
-        24px
-      );
-      --composable-grid--column-max-count: 2;
-      --composable-grid--column-min-width: var(--_column-min-width);
-
-      & > * {
-        grid-row: span 2;
-      }
-    }
-
-    ._card {
-      display: block grid;
-      grid-template-columns: subgrid;
-      gap: 1rlh 0;
-      align-content: start;
-      padding-block: 1.5rlh;
-      padding-inline: max(24px, 5%);
-      border: 1px solid var(--border-color);
-      border-radius: var(--rounded-md);
-      background-color: var(--background-lighten);
-
-      @supports (corner-shape: squircle) {
-        border-radius: var(--rounded-lg);
-        corner-shape: squircle;
-      }
-    }
-
-    ._heading {
-      --fluid-text--min-font-size: 16;
-      --fluid-text--max-font-size: 20;
-
-      display: block flex;
-      column-gap: 0.5em;
-      color: var(--foreground-primary);
-    }
-
-    ._description {
-      --composable-flow--space: 0.5lh;
-
-      line-height: var(--leading-relaxed);
-
-      & > p {
-        inline-size: round(down, 100%, 1ic);
-        inline-size: calc-size(auto, round(down, size, 1ic));
-      }
-    }
-  }
-
-  @scope (.installation-method.scope) to (.scope) {
-    :scope {
-      container: --installation-method / inline-size;
-    }
-
-    * {
-      --composable-flow--space: 1rlh;
-    }
-
-    ._heading {
-      --fluid-text--min-font-size: 16;
-      --fluid-text--max-font-size: 20;
-    }
-
-    ._code {
-      display: block grid;
-      padding-block: 1rlh;
-      padding-inline: 3ch;
-      border: 1px solid var(--border-color);
-      border-radius: var(--rounded-md);
-      corner-shape: squircle;
-      background-color: var(--code-background);
-      text-wrap-mode: nowrap;
-    }
-  }
-
-  @scope (.site-footer.scope) to (.scope) {
-    :scope {
-      container: --site-footer / inline-size;
-      border-block-start: 1px solid var(--border-color);
-      background-color: var(--background-lighten);
-      font-family: var(--font-montserrat);
-
-      body & {
-        position: sticky;
-        inset-block-start: 100%;
-      }
-    }
-
-    ._full-bleed {
-      --length: 2rlh;
-      --composable-full-bleed--row-gap: 1.5rlh;
-
-      padding-block: clamp(
-        2rlh,
-        tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
-        3rlh
-      );
-    }
-
-    ._nav-list {
-      --composable-cluster--row-gap: 0.5em;
-      --composable-cluster--column-gap: 1em;
-      --composable-cluster--justify-content: center;
-    }
-  }
-}
-
-@layer pages {
-  @scope (.home-page.scope) to (.scope) {
-    main {
-      --length: 3rlh;
-      --_gutter: clamp(
-        3lh,
-        tan(atan2(var(--length), var(--design-base-min-width))) * 100svi,
-        5rlh
-      );
-
-      --composable-full-bleed--row-gap: var(--_gutter);
-
-      padding-block: var(--_gutter);
+      grid-column: var(--full-bleed--column, --content);
     }
   }
 }
 
 @layer utilities {
-  .-fluid-text {
+  [class*="-fluid-text"] {
     --_u-relative-max-width: var(--fluid-text--relative-max-width, 1280);
     --_u-relative-min-width: var(--fluid-text--relative-min-width, 375);
     --_u-min-font-size: var(--fluid-text--min-font-size, 14);
@@ -560,6 +253,21 @@
         var(--_u-fluid-intercept) / var(--_u-base-font-size) * 1rem,
       var(--_u-max-font-size) / var(--_u-base-font-size) * 1rem
     );
+  }
+
+  .-fluid-text--sm {
+    --fluid-text--min-font-size: 12;
+    --fluid-text--max-font-size: 14;
+  }
+
+  .-fluid-text--md {
+    --fluid-text--min-font-size: 16;
+    --fluid-text--max-font-size: 20;
+  }
+
+  .-fluid-text--lg {
+    --fluid-text--min-font-size: 20;
+    --fluid-text--max-font-size: 24;
   }
 
   .-text-center {

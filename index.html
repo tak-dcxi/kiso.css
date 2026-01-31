@@ -86,25 +86,213 @@
     </noscript>
   </head>
   <body class="scope home-page | -fluid-text">
+    <style>
+      @layer pages {
+        @scope to (.scope) {
+          main {
+            --length: 3rlh;
+            --_gutter: clamp(
+              3lh,
+              tan(atan2(var(--length), var(--design-base-min-width))) * 100svi,
+              5rlh
+            );
+
+            padding-block: var(--_gutter);
+          }
+        }
+      }
+    </style>
     <header class="scope site-header">
-      <div class="_full-bleed | composable-full-bleed">
-        <hgroup class="_heading | composable-flow | -text-center">
-          <h1 class="_title | -fluid-text" lang="en" translate="no">
+      <style>
+        @layer features {
+          @scope to (.scope) {
+            :scope {
+              container: --root / inline-size;
+              background-color: var(--background-lighten);
+            }
+
+            ._body {
+              --length: 3rlh;
+
+              padding-block: clamp(
+                3rlh,
+                tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
+                6rlh
+              );
+              border-block-end: 1px solid var(--border-color);
+            }
+
+            h1 {
+              @media (forced-colors: none) {
+                background-image: linear-gradient(
+                  135deg in oklab,
+                  oklch(from var(--foreground-primary) calc(l - 0.2) c h),
+                  oklch(from var(--foreground-primary) calc(l + 0.2) c h)
+                );
+                background-clip: text;
+                color: transparent;
+              }
+            }
+
+            hgroup p {
+              letter-spacing: 0.03em;
+            }
+          }
+        }
+      </style>
+      <div class="_body | full-bleed" style="--full-bleed--row-gap: 2rlh">
+        <hgroup class="flow | -text-center" style="--flow--space: 1rlh">
+          <h1
+            class="-fluid-text"
+            style="
+              --fluid-text--min-font-size: 40;
+              --fluid-text--max-font-size: 48;
+            "
+            lang="en"
+            translate="no"
+          >
             kiso.css
           </h1>
-          <p class="_tagline | -fluid-text -kerning -auto-phrase">
+          <p class="-fluid-text--md -kerning -auto-phrase">
             日本のWebサイトのための「基礎」となるリセットCSS
           </p>
         </hgroup>
-        <nav class="_actions" aria-label="ダウンロードリンク">
-          <ul class="_actions-list | composable-cluster">
+        <nav aria-label="ダウンロードリンク">
+          <ul
+            class="cluster"
+            style="
+              --cluster--row-gap: 1ex;
+              --cluster--column-gap: 1rem;
+              --cluster--justify: center;
+            "
+          >
             <li class="scope shared-button">
+              <style>
+                @layer shared {
+                  @scope to (.scope) {
+                    :scope {
+                      --_accent-primary: #8474fe;
+                      --_accent-secondary: #4d36d0;
+
+                      display: inline grid;
+                      vertical-align: bottom;
+                    }
+
+                    a {
+                      --_hocus-on: var(--OFF);
+                      --_hocus-off: var(--ON);
+
+                      --gradient-alpha: var(--_hocus-on, 0%)
+                        var(--_hocus-off, 100%);
+
+                      padding-block: 0.75em;
+                      padding-inline: 1em;
+                      border: 1px solid transparent;
+                      border-radius: var(--rounded-md);
+                      box-shadow: 0 12px 20px -8px oklch(from
+                            var(--_accent-secondary) l c h / 10%);
+                      background-color: var(--_accent-secondary);
+                      background-image: linear-gradient(
+                        to bottom,
+                        oklch(
+                          from var(--_accent-primary) l c h /
+                            var(--gradient-alpha)
+                        ),
+                        oklch(
+                          from var(--_accent-secondary) l c h /
+                            var(--gradient-alpha)
+                        )
+                      );
+                      background-origin: border-box;
+                      color: var(--color-lightest);
+                      transition-duration: 300ms;
+                      transition-property: --gradient-alpha;
+
+                      @supports (corner-shape: squircle) {
+                        border-radius: var(--rounded-lg);
+                        corner-shape: squircle;
+                      }
+
+                      &:focus-visible {
+                        --_hocus-on: var(--ON);
+                        --_hocus-off: var(--OFF);
+                      }
+
+                      &:any-link:hover {
+                        @media (any-hover) {
+                          --_hocus-on: var(--ON);
+                          --_hocus-off: var(--OFF);
+                        }
+                      }
+                    }
+                  }
+                }
+              </style>
               <a href="#installation" class="_body">今すぐ使い始める</a>
             </li>
             <li class="scope shared-github-button">
+              <style>
+                @layer shared {
+                  @scope to (.scope) {
+                    :scope {
+                      --_background-default: var(--color-darkest);
+                      --_background-hocus: oklch(
+                        from var(--_background-default) 30% c h
+                      );
+
+                      display: inline grid;
+                      vertical-align: bottom;
+                    }
+
+                    a {
+                      --_hocus-on: var(--OFF);
+                      --_hocus-off: var(--ON);
+
+                      display: inherit;
+                      grid-template-columns: 1em 1fr;
+                      column-gap: 0.5ch;
+                      align-items: center;
+                      padding-block: 0.75em;
+                      padding-inline: 1em;
+                      border: 1px solid transparent;
+                      border-radius: var(--rounded-md);
+                      box-shadow: 0 12px 20px -8px oklch(from
+                            var(--color-darkest) l c h / 10%);
+                      background-color: var(
+                          --_hocus-on,
+                          var(--_background-hocus)
+                        )
+                        var(--_hocus-off, var(--_background-default));
+                      color: var(--color-lightest);
+                      transition-duration: 300ms;
+                      transition-property: background-color;
+
+                      @supports (corner-shape: squircle) {
+                        border-radius: var(--rounded-lg);
+                        corner-shape: squircle;
+                      }
+
+                      &:focus-visible {
+                        --_hocus-on: var(--ON);
+                        --_hocus-off: var(--OFF);
+                      }
+
+                      &:any-link:hover {
+                        @media (any-hover) {
+                          --_hocus-on: var(--ON);
+                          --_hocus-off: var(--OFF);
+                        }
+                      }
+
+                      & > svg {
+                        inline-size: 100%;
+                      }
+                    }
+                  }
+                }
+              </style>
               <a
                 href="https://github.com/tak-dcxi/kiso.css/"
-                class="_body"
                 lang="en"
                 translate="no"
               >
@@ -127,19 +315,100 @@
       </div>
     </header>
 
-    <main class="_full-bleed | composable-full-bleed">
+    <main class="full-bleed" style="--full-bleed--row-gap: var(--_gutter)">
       <section id="features" class="scope shared-section">
-        <div class="composable-flow">
+        <div class="flow" style="--flow--space: 2rlh">
           <div class="scope shared-heading">
-            <h2 class="_body | -fluid-text -text-center">特徴</h2>
+            <style>
+              @scope to (.scope) {
+                h2 {
+                  &::after {
+                    content: "";
+                    display: block flow;
+                    inline-size: min(2em, 100%);
+                    margin-block-start: 0.75rlh;
+                    margin-inline: auto;
+                    border-block-end: 4px solid;
+                  }
+                }
+              }
+            </style>
+            <h2 class="-fluid-text--lg -text-center">特徴</h2>
           </div>
           <div class="scope features-cards">
-            <div class="_main-grid | composable-grid">
+            <style>
+              @layer features {
+                @scope to (.scope) {
+                  :scope {
+                    --_column-min-width: 25rem;
+
+                    container: --root / inline-size;
+                  }
+
+                  ._body {
+                    & > * {
+                      grid-row: span 2;
+                    }
+                  }
+
+                  ._card {
+                    display: block grid;
+                    grid-template-columns: subgrid;
+                    gap: 1rlh 0;
+                    align-content: start;
+                    padding-block: 1.5rlh;
+                    padding-inline: max(24px, 5%);
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--rounded-md);
+                    background-color: var(--background-lighten);
+
+                    @supports (corner-shape: squircle) {
+                      border-radius: var(--rounded-lg);
+                      corner-shape: squircle;
+                    }
+                  }
+
+                  ._heading {
+                    display: block flex;
+                    column-gap: 0.5em;
+                    color: var(--foreground-primary);
+                  }
+
+                  ._description {
+                    line-height: var(--leading-relaxed);
+
+                    & > p {
+                      inline-size: calc-size(auto, round(down, size, 1ic));
+                    }
+                  }
+                }
+              }
+            </style>
+            <div
+              class="_body | grid"
+              style="
+                --grid--row-gap: clamp(
+                  16px,
+                  tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
+                  24px
+                );
+                --grid--column-gap: clamp(
+                  16px,
+                  tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
+                  24px
+                );
+                --grid--column-max-count: 2;
+                --grid--column-min-width: var(--_column-min-width);
+              "
+            >
               <section class="_card">
-                <h3 class="_heading | -fluid-text">
+                <h3 class="_heading | -fluid-text--md">
                   <span aria-hidden="true">🇯🇵</span>日本向けの設計
                 </h3>
-                <div class="_description | composable-flow | -hanging">
+                <div
+                  class="_description | flow | -hanging"
+                  style="--flow--space: 0.5lh"
+                >
                   <p>
                     kiso.cssの最大の特徴は、日本語環境での使用を前提とした設計にあります。
                   </p>
@@ -152,10 +421,13 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text">
+                <h3 class="_heading | -fluid-text--md">
                   <span aria-hidden="true">🎯</span>上書きが容易
                 </h3>
-                <div class="_description | composable-flow | -hanging">
+                <div
+                  class="_description | flow | -hanging"
+                  style="--flow--space: 0.5lh"
+                >
                   <p>
                     kiso.cssでは、疑似要素や<code>!important</code>が明示的に指定されたスタイルを除き、すべてのセレクタを<code>:where()</code>擬似クラスで囲むことで詳細度を0にしています。
                   </p>
@@ -165,10 +437,13 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text">
+                <h3 class="_heading | -fluid-text--md">
                   <span aria-hidden="true">♿</span>アクセシビリティ重視
                 </h3>
-                <div class="_description | composable-flow | -hanging">
+                <div
+                  class="_description | flow | -hanging"
+                  style="--flow--space: 0.5lh"
+                >
                   <p>
                     リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
                   </p>
@@ -178,10 +453,13 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text">
+                <h3 class="_heading | -fluid-text--md">
                   <span aria-hidden="true">🚀</span>最新のHTML/CSSをサポート
                 </h3>
-                <div class="_description | composable-flow | -hanging">
+                <div
+                  class="_description | flow | -hanging"
+                  style="--flow--space: 0.5lh"
+                >
                   <p>
                     <code>text-wrap</code
                     >、<code>text-autospace</code>、<code>text-spacing-trim</code>、<code
@@ -197,10 +475,13 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text">
+                <h3 class="_heading | -fluid-text--md">
                   <span aria-hidden="true">👀</span>厳選されたリセット
                 </h3>
-                <div class="_description | composable-flow | -hanging">
+                <div
+                  class="_description | flow | -hanging"
+                  style="--flow--space: 0.5lh"
+                >
                   <p>
                     kiso.cssは闇雲にリセットするのではなく、リセットするスタイルを厳選しています。
                   </p>
@@ -213,10 +494,13 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text">
+                <h3 class="_heading | -fluid-text--md">
                   <span aria-hidden="true">🔧</span>簡単導入
                 </h3>
-                <div class="_description | composable-flow | -hanging">
+                <div
+                  class="_description | flow | -hanging"
+                  style="--flow--space: 0.5lh"
+                >
                   <p>
                     npm、CDN、直接ダウンロードに対応。1行のインポートですぐに使用開始できます。
                   </p>
@@ -228,34 +512,108 @@
       </section>
 
       <section id="installation" class="scope shared-section">
-        <div class="composable-flow">
+        <div class="flow" style="--flow--space: 2rlh">
           <div class="scope shared-heading">
-            <h2 class="_body | -fluid-text -text-center">インストール</h2>
+            <style>
+              @scope to (.scope) {
+                h2 {
+                  &::after {
+                    content: "";
+                    display: block flow;
+                    inline-size: min(2em, 100%);
+                    margin-block-start: 0.75rlh;
+                    margin-inline: auto;
+                    border-block-end: 4px solid;
+                  }
+                }
+              }
+            </style>
+            <h2 class="-fluid-text--lg -text-center">インストール</h2>
           </div>
 
           <section class="scope installation-method">
-            <div class="composable-flow">
-              <h3 class="_heading | -fluid-text">npm / yarn</h3>
-              <pre class="_code">
+            <style>
+              @layer features {
+                @scope to (.scope) {
+                  :scope {
+                    container: --root / inline-size;
+                  }
+
+                  pre {
+                    display: block grid;
+                    padding-block: 1rlh;
+                    padding-inline: 3ch;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--rounded-md);
+                    corner-shape: squircle;
+                    background-color: var(--code-background);
+                    text-wrap-mode: nowrap;
+                  }
+                }
+              }
+            </style>
+            <div class="flow" style="--flow--space: 1rlh">
+              <h3 class="-fluid-text--md">npm / yarn</h3>
+              <pre>
                   <code>npm install kiso.css</code>
                   <code># or</code>
                   <code>yarn add kiso.css</code>
-                </pre>
+              </pre>
             </div>
           </section>
 
           <section class="scope installation-method">
-            <div class="composable-flow">
-              <h3 class="_heading | -fluid-text">CDN</h3>
-              <pre class="_code">
+            <style>
+              @layer features {
+                @scope to (.scope) {
+                  :scope {
+                    container: --root / inline-size;
+                  }
+
+                  pre {
+                    display: block grid;
+                    padding-block: 1rlh;
+                    padding-inline: 3ch;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--rounded-md);
+                    corner-shape: squircle;
+                    background-color: var(--code-background);
+                    text-wrap-mode: nowrap;
+                  }
+                }
+              }
+            </style>
+            <div class="flow" style="--flow--space: 1rlh">
+              <h3 class="-fluid-text--md">CDN</h3>
+              <pre>
                   <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
-                </pre>
+              </pre>
             </div>
           </section>
 
           <section class="scope installation-method">
-            <div class="composable-flow">
-              <h3 class="_heading | -fluid-text">ダウンロード</h3>
+            <style>
+              @layer features {
+                @scope to (.scope) {
+                  :scope {
+                    container: --root / inline-size;
+                  }
+
+                  pre {
+                    display: block grid;
+                    padding-block: 1rlh;
+                    padding-inline: 3ch;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--rounded-md);
+                    corner-shape: squircle;
+                    background-color: var(--code-background);
+                    text-wrap-mode: nowrap;
+                  }
+                }
+              }
+            </style>
+            <div class="flow" style="--flow--space: 1rlh">
+              <h3 class="-fluid-text--md">ダウンロード</h3>
               <p class="-hanging">
                 <a
                   class="-text-link"
@@ -270,8 +628,43 @@
     </main>
 
     <footer class="scope site-footer">
-      <div class="_full-bleed | composable-full-bleed">
-        <ul class="_nav-list | composable-cluster" lang="en" translate="no">
+      <style>
+        @layer features {
+          @scope to (.scope) {
+            :scope {
+              container: --root / inline-size;
+              background-color: var(--background-lighten);
+
+              :root & {
+                position: sticky;
+                inset-block-start: 100%;
+              }
+            }
+
+            ._body {
+              --length: 2rlh;
+
+              padding-block: clamp(
+                2rlh,
+                tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
+                3rlh
+              );
+              border-block-start: 1px solid var(--border-color);
+            }
+          }
+        }
+      </style>
+      <div class="_body | full-bleed" style="--full-bleed--row-gap: 1.5rlh">
+        <ul
+          class="cluster"
+          style="
+            --cluster--row-gap: 0.5em;
+            --cluster--column-gap: 1em;
+            --cluster--justify: center;
+          "
+          lang="en"
+          translate="no"
+        >
           <li>
             <a
               class="-text-link"
@@ -299,8 +692,8 @@
             >
           </li>
         </ul>
-        <p class="_copyright | -text-center" lang="en" translate="no">
-          <small>
+        <p class="-text-center" lang="en" translate="no">
+          <small class="-fluid-text--sm">
             © 2026 TAK (
             <a
               class="-text-link"
