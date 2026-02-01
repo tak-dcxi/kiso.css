@@ -1,29 +1,9 @@
-@layer reset, base, compositions, shared, features, pages, utilities;
+@layer tokens, reset, base, compositions, shared, features, pages, utilities;
 
 @import url("../kiso.css") layer(reset);
 
-@property --gradient-alpha {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 100%;
-}
-
-@property --length {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 0;
-}
-
-@layer base {
-  *,
-  ::before,
-  ::after {
-    min-inline-size: 0;
-  }
-
+@layer tokens {
   :root {
-    --ON: initial;
-    --OFF: ;
     --color-lightest: #f7f7f7;
     --color-light-gray: #f3f4f6;
     --color-shaded-gray: #e5e7eb;
@@ -69,8 +49,21 @@
     --leading-relaxed: 1.75;
     --rounded-md: 12px;
     --rounded-lg: 32px;
-    --design-base-max-width: 1280px;
-    --design-base-min-width: 375px;
+    --design-base-max-width: 1280;
+    --design-base-min-width: 375;
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    min-inline-size: 0;
+  }
+
+  :root {
+    --ON: initial;
+    --OFF: ;
 
     background-color: var(--background-base);
     color: var(--foreground-base);
@@ -133,6 +126,18 @@
       Canvas !important;
     outline: var(--_b-ring-thickness) solid CanvasText;
     outline-offset: var(--_b-ring-offset);
+  }
+
+  @property --gradient-alpha {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 100%;
+  }
+
+  @property --length {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 0;
   }
 }
 
@@ -226,6 +231,9 @@
 }
 
 @layer utilities {
+  /* ======================================================
+  //  MARK: typography
+  // ====================================================== */
   [class*="-fluid-text"] {
     --_u-relative-max-width: var(--fluid-text--relative-max-width, 1280);
     --_u-relative-min-width: var(--fluid-text--relative-min-width, 375);
@@ -255,19 +263,39 @@
     );
   }
 
-  .-fluid-text--sm {
+  .-fluid-text-sm {
     --fluid-text--min-font-size: 12;
     --fluid-text--max-font-size: 14;
   }
 
-  .-fluid-text--md {
+  .-fluid-text-md {
     --fluid-text--min-font-size: 16;
     --fluid-text--max-font-size: 20;
   }
 
-  .-fluid-text--lg {
+  .-fluid-text-lg {
     --fluid-text--min-font-size: 20;
     --fluid-text--max-font-size: 24;
+  }
+
+  .-leading-tight {
+    line-height: var(--leading-tight);
+  }
+
+  .-leading-normal {
+    line-height: var(--leading-normal);
+  }
+
+  .-leading-relaxed {
+    line-height: var(--leading-relaxed);
+  }
+
+  .-text-primary {
+    color: var(--foreground-primary);
+  }
+
+  .-text-secondary {
+    color: var(--foreground-secondary);
   }
 
   .-text-center {
@@ -347,6 +375,20 @@
 
     &:lang(ja) {
       display: inline flow-root;
+    }
+  }
+
+  .-bg-clip-text {
+    @media (forced-colors: none) {
+      background-image: var(
+        --bg-clip-text--image,
+        conic-gradient(var(--foreground-primary) 0 0)
+      );
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-clip: text;
+      color: transparent;
     }
   }
 }

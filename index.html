@@ -93,7 +93,9 @@
             --length: 3rlh;
             --_gutter: clamp(
               3lh,
-              tan(atan2(var(--length), var(--design-base-min-width))) * 100svi,
+              tan(
+                  atan2(var(--length), calc(var(--design-base-min-width) * 1px))
+                ) * 100svi,
               5rlh
             );
 
@@ -102,12 +104,13 @@
         }
       }
     </style>
+
     <header class="scope site-header">
       <style>
         @layer features {
           @scope to (.scope) {
             :scope {
-              container: --root / inline-size;
+              container: --scope / inline-size;
               background-color: var(--background-lighten);
             }
 
@@ -116,22 +119,15 @@
 
               padding-block: clamp(
                 3rlh,
-                tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
+                tan(
+                    atan2(
+                      var(--length),
+                      calc(var(--design-base-min-width) * 1px)
+                    )
+                  ) * 100cqi,
                 6rlh
               );
               border-block-end: 1px solid var(--border-color);
-            }
-
-            h1 {
-              @media (forced-colors: none) {
-                background-image: linear-gradient(
-                  135deg in oklab,
-                  oklch(from var(--foreground-primary) calc(l - 0.2) c h),
-                  oklch(from var(--foreground-primary) calc(l + 0.2) c h)
-                );
-                background-clip: text;
-                color: transparent;
-              }
             }
 
             hgroup p {
@@ -143,17 +139,22 @@
       <div class="_body | full-bleed" style="--full-bleed--row-gap: 2rlh">
         <hgroup class="flow | -text-center" style="--flow--space: 1rlh">
           <h1
-            class="-fluid-text"
+            class="-fluid-text -bg-clip-text"
             style="
               --fluid-text--min-font-size: 40;
               --fluid-text--max-font-size: 48;
+              --bg-clip-text--image: linear-gradient(
+                135deg in oklab,
+                oklch(from var(--foreground-primary) 50% c h),
+                oklch(from var(--foreground-primary) 100% c h)
+              );
             "
             lang="en"
             translate="no"
           >
             kiso.css
           </h1>
-          <p class="-fluid-text--md -kerning -auto-phrase">
+          <p class="-fluid-text-md -kerning -auto-phrase">
             日本のWebサイトのための「基礎」となるリセットCSS
           </p>
         </hgroup>
@@ -297,8 +298,6 @@
                 translate="no"
               >
                 <svg
-                  width="16"
-                  height="16"
                   viewBox="0 0 496 512"
                   aria-hidden="true"
                   fill="currentcolor"
@@ -333,7 +332,7 @@
                 }
               }
             </style>
-            <h2 class="-fluid-text--lg -text-center">特徴</h2>
+            <h2 class="-fluid-text-lg -text-center">特徴</h2>
           </div>
           <div class="scope features-cards">
             <style>
@@ -342,7 +341,7 @@
                   :scope {
                     --_column-min-width: 25rem;
 
-                    container: --root / inline-size;
+                    container: --scope / inline-size;
                   }
 
                   ._body {
@@ -371,12 +370,9 @@
                   ._heading {
                     display: block flex;
                     column-gap: 0.5em;
-                    color: var(--foreground-primary);
                   }
 
                   ._description {
-                    line-height: var(--leading-relaxed);
-
                     & > p {
                       inline-size: calc-size(auto, round(down, size, 1ic));
                     }
@@ -389,12 +385,12 @@
               style="
                 --grid--row-gap: clamp(
                   16px,
-                  tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
+                  16 / var(--design-base-min-width) * 100cqi,
                   24px
                 );
                 --grid--column-gap: clamp(
                   16px,
-                  tan(atan2(16px, var(--design-base-min-width))) * 100cqi,
+                  16 / var(--design-base-min-width) * 100cqi,
                   24px
                 );
                 --grid--column-max-count: 2;
@@ -402,12 +398,12 @@
               "
             >
               <section class="_card">
-                <h3 class="_heading | -fluid-text--md">
+                <h3 class="_heading | -text-primary -fluid-text-md">
                   <span aria-hidden="true">🇯🇵</span>日本向けの設計
                 </h3>
                 <div
-                  class="_description | flow | -hanging"
-                  style="--flow--space: 0.5lh"
+                  class="_description | flow | -leading-relaxed -hanging"
+                  style="--flow--space: 0.5rlh"
                 >
                   <p>
                     kiso.cssの最大の特徴は、日本語環境での使用を前提とした設計にあります。
@@ -421,12 +417,12 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text--md">
+                <h3 class="_heading | -text-primary -fluid-text-md">
                   <span aria-hidden="true">🎯</span>上書きが容易
                 </h3>
                 <div
-                  class="_description | flow | -hanging"
-                  style="--flow--space: 0.5lh"
+                  class="_description | flow | -leading-relaxed -hanging"
+                  style="--flow--space: 0.5rlh"
                 >
                   <p>
                     kiso.cssでは、疑似要素や<code>!important</code>が明示的に指定されたスタイルを除き、すべてのセレクタを<code>:where()</code>擬似クラスで囲むことで詳細度を0にしています。
@@ -437,12 +433,12 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text--md">
+                <h3 class="_heading | -text-primary -fluid-text-md">
                   <span aria-hidden="true">♿</span>アクセシビリティ重視
                 </h3>
                 <div
-                  class="_description | flow | -hanging"
-                  style="--flow--space: 0.5lh"
+                  class="_description | flow | -leading-relaxed -hanging"
+                  style="--flow--space: 0.5rlh"
                 >
                   <p>
                     リセットCSSでありがちなキーボード操作時のフォーカスリングの消失を防止します。また、強制カラーモードをサポートしたアクセシブルな実装を行っています。
@@ -453,12 +449,12 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text--md">
+                <h3 class="_heading | -text-primary -fluid-text-md">
                   <span aria-hidden="true">🚀</span>最新のHTML/CSSをサポート
                 </h3>
                 <div
-                  class="_description | flow | -hanging"
-                  style="--flow--space: 0.5lh"
+                  class="_description | flow | -leading-relaxed -hanging"
+                  style="--flow--space: 0.5rlh"
                 >
                   <p>
                     <code>text-wrap</code
@@ -475,12 +471,12 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text--md">
+                <h3 class="_heading | -text-primary -fluid-text-md">
                   <span aria-hidden="true">👀</span>厳選されたリセット
                 </h3>
                 <div
-                  class="_description | flow | -hanging"
-                  style="--flow--space: 0.5lh"
+                  class="_description | flow | -leading-relaxed -hanging"
+                  style="--flow--space: 0.5rlh"
                 >
                   <p>
                     kiso.cssは闇雲にリセットするのではなく、リセットするスタイルを厳選しています。
@@ -494,12 +490,12 @@
                 </div>
               </section>
               <section class="_card">
-                <h3 class="_heading | -fluid-text--md">
+                <h3 class="_heading | -text-primary -fluid-text-md">
                   <span aria-hidden="true">🔧</span>簡単導入
                 </h3>
                 <div
-                  class="_description | flow | -hanging"
-                  style="--flow--space: 0.5lh"
+                  class="_description | flow | -leading-relaxed -hanging"
+                  style="--flow--space: 0.5rlh"
                 >
                   <p>
                     npm、CDN、直接ダウンロードに対応。1行のインポートですぐに使用開始できます。
@@ -511,119 +507,99 @@
         </div>
       </section>
 
-      <section id="installation" class="scope shared-section">
-        <div class="flow" style="--flow--space: 2rlh">
-          <div class="scope shared-heading">
-            <style>
-              @scope to (.scope) {
-                h2 {
-                  &::after {
-                    content: "";
-                    display: block flow;
-                    inline-size: min(2em, 100%);
-                    margin-block-start: 0.75rlh;
-                    margin-inline: auto;
-                    border-block-end: 4px solid;
-                  }
+      <section id="installation" class="flow" style="--flow--space: 2rlh">
+        <div class="scope shared-heading">
+          <style>
+            @scope to (.scope) {
+              h2 {
+                &::after {
+                  content: "";
+                  display: block flow;
+                  inline-size: min(2em, 100%);
+                  margin-block-start: 0.75rlh;
+                  margin-inline: auto;
+                  border-block-end: 4px solid;
                 }
               }
-            </style>
-            <h2 class="-fluid-text--lg -text-center">インストール</h2>
-          </div>
-
-          <section class="scope installation-method">
-            <style>
-              @layer features {
-                @scope to (.scope) {
-                  :scope {
-                    container: --root / inline-size;
-                  }
-
-                  pre {
-                    display: block grid;
-                    padding-block: 1rlh;
-                    padding-inline: 3ch;
-                    border: 1px solid var(--border-color);
-                    border-radius: var(--rounded-md);
-                    corner-shape: squircle;
-                    background-color: var(--code-background);
-                    text-wrap-mode: nowrap;
-                  }
-                }
-              }
-            </style>
-            <div class="flow" style="--flow--space: 1rlh">
-              <h3 class="-fluid-text--md">npm / yarn</h3>
-              <pre>
-                  <code>npm install kiso.css</code>
-                  <code># or</code>
-                  <code>yarn add kiso.css</code>
-              </pre>
-            </div>
-          </section>
-
-          <section class="scope installation-method">
-            <style>
-              @layer features {
-                @scope to (.scope) {
-                  :scope {
-                    container: --root / inline-size;
-                  }
-
-                  pre {
-                    display: block grid;
-                    padding-block: 1rlh;
-                    padding-inline: 3ch;
-                    border: 1px solid var(--border-color);
-                    border-radius: var(--rounded-md);
-                    corner-shape: squircle;
-                    background-color: var(--code-background);
-                    text-wrap-mode: nowrap;
-                  }
-                }
-              }
-            </style>
-            <div class="flow" style="--flow--space: 1rlh">
-              <h3 class="-fluid-text--md">CDN</h3>
-              <pre>
-                  <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
-              </pre>
-            </div>
-          </section>
-
-          <section class="scope installation-method">
-            <style>
-              @layer features {
-                @scope to (.scope) {
-                  :scope {
-                    container: --root / inline-size;
-                  }
-
-                  pre {
-                    display: block grid;
-                    padding-block: 1rlh;
-                    padding-inline: 3ch;
-                    border: 1px solid var(--border-color);
-                    border-radius: var(--rounded-md);
-                    corner-shape: squircle;
-                    background-color: var(--code-background);
-                    text-wrap-mode: nowrap;
-                  }
-                }
-              }
-            </style>
-            <div class="flow" style="--flow--space: 1rlh">
-              <h3 class="-fluid-text--md">ダウンロード</h3>
-              <p class="-hanging">
-                <a
-                  class="-text-link"
-                  href="https://tak-dcxi.github.io/kiso.css/kiso.css"
-                  >GitHub</a
-                >から直接ダウンロードして、プロジェクトに含めることもできます。
-              </p>
-            </div>
-          </section>
+            }
+          </style>
+          <h2 class="-fluid-text-lg -text-center">インストール</h2>
         </div>
+
+        <section>
+          <div class="flow" style="--flow--space: 1rlh">
+            <h3 class="-fluid-text-md">npm / yarn</h3>
+            <div class="scope shared-code">
+              <style>
+                @layer shared {
+                  @scope to (.scope) {
+                    pre {
+                      display: block grid;
+                      padding-block: 1rlh;
+                      padding-inline: 3ch;
+                      border: 1px solid var(--border-color);
+                      border-radius: var(--rounded-md);
+                      corner-shape: squircle;
+                      background-color: var(--code-background);
+                    }
+
+                    code {
+                      inline-size: max-content;
+                    }
+                  }
+                }
+              </style>
+              <pre>
+                <code>npm install kiso.css</code>
+                <code># or</code>
+                <code>yarn add kiso.css</code>
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="flow" style="--flow--space: 1rlh">
+            <h3 class="-fluid-text-md">CDN</h3>
+            <div class="scope shared-code">
+              <style>
+                @layer shared {
+                  @scope to (.scope) {
+                    pre {
+                      display: block grid;
+                      padding-block: 1rlh;
+                      padding-inline: 3ch;
+                      border: 1px solid var(--border-color);
+                      border-radius: var(--rounded-md);
+                      corner-shape: squircle;
+                      background-color: var(--code-background);
+                    }
+
+                    code {
+                      inline-size: max-content;
+                    }
+                  }
+                }
+              </style>
+              <pre>
+                <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="flow" style="--flow--space: 1rlh">
+            <h3 class="-fluid-text-md">ダウンロード</h3>
+            <p class="-hanging">
+              <a
+                class="-text-link"
+                href="https://tak-dcxi.github.io/kiso.css/kiso.css"
+                >GitHub</a
+              >から直接ダウンロードして、プロジェクトに含めることもできます。
+            </p>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -632,7 +608,7 @@
         @layer features {
           @scope to (.scope) {
             :scope {
-              container: --root / inline-size;
+              container: --scope / inline-size;
               background-color: var(--background-lighten);
 
               :root & {
@@ -646,7 +622,12 @@
 
               padding-block: clamp(
                 2rlh,
-                tan(atan2(var(--length), var(--design-base-min-width))) * 100cqi,
+                tan(
+                    atan2(
+                      var(--length),
+                      calc(var(--design-base-min-width) * 1px)
+                    )
+                  ) * 100cqi,
                 3rlh
               );
               border-block-start: 1px solid var(--border-color);
@@ -693,7 +674,7 @@
           </li>
         </ul>
         <p class="-text-center" lang="en" translate="no">
-          <small class="-fluid-text--sm">
+          <small class="-fluid-text-sm">
             © 2026 TAK (
             <a
               class="-text-link"
