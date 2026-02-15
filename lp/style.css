@@ -133,12 +133,6 @@
     inherits: true;
     initial-value: 100%;
   }
-
-  @property --length {
-    syntax: "<length>";
-    inherits: true;
-    initial-value: 0;
-  }
 }
 
 @layer compositions {
@@ -199,7 +193,6 @@
     );
     --_c-gutter: var(--full-bleed--gutter, max(16px, 5%));
     --_c-row-gap: var(--full-bleed--row-gap, 0px);
-
     --_c-breakout-area-width: calc(
       (var(--_c-breakout-max-width) - var(--_c-content-max-width)) / 2
     );
@@ -226,6 +219,130 @@
 
     & > * {
       grid-column: var(--full-bleed--column, --content);
+    }
+  }
+}
+
+@layer shared {
+  @scope (.scope.shared-button) to (.scope) {
+    :scope {
+      --_accent-primary: #8474fe;
+      --_accent-secondary: #4d36d0;
+      --_hocus-on: var(--OFF);
+      --_hocus-off: var(--ON);
+
+      --gradient-alpha: var(--_hocus-on, 0%) var(--_hocus-off, 100%);
+
+      display: inline flow-root;
+      padding-block: 0.75em;
+      padding-inline: 1em;
+      border: 1px solid transparent;
+      border-radius: var(--rounded-md);
+      box-shadow: 0 12px 20px -8px oklch(from var(--_accent-secondary) l c h /
+            10%);
+      background-color: var(--_accent-secondary);
+      background-image: linear-gradient(
+        to bottom,
+        oklch(from var(--_accent-primary) l c h / var(--gradient-alpha)),
+        oklch(from var(--_accent-secondary) l c h / var(--gradient-alpha))
+      );
+      background-origin: border-box;
+      color: var(--color-lightest);
+      vertical-align: bottom;
+      transition-duration: 300ms;
+      transition-property: --gradient-alpha;
+
+      @supports (corner-shape: squircle) {
+        border-radius: var(--rounded-lg);
+        corner-shape: squircle;
+      }
+
+      &:focus-visible {
+        --_hocus-on: var(--ON);
+        --_hocus-off: var(--OFF);
+      }
+
+      &:any-link:hover {
+        @media (any-hover) {
+          --_hocus-on: var(--ON);
+          --_hocus-off: var(--OFF);
+        }
+      }
+    }
+  }
+
+  @scope (.scope.shared-heading) to (.scope) {
+    :scope {
+      &::after {
+        content: "";
+        display: block flow;
+        inline-size: min(2em, 100%);
+        margin-block-start: 0.5rlh;
+        margin-inline: auto;
+        border-block-end: 4px solid;
+      }
+    }
+  }
+
+  @scope (.scope.shared-code) to (.scope) {
+    :scope {
+      display: block grid;
+      padding-block: 1rlh;
+      padding-inline: 3ch;
+      border: 1px solid var(--border-color);
+      border-radius: var(--rounded-md);
+      corner-shape: squircle;
+      background-color: var(--code-background);
+    }
+
+    code {
+      min-inline-size: max-content;
+    }
+  }
+
+  @scope (.scope.shared-github-button) to (.scope) {
+    :scope {
+      --_background-default: var(--color-darkest);
+      --_background-hocus: oklch(from var(--_background-default) 30% c h);
+      --_hocus-on: var(--OFF);
+      --_hocus-off: var(--ON);
+
+      display: inline grid;
+      grid-template-columns: 1em 1fr;
+      column-gap: 0.5ch;
+      align-items: center;
+      padding-block: 0.75em;
+      padding-inline: 1em;
+      border: 1px solid transparent;
+      border-radius: var(--rounded-md);
+      box-shadow: 0 12px 20px -8px oklch(from var(--color-darkest) l c h / 10%);
+      background-color: var(--_hocus-on, var(--_background-hocus))
+        var(--_hocus-off, var(--_background-default));
+      color: var(--color-lightest);
+      vertical-align: bottom;
+      transition-duration: 300ms;
+      transition-property: background-color;
+
+      @supports (corner-shape: squircle) {
+        border-radius: var(--rounded-lg);
+        corner-shape: squircle;
+      }
+
+      &:focus-visible {
+        --_hocus-on: var(--ON);
+        --_hocus-off: var(--OFF);
+      }
+
+      &:any-link:hover {
+        @media (any-hover) {
+          --_hocus-on: var(--ON);
+          --_hocus-off: var(--OFF);
+        }
+      }
+
+      & > svg {
+        inline-size: 100%;
+      }
     }
   }
 }
@@ -375,20 +492,6 @@
 
     &:lang(ja) {
       display: inline flow-root;
-    }
-  }
-
-  .-bg-clip-text {
-    @media (forced-colors: none) {
-      background-image: var(
-        --bg-clip-text--image,
-        conic-gradient(var(--foreground-primary) 0 0)
-      );
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-clip: text;
-      color: transparent;
     }
   }
 }

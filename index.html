@@ -89,12 +89,21 @@
     <style>
       @layer pages {
         @scope to (.scope) {
+          @property --home-page--padding-block-min {
+            syntax: "<length>";
+            inherits: false;
+            initial-value: 0;
+          }
+
           main {
-            --length: 3rlh;
+            --home-page--padding-block-min: 3rlh;
             --_gutter: clamp(
-              3lh,
+              var(--home-page--padding-block-min),
               tan(
-                  atan2(var(--length), calc(var(--design-base-min-width) * 1px))
+                  atan2(
+                    var(--home-page--padding-block-min),
+                    var(--design-base-min-width) * 1px
+                  )
                 ) * 100svi,
               5rlh
             );
@@ -114,15 +123,21 @@
               background-color: var(--background-lighten);
             }
 
+            @property --site-header--padding-block-min {
+              syntax: "<length>";
+              inherits: false;
+              initial-value: 0;
+            }
+
             ._body {
-              --length: 3rlh;
+              --site-header--padding-block-min: 3rlh;
 
               padding-block: clamp(
-                3rlh,
+                var(--site-header--padding-block-min),
                 tan(
                     atan2(
-                      var(--length),
-                      calc(var(--design-base-min-width) * 1px)
+                      var(--site-header--padding-block-min),
+                      var(--design-base-min-width) * 1px
                     )
                   ) * 100cqi,
                 6rlh
@@ -130,8 +145,22 @@
               border-block-end: 1px solid var(--border-color);
             }
 
-            hgroup p {
-              letter-spacing: 0.03em;
+            @scope (hgroup) {
+              h1 {
+                @media (forced-colors: none) {
+                  background-image: linear-gradient(
+                    135deg in oklab,
+                    oklch(from var(--foreground-primary) 50% c h),
+                    oklch(from var(--foreground-primary) 100% c h)
+                  );
+                  background-clip: text;
+                  color: transparent;
+                }
+              }
+
+              p {
+                letter-spacing: 0.03em;
+              }
             }
           }
         }
@@ -143,11 +172,6 @@
             style="
               --fluid-text--min-font-size: 40;
               --fluid-text--max-font-size: 48;
-              --bg-clip-text--image: linear-gradient(
-                135deg in oklab,
-                oklch(from var(--foreground-primary) 50% c h),
-                oklch(from var(--foreground-primary) 100% c h)
-              );
             "
             lang="en"
             translate="no"
@@ -167,132 +191,14 @@
               --cluster--justify: center;
             "
           >
-            <li class="scope shared-button">
-              <style>
-                @layer shared {
-                  @scope to (.scope) {
-                    :scope {
-                      --_accent-primary: #8474fe;
-                      --_accent-secondary: #4d36d0;
-
-                      display: inline grid;
-                      vertical-align: bottom;
-                    }
-
-                    a {
-                      --_hocus-on: var(--OFF);
-                      --_hocus-off: var(--ON);
-
-                      --gradient-alpha: var(--_hocus-on, 0%)
-                        var(--_hocus-off, 100%);
-
-                      padding-block: 0.75em;
-                      padding-inline: 1em;
-                      border: 1px solid transparent;
-                      border-radius: var(--rounded-md);
-                      box-shadow: 0 12px 20px -8px oklch(from
-                            var(--_accent-secondary) l c h / 10%);
-                      background-color: var(--_accent-secondary);
-                      background-image: linear-gradient(
-                        to bottom,
-                        oklch(
-                          from var(--_accent-primary) l c h /
-                            var(--gradient-alpha)
-                        ),
-                        oklch(
-                          from var(--_accent-secondary) l c h /
-                            var(--gradient-alpha)
-                        )
-                      );
-                      background-origin: border-box;
-                      color: var(--color-lightest);
-                      transition-duration: 300ms;
-                      transition-property: --gradient-alpha;
-
-                      @supports (corner-shape: squircle) {
-                        border-radius: var(--rounded-lg);
-                        corner-shape: squircle;
-                      }
-
-                      &:focus-visible {
-                        --_hocus-on: var(--ON);
-                        --_hocus-off: var(--OFF);
-                      }
-
-                      &:any-link:hover {
-                        @media (any-hover) {
-                          --_hocus-on: var(--ON);
-                          --_hocus-off: var(--OFF);
-                        }
-                      }
-                    }
-                  }
-                }
-              </style>
-              <a href="#installation" class="_body">今すぐ使い始める</a>
+            <li>
+              <a class="scope shared-button" href="#installation">
+                今すぐ使い始める
+              </a>
             </li>
-            <li class="scope shared-github-button">
-              <style>
-                @layer shared {
-                  @scope to (.scope) {
-                    :scope {
-                      --_background-default: var(--color-darkest);
-                      --_background-hocus: oklch(
-                        from var(--_background-default) 30% c h
-                      );
-
-                      display: inline grid;
-                      vertical-align: bottom;
-                    }
-
-                    a {
-                      --_hocus-on: var(--OFF);
-                      --_hocus-off: var(--ON);
-
-                      display: inherit;
-                      grid-template-columns: 1em 1fr;
-                      column-gap: 0.5ch;
-                      align-items: center;
-                      padding-block: 0.75em;
-                      padding-inline: 1em;
-                      border: 1px solid transparent;
-                      border-radius: var(--rounded-md);
-                      box-shadow: 0 12px 20px -8px oklch(from
-                            var(--color-darkest) l c h / 10%);
-                      background-color: var(
-                          --_hocus-on,
-                          var(--_background-hocus)
-                        )
-                        var(--_hocus-off, var(--_background-default));
-                      color: var(--color-lightest);
-                      transition-duration: 300ms;
-                      transition-property: background-color;
-
-                      @supports (corner-shape: squircle) {
-                        border-radius: var(--rounded-lg);
-                        corner-shape: squircle;
-                      }
-
-                      &:focus-visible {
-                        --_hocus-on: var(--ON);
-                        --_hocus-off: var(--OFF);
-                      }
-
-                      &:any-link:hover {
-                        @media (any-hover) {
-                          --_hocus-on: var(--ON);
-                          --_hocus-off: var(--OFF);
-                        }
-                      }
-
-                      & > svg {
-                        inline-size: 100%;
-                      }
-                    }
-                  }
-                }
-              </style>
+            <li>
               <a
+                class="scope shared-github-button"
                 href="https://github.com/tak-dcxi/kiso.css/"
                 lang="en"
                 translate="no"
@@ -317,23 +223,9 @@
     <main class="full-bleed" style="--full-bleed--row-gap: var(--_gutter)">
       <section id="features" class="scope shared-section">
         <div class="flow" style="--flow--space: 2rlh">
-          <div class="scope shared-heading">
-            <style>
-              @scope to (.scope) {
-                h2 {
-                  &::after {
-                    content: "";
-                    display: block flow;
-                    inline-size: min(2em, 100%);
-                    margin-block-start: 0.75rlh;
-                    margin-inline: auto;
-                    border-block-end: 4px solid;
-                  }
-                }
-              }
-            </style>
-            <h2 class="-fluid-text-lg -text-center">特徴</h2>
-          </div>
+          <h2 class="scope shared-heading | -fluid-text-lg -text-center">
+            特徴
+          </h2>
           <div class="scope features-cards">
             <style>
               @layer features {
@@ -374,7 +266,7 @@
 
                   ._description {
                     & > p {
-                      inline-size: calc-size(auto, round(down, size, 1ic));
+                      max-inline-size: calc-size(auto, round(down, size, 1ic));
                     }
                   }
                 }
@@ -508,83 +400,26 @@
       </section>
 
       <section id="installation" class="flow" style="--flow--space: 2rlh">
-        <div class="scope shared-heading">
-          <style>
-            @scope to (.scope) {
-              h2 {
-                &::after {
-                  content: "";
-                  display: block flow;
-                  inline-size: min(2em, 100%);
-                  margin-block-start: 0.75rlh;
-                  margin-inline: auto;
-                  border-block-end: 4px solid;
-                }
-              }
-            }
-          </style>
-          <h2 class="-fluid-text-lg -text-center">インストール</h2>
-        </div>
-
+        <h2 class="scope shared-heading | -fluid-text-lg -text-center">
+          インストール
+        </h2>
         <section>
           <div class="flow" style="--flow--space: 1rlh">
             <h3 class="-fluid-text-md">npm / yarn</h3>
-            <div class="scope shared-code">
-              <style>
-                @layer shared {
-                  @scope to (.scope) {
-                    pre {
-                      display: block grid;
-                      padding-block: 1rlh;
-                      padding-inline: 3ch;
-                      border: 1px solid var(--border-color);
-                      border-radius: var(--rounded-md);
-                      corner-shape: squircle;
-                      background-color: var(--code-background);
-                    }
-
-                    code {
-                      inline-size: max-content;
-                    }
-                  }
-                }
-              </style>
-              <pre>
-                <code>npm install kiso.css</code>
-                <code># or</code>
-                <code>yarn add kiso.css</code>
-              </pre>
-            </div>
+            <pre class="scope shared-code">
+              <code>npm install kiso.css</code>
+              <code># or</code>
+              <code>yarn add kiso.css</code>
+            </pre>
           </div>
         </section>
 
         <section>
           <div class="flow" style="--flow--space: 1rlh">
             <h3 class="-fluid-text-md">CDN</h3>
-            <div class="scope shared-code">
-              <style>
-                @layer shared {
-                  @scope to (.scope) {
-                    pre {
-                      display: block grid;
-                      padding-block: 1rlh;
-                      padding-inline: 3ch;
-                      border: 1px solid var(--border-color);
-                      border-radius: var(--rounded-md);
-                      corner-shape: squircle;
-                      background-color: var(--code-background);
-                    }
-
-                    code {
-                      inline-size: max-content;
-                    }
-                  }
-                }
-              </style>
-              <pre>
-                <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
-              </pre>
-            </div>
+            <pre class="scope shared-code">
+              <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
+            </pre>
           </div>
         </section>
 
@@ -617,15 +452,21 @@
               }
             }
 
+            @property --site-footer--padding-block-min {
+              syntax: "<length>";
+              inherits: false;
+              initial-value: 0;
+            }
+
             ._body {
-              --length: 2rlh;
+              --site-footer--padding-block-min: 2rlh;
 
               padding-block: clamp(
-                2rlh,
+                var(--site-footer--padding-block-min),
                 tan(
                     atan2(
-                      var(--length),
-                      calc(var(--design-base-min-width) * 1px)
+                      var(--site-footer--padding-block-min),
+                      var(--design-base-min-width) * 1px
                     )
                   ) * 100cqi,
                 3rlh
