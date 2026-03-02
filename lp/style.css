@@ -1,56 +1,56 @@
-@layer tokens, reset, base, compositions, shared, features, pages, utilities;
+@layer tokens, reset, base, composition, pages, features, affordance, utilities;
 
 @import url("../kiso.css") layer(reset);
 
 @layer tokens {
   :root {
-    --color-lightest: #f7f7f7;
-    --color-light-gray: #f3f4f6;
-    --color-shaded-gray: #e5e7eb;
-    --color-darkest: #000;
-    --color-very-dark-blue: #111827;
-    --color-desaturated-blue: #1f2937;
-    --color-dark-grayish-blue: #374151;
-    --color-dark-blue: #1e40af;
-    --color-strong-blue: #0097d3;
-    --color-soft-blue: #60a5fa;
-    --color-bright-blue: #3b82f6;
-    --foreground-base: light-dark(
-      var(--color-desaturated-blue),
-      var(--color-light-gray)
+    --color--lightest: #f7f7f7;
+    --color--light-gray: #f3f4f6;
+    --color--shaded-gray: #e5e7eb;
+    --color--darkest: #000;
+    --color--very-dark-blue: #111827;
+    --color--desaturated-blue: #1f2937;
+    --color--dark-grayish-blue: #374151;
+    --color--dark-blue: #1e40af;
+    --color--strong-blue: #0097d3;
+    --color--soft-blue: #60a5fa;
+    --color--bright-blue: #3b82f6;
+    --foreground--base: light-dark(
+      var(--color--desaturated-blue),
+      var(--color--light-gray)
     );
-    --foreground-primary: light-dark(
-      var(--color-strong-blue),
-      var(--color-soft-blue)
+    --foreground--primary: light-dark(
+      var(--color--strong-blue),
+      var(--color--soft-blue)
     );
-    --foreground-secondary: light-dark(
-      var(--color-dark-blue),
-      var(--color-bright-blue)
+    --foreground--secondary: light-dark(
+      var(--color--dark-blue),
+      var(--color--bright-blue)
     );
-    --background-base: light-dark(
-      var(--color-lightest),
-      var(--color-very-dark-blue)
+    --background--base: light-dark(
+      var(--color--lightest),
+      var(--color--very-dark-blue)
     );
-    --background-lighten: light-dark(
-      var(--color-light-gray),
-      var(--color-desaturated-blue)
+    --background--lighten: light-dark(
+      var(--color--light-gray),
+      var(--color--desaturated-blue)
     );
-    --code-background: light-dark(
-      var(--color-light-gray),
-      var(--color-desaturated-blue)
+    --code--background: light-dark(
+      var(--color--light-gray),
+      var(--color--desaturated-blue)
     );
-    --border-color: light-dark(
-      var(--color-shaded-gray),
-      var(--color-dark-grayish-blue)
+    --border-color--base: light-dark(
+      var(--color--shaded-gray),
+      var(--color--dark-grayish-blue)
     );
-    --font-montserrat: "Montserrat", sans-serif;
-    --leading-tight: 1.25;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.75;
-    --rounded-md: 12px;
-    --rounded-lg: 32px;
-    --design-base-max-width: 1280;
-    --design-base-min-width: 375;
+    --font-family--montserrat: "Montserrat", sans-serif;
+    --leading--tight: 1.25;
+    --leading--normal: 1.5;
+    --leading--relaxed: 1.75;
+    --rounded--md: 12px;
+    --rounded--lg: 32px;
+    --art-board--max-width: 1280;
+    --art-board--min-width: 375;
   }
 }
 
@@ -62,11 +62,8 @@
   }
 
   :root {
-    --ON: initial;
-    --OFF: ;
-
-    background-color: var(--background-base);
-    color: var(--foreground-base);
+    background-color: var(--background--base);
+    color: var(--foreground--base);
     text-underline-offset: calc((1lh - 1em) / 2);
     -webkit-font-smoothing: antialiased;
 
@@ -82,7 +79,7 @@
   }
 
   :where(:lang(en)) {
-    font-family: var(--font-montserrat);
+    font-family: var(--font-family--montserrat);
     font-size-adjust: cap-height from-font;
     font-kerning: normal;
   }
@@ -119,13 +116,12 @@
   }
 
   :where(:focus-visible) {
-    --_b-ring-thickness: 3px;
-    --_b-ring-offset: 3px;
+    --_ring--width: 3px;
+    --_ring--offset: 3px;
 
-    box-shadow: 0 0 0 calc(var(--_b-ring-offset) + var(--_b-ring-thickness))
-      Canvas !important;
-    outline: var(--_b-ring-thickness) solid CanvasText;
-    outline-offset: var(--_b-ring-offset);
+    box-shadow: 0 0 0 calc(var(--_ring--offset) + var(--_ring--width)) Canvas !important;
+    outline: var(--_ring--width) solid CanvasText;
+    outline-offset: var(--_ring--offset);
   }
 
   @property --gradient-alpha {
@@ -135,7 +131,7 @@
   }
 }
 
-@layer compositions {
+@layer composition {
   .flow {
     display: block flow-root;
 
@@ -145,76 +141,75 @@
   }
 
   .grid {
-    --_c-mode: var(--grid--mode, auto-fit);
-    --_c-row-gap: var(--grid--row-gap, 1.5rem);
-    --_c-column-gap: var(--grid--column-gap, 1.5rem);
-    --_c-column-max-count: var(--grid--column-max-count, 5);
-    --_c-column-min-width: var(--grid--column-min-width, 20rem);
+    --_c--mode: var(--grid--mode, auto-fit);
+    --_c--row-gap: var(--grid--row-gap, 1.5rem);
+    --_c--column-gap: var(--grid--column-gap, 1.5rem);
+    --_c--column-max-count: var(--grid--column-max-count, 5);
+    --_c--column-min-width: var(--grid--column-min-width, 20rem);
 
     /* コンテナの横幅からギャップの合計値を引いたものをn等分する */
-    --_c-column-width-calculated: calc(
-      (100% - var(--_c-column-gap) * (var(--_c-column-max-count) - 1)) /
-        var(--_c-column-max-count)
+    --_c--column-width-calculated: calc(
+      (100% - var(--_c--column-gap) * (var(--_c--column-max-count) - 1)) /
+        var(--_c--column-max-count)
     );
 
     /* 最終的に適用される列の幅。理想の幅と最小幅を比較し、大きい方を採用します。*/
-    --_c-column-width: min(
+    --_c--column-width: min(
       100%,
-      max(var(--_c-column-min-width), var(--_c-column-width-calculated))
+      max(var(--_c--column-min-width), var(--_c--column-width-calculated))
     );
 
     display: block grid;
     grid-template-columns: repeat(
-      var(--_c-mode),
-      minmax(var(--_c-column-width), 1fr)
+      var(--_c--mode),
+      minmax(var(--_c--column-width), 1fr)
     );
-    gap: var(--_c-row-gap) var(--_c-column-gap);
+    gap: var(--_c--row-gap) var(--_c--column-gap);
   }
 
   .cluster {
-    --_c-row-gap: var(--cluster--row-gap, 1rem);
-    --_c-column-gap: var(--cluster--column-gap, 1rem);
-    --_c-justify: var(--cluster--justify, start);
-    --_c-items: var(--cluster--items, center);
-    --_c-content: var(--cluster--content, start);
+    --_c--row-gap: var(--cluster--row-gap, 1rem);
+    --_c--column-gap: var(--cluster--column-gap, 1rem);
+    --_c--main-alignment: var(--cluster--main-alignment, normal);
+    --_c--cross-alignment: var(--cluster--cross-alignment, normal);
 
     display: block flex;
     flex-wrap: wrap;
-    gap: var(--_c-row-gap) var(--_c-column-gap);
-    place-content: var(--_c-content) var(--_c-justify);
-    align-items: var(--_c-items);
+    gap: var(--_c--row-gap) var(--_c--column-gap);
+    justify-content: var(--_c--main-alignment);
+    align-items: var(--_c--cross-alignment);
   }
 
   .full-bleed {
-    --_c-content-max-width: var(--full-bleed--content-max-width, 64rem);
-    --_c-breakout-max-width: var(
+    --_c--content-max-width: var(--full-bleed--content-max-width, 64rem);
+    --_c--breakout-max-width: var(
       --full-bleed--breakout-max-width,
-      calc(var(--_c-content-max-width) + 10rem * 2)
+      calc(var(--_c--content-max-width) + 10rem * 2)
     );
-    --_c-gutter: var(--full-bleed--gutter, max(16px, 5%));
-    --_c-row-gap: var(--full-bleed--row-gap, 0px);
-    --_c-breakout-area-width: calc(
-      (var(--_c-breakout-max-width) - var(--_c-content-max-width)) / 2
+    --_c--gutter: var(--full-bleed--gutter, max(16px, 5%));
+    --_c--row-gap: var(--full-bleed--row-gap, 0px);
+    --_c--breakout-area-width: calc(
+      (var(--_c--breakout-max-width) - var(--_c--content-max-width)) / 2
     );
-    --_c-content-area-width: min(
-      var(--_c-content-max-width),
-      100% - var(--_c-gutter) * 2
+    --_c--content-area-width: min(
+      var(--_c--content-max-width),
+      100% - var(--_c--gutter) * 2
     );
 
     display: block grid;
     grid-template-columns:
       [--full-start]
-      minmax(var(--_c-gutter), 1fr)
+      minmax(var(--_c--gutter), 1fr)
       [--breakout-start]
-      minmax(0, var(--_c-breakout-area-width))
+      minmax(0, var(--_c--breakout-area-width))
       [--content-start]
-      var(--_c-content-area-width)
+      var(--_c--content-area-width)
       [--content-end]
-      minmax(0, var(--_c-breakout-area-width))
+      minmax(0, var(--_c--breakout-area-width))
       [--breakout-end]
-      minmax(var(--_c-gutter), 1fr)
+      minmax(var(--_c--gutter), 1fr)
       [--full-end];
-    row-gap: var(--_c-row-gap);
+    row-gap: var(--_c--row-gap);
     align-content: start;
 
     & > * {
@@ -223,55 +218,55 @@
   }
 }
 
-@layer shared {
-  @scope (.scope.shared-button) to (.scope) {
+@layer affordance {
+  @scope (.ui-button) {
     :scope {
-      --_accent-primary: #8474fe;
-      --_accent-secondary: #4d36d0;
-      --_hocus-on: var(--OFF);
-      --_hocus-off: var(--ON);
+      --_accent--primary: #8474fe;
+      --_accent--secondary: #4d36d0;
+      --_hocus--on: ;
+      --_hocus--off: initial;
 
-      --gradient-alpha: var(--_hocus-on, 0%) var(--_hocus-off, 100%);
+      --gradient-alpha: var(--_hocus--on, 0%) var(--_hocus--off, 100%);
 
       display: inline flow-root;
       padding-block: 0.75em;
       padding-inline: 1em;
       border: 1px solid transparent;
-      border-radius: var(--rounded-md);
-      box-shadow: 0 12px 20px -8px oklch(from var(--_accent-secondary) l c h /
+      border-radius: var(--rounded--md);
+      box-shadow: 0 12px 20px -8px oklch(from var(--_accent--secondary) l c h /
             10%);
-      background-color: var(--_accent-secondary);
+      background-color: var(--_accent--secondary);
       background-image: linear-gradient(
         to bottom,
-        oklch(from var(--_accent-primary) l c h / var(--gradient-alpha)),
-        oklch(from var(--_accent-secondary) l c h / var(--gradient-alpha))
+        oklch(from var(--_accent--primary) l c h / var(--gradient-alpha)),
+        oklch(from var(--_accent--secondary) l c h / var(--gradient-alpha))
       );
       background-origin: border-box;
-      color: var(--color-lightest);
+      color: var(--color--lightest);
       vertical-align: bottom;
       transition-duration: 300ms;
       transition-property: --gradient-alpha;
 
       @supports (corner-shape: squircle) {
-        border-radius: var(--rounded-lg);
+        border-radius: var(--rounded--lg);
         corner-shape: squircle;
       }
 
       &:focus-visible {
-        --_hocus-on: var(--ON);
-        --_hocus-off: var(--OFF);
+        --_hocus--on: initial;
+        --_hocus--off: ;
       }
 
       &:any-link:hover {
         @media (any-hover) {
-          --_hocus-on: var(--ON);
-          --_hocus-off: var(--OFF);
+          --_hocus--on: initial;
+          --_hocus--off: ;
         }
       }
     }
   }
 
-  @scope (.scope.shared-heading) to (.scope) {
+  @scope (.ui-heading) {
     :scope {
       &::after {
         content: "";
@@ -284,15 +279,15 @@
     }
   }
 
-  @scope (.scope.shared-code) to (.scope) {
+  @scope (.ui-code) {
     :scope {
       display: block grid;
       padding-block: 1rlh;
       padding-inline: 3ch;
-      border: 1px solid var(--border-color);
-      border-radius: var(--rounded-md);
+      border: 1px solid var(--border-color--base);
+      border-radius: var(--rounded--md);
       corner-shape: squircle;
-      background-color: var(--code-background);
+      background-color: var(--code--background);
     }
 
     code {
@@ -300,12 +295,12 @@
     }
   }
 
-  @scope (.scope.shared-github-button) to (.scope) {
+  @scope (.ui-github-button) {
     :scope {
-      --_background-default: var(--color-darkest);
-      --_background-hocus: oklch(from var(--_background-default) 30% c h);
-      --_hocus-on: var(--OFF);
-      --_hocus-off: var(--ON);
+      --_background--default: var(--color--darkest);
+      --_background--hocus: oklch(from var(--_background--default) 30% c h);
+      --_hocus--on: ;
+      --_hocus--off: initial;
 
       display: inline grid;
       grid-template-columns: 1em 1fr;
@@ -314,34 +309,55 @@
       padding-block: 0.75em;
       padding-inline: 1em;
       border: 1px solid transparent;
-      border-radius: var(--rounded-md);
-      box-shadow: 0 12px 20px -8px oklch(from var(--color-darkest) l c h / 10%);
-      background-color: var(--_hocus-on, var(--_background-hocus))
-        var(--_hocus-off, var(--_background-default));
-      color: var(--color-lightest);
+      border-radius: var(--rounded--md);
+      box-shadow: 0 12px 20px -8px oklch(from var(--color--darkest) l c h / 10%);
+      background-color: var(--_hocus--on, var(--_background--hocus))
+        var(--_hocus--off, var(--_background--default));
+      color: var(--color--lightest);
       vertical-align: bottom;
       transition-duration: 300ms;
       transition-property: background-color;
 
       @supports (corner-shape: squircle) {
-        border-radius: var(--rounded-lg);
+        border-radius: var(--rounded--lg);
         corner-shape: squircle;
       }
 
       &:focus-visible {
-        --_hocus-on: var(--ON);
-        --_hocus-off: var(--OFF);
+        --_hocus--on: initial;
+        --_hocus--off: ;
       }
 
       &:any-link:hover {
         @media (any-hover) {
-          --_hocus-on: var(--ON);
-          --_hocus-off: var(--OFF);
+          --_hocus--on: initial;
+          --_hocus--off: ;
         }
       }
 
       & > svg {
         inline-size: 100%;
+      }
+    }
+  }
+
+  @scope (.ui-inline-link) {
+    :scope {
+      --_foreground: var(--inline-link--foreground, var(--foreground--primary));
+
+      color: var(--_foreground);
+      text-decoration-line: revert;
+      transition-duration: 300ms;
+      transition-property: text-decoration-color;
+
+      &:focus-visible {
+        text-decoration-color: transparent;
+      }
+
+      &:any-link:hover {
+        @media (any-hover) {
+          text-decoration-color: transparent;
+        }
       }
     }
   }
@@ -352,67 +368,67 @@
   //  MARK: typography
   // ====================================================== */
   [class*="-fluid-text"] {
-    --_u-relative-max-width: var(--fluid-text--relative-max-width, 1280);
-    --_u-relative-min-width: var(--fluid-text--relative-min-width, 375);
-    --_u-min-font-size: var(--fluid-text--min-font-size, 14);
-    --_u-max-font-size: var(--fluid-text--max-font-size, 16);
-    --_u-base-font-size: var(--fluid-text--base-font-size, 16);
-    --_u-relative-unit: var(
+    --_u--relative-max-width: var(--fluid-text--relative-max-width, 1280);
+    --_u--relative-min-width: var(--fluid-text--relative-min-width, 375);
+    --_u--min-font-size: var(--fluid-text--min-font-size, 14);
+    --_u--max-font-size: var(--fluid-text--max-font-size, 16);
+    --_u--base-font-size: var(--fluid-text--base-font-size, 16);
+    --_u--relative-unit: var(
       --fluid-text--relative-unit,
       100svi
     ); /* 100svi or 100cqi */
 
     /* slope and intercept calculations */
-    --_u-fluid-slope: calc(
-      (var(--_u-max-font-size) - var(--_u-min-font-size)) /
-        (var(--_u-relative-max-width) - var(--_u-relative-min-width))
+    --_u--fluid-slope: calc(
+      (var(--_u--max-font-size) - var(--_u--min-font-size)) /
+        (var(--_u--relative-max-width) - var(--_u--relative-min-width))
     );
-    --_u-fluid-intercept: calc(
-      var(--_u-min-font-size) - var(--_u-fluid-slope) *
-        var(--_u-relative-min-width)
+    --_u--fluid-intercept: calc(
+      var(--_u--min-font-size) - var(--_u--fluid-slope) *
+        var(--_u--relative-min-width)
     );
 
     font-size: clamp(
-      var(--_u-min-font-size) / var(--_u-base-font-size) * 1rem,
-      var(--_u-fluid-slope) * var(--_u-relative-unit) +
-        var(--_u-fluid-intercept) / var(--_u-base-font-size) * 1rem,
-      var(--_u-max-font-size) / var(--_u-base-font-size) * 1rem
+      var(--_u--min-font-size) / var(--_u--base-font-size) * 1rem,
+      var(--_u--fluid-slope) * var(--_u--relative-unit) +
+        var(--_u--fluid-intercept) / var(--_u--base-font-size) * 1rem,
+      var(--_u--max-font-size) / var(--_u--base-font-size) * 1rem
     );
   }
 
-  .-fluid-text-sm {
+  .-fluid-text--sm {
     --fluid-text--min-font-size: 12;
     --fluid-text--max-font-size: 14;
   }
 
-  .-fluid-text-md {
+  .-fluid-text--md {
     --fluid-text--min-font-size: 16;
     --fluid-text--max-font-size: 20;
   }
 
-  .-fluid-text-lg {
+  .-fluid-text--lg {
     --fluid-text--min-font-size: 20;
     --fluid-text--max-font-size: 24;
   }
 
-  .-leading-tight {
-    line-height: var(--leading-tight);
+  .-leading--tight {
+    line-height: var(--leading--tight);
   }
 
-  .-leading-normal {
-    line-height: var(--leading-normal);
+  .-leading--normal {
+    line-height: var(--leading--normal);
   }
 
-  .-leading-relaxed {
-    line-height: var(--leading-relaxed);
+  .-leading--relaxed {
+    line-height: var(--leading--relaxed);
   }
 
-  .-text-primary {
-    color: var(--foreground-primary);
+  .-foreground--primary {
+    color: var(--foreground--primary);
   }
 
-  .-text-secondary {
-    color: var(--foreground-secondary);
+  .-foreground--secondary {
+    color: var(--foreground--secondary);
   }
 
   .-text-center {
@@ -425,28 +441,6 @@
 
     &:lang(en) {
       text-box-edge: cap alphabetic;
-    }
-  }
-
-  .-text-link {
-    --_text-link--foreground: var(
-      --text-link--foreground,
-      var(--foreground-primary)
-    );
-
-    color: var(--_text-link--foreground);
-    text-decoration-line: revert;
-    transition-duration: 300ms;
-    transition-property: text-decoration-color;
-
-    &:focus-visible {
-      text-decoration-color: transparent;
-    }
-
-    &:any-link:hover {
-      @media (any-hover) {
-        text-decoration-color: transparent;
-      }
     }
   }
 
