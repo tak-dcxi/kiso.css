@@ -135,13 +135,13 @@
             "
           >
             <li>
-              <a class="scope ui-button" href="#installation">
+              <a class="scope button" href="#installation">
                 今すぐ使い始める
               </a>
             </li>
             <li>
               <a
-                class="scope ui-github-button"
+                class="scope github-button"
                 href="https://github.com/tak-dcxi/kiso.css/"
                 lang="en"
                 translate="no"
@@ -170,20 +170,20 @@
               background-color: var(--background--lighten);
             }
 
-            @property --site-header--padding-block-min {
+            @property --site-header--min-padding-block {
               syntax: "<length>";
               inherits: false;
               initial-value: 0;
             }
 
             ._body {
-              --site-header--padding-block-min: 3rlh;
+              --site-header--min-padding-block: 3rlh;
 
               padding-block: clamp(
-                var(--site-header--padding-block-min),
+                var(--site-header--min-padding-block),
                 tan(
                     atan2(
-                      var(--site-header--padding-block-min),
+                      var(--site-header--min-padding-block),
                       var(--art-board--min-width) * 1px
                     )
                   ) * 100cqi,
@@ -199,7 +199,7 @@
     <main class="full-bleed" style="--full-bleed--row-gap: 3rlh">
       <section id="features" class="scope ui-section">
         <div class="flow" style="--flow--space: 2rlh">
-          <h2 class="scope ui-heading | -fluid-text--lg -text-center">特徴</h2>
+          <h2 class="scope heading | -fluid-text--lg -text-center">特徴</h2>
           <div class="scope features-cards">
             <div
               class="_body | grid"
@@ -374,13 +374,13 @@
       </section>
 
       <section id="installation" class="flow" style="--flow--space: 2rlh">
-        <h2 class="scope ui-heading | -fluid-text--lg -text-center">
+        <h2 class="scope heading | -fluid-text--lg -text-center">
           インストール
         </h2>
         <section>
           <div class="flow" style="--flow--space: 1rlh">
             <h3 class="-fluid-text--md">npm / yarn</h3>
-            <pre class="scope ui-code">
+            <pre class="scope code">
               <code>npm install kiso.css</code>
               <code># or</code>
               <code>yarn add kiso.css</code>
@@ -391,7 +391,7 @@
         <section>
           <div class="flow" style="--flow--space: 1rlh">
             <h3 class="-fluid-text--md">CDN</h3>
-            <pre class="scope ui-code">
+            <pre class="scope code">
               <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kiso.css@latest/kiso.css"&gt;</code>
             </pre>
           </div>
@@ -402,7 +402,7 @@
             <h3 class="-fluid-text--md">ダウンロード</h3>
             <p class="-hanging">
               <a
-                class="ui-inline-link"
+                class="inline-link"
                 href="https://tak-dcxi.github.io/kiso.css/kiso.css"
                 >GitHub</a
               >から直接ダウンロードして、プロジェクトに含めることもできます。
@@ -426,7 +426,7 @@
         >
           <li>
             <a
-              class="ui-inline-link"
+              class="inline-link"
               href="https://github.com/tak-dcxi/kiso.css/"
               lang="en"
               translate="no"
@@ -435,7 +435,7 @@
           </li>
           <li>
             <a
-              class="ui-inline-link"
+              class="inline-link"
               href="https://www.npmjs.com/package/kiso.css"
               lang="en"
               translate="no"
@@ -444,7 +444,7 @@
           </li>
           <li>
             <a
-              class="ui-inline-link"
+              class="inline-link"
               href="https://github.com/tak-dcxi/kiso.css/blob/main/LICENSE"
               lang="en"
               >MIT License</a
@@ -455,7 +455,7 @@
           <small class="-fluid-text--sm">
             © 2026 TAK (
             <a
-              class="ui-inline-link"
+              class="inline-link"
               href="https://www.tak-dcxi.com/"
               target="_blank"
             >
@@ -478,20 +478,20 @@
               }
             }
 
-            @property --site-footer--padding-block-min {
+            @property --site-footer--min-padding-block {
               syntax: "<length>";
               inherits: false;
               initial-value: 0;
             }
 
             ._body {
-              --site-footer--padding-block-min: 2rlh;
+              --site-footer--min-padding-block: 2rlh;
 
               padding-block: clamp(
-                var(--site-footer--padding-block-min),
+                var(--site-footer--min-padding-block),
                 tan(
                     atan2(
-                      var(--site-footer--padding-block-min),
+                      var(--site-footer--min-padding-block),
                       var(--art-board--min-width) * 1px
                     )
                   ) * 100cqi,
@@ -507,20 +507,20 @@
     <style>
       @layer pages {
         @scope to (.scope) {
-          @property --home-page--padding-block-min {
+          @property --home-page--min-padding-block {
             syntax: "<length>";
             inherits: false;
             initial-value: 0;
           }
 
           main {
-            --home-page--padding-block-min: 3rlh;
+            --home-page--min-padding-block: 3rlh;
 
             padding-block: clamp(
-              var(--home-page--padding-block-min),
+              var(--home-page--min-padding-block),
               tan(
                   atan2(
-                    var(--home-page--padding-block-min),
+                    var(--home-page--min-padding-block),
                     var(--art-board--min-width) * 1px
                   )
                 ) * 100svi,

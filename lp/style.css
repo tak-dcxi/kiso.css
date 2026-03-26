@@ -1,4 +1,4 @@
-@layer tokens, reset, base, composition, pages, features, affordance, utilities;
+@layer tokens, reset, base, vendors, composition, pages, features, affordance, utilities;
 
 @import url("../kiso.css") layer(reset);
 
@@ -116,12 +116,12 @@
   }
 
   :where(:focus-visible) {
-    --_ring--width: 3px;
-    --_ring--offset: 3px;
+    --_ring-width: 3px;
+    --_ring-offset: 3px;
 
-    box-shadow: 0 0 0 calc(var(--_ring--offset) + var(--_ring--width)) Canvas !important;
-    outline: var(--_ring--width) solid CanvasText;
-    outline-offset: var(--_ring--offset);
+    box-shadow: 0 0 0 calc(var(--_ring-offset) + var(--_ring-width)) Canvas !important;
+    outline: var(--_ring-width) solid CanvasText;
+    outline-offset: var(--_ring-offset);
   }
 
   @property --gradient-alpha {
@@ -132,100 +132,137 @@
 }
 
 @layer composition {
-  .flow {
-    display: block flow-root;
+  @scope (.flow) {
+    :scope {
+      display: block flow-root;
 
-    & > * + * {
-      margin-block-start: var(--flow--space, 1.5rlh);
+      & > * + * {
+        margin-block-start: var(--flow--space, 1.5rlh);
+      }
     }
   }
 
-  .grid {
-    --_c--mode: var(--grid--mode, auto-fit);
-    --_c--row-gap: var(--grid--row-gap, 1.5rem);
-    --_c--column-gap: var(--grid--column-gap, 1.5rem);
-    --_c--column-max-count: var(--grid--column-max-count, 5);
-    --_c--column-min-width: var(--grid--column-min-width, 20rem);
+  @scope (.grid) {
+    :scope {
+      --_c--mode: var(--grid--mode, auto-fit);
+      --_c--column-max-count: var(--grid--column-max-count, 5);
+      --_c--column-min-width: var(--grid--column-min-width, 20rem);
+      --_c--column-preferred-width: calc(
+        (100% - var(--_c--column-gap) * (var(--_c--column-max-count) - 1)) /
+          var(--_c--column-max-count)
+      );
+      --_c--column-width: min(
+        100%,
+        max(var(--_c--column-min-width), var(--_c--column-preferred-width))
+      );
+      --_c--row-gap: var(--grid--row-gap, 1.5rem);
+      --_c--column-gap: var(--grid--column-gap, 1.5rem);
 
-    /* コンテナの横幅からギャップの合計値を引いたものをn等分する */
-    --_c--column-width-calculated: calc(
-      (100% - var(--_c--column-gap) * (var(--_c--column-max-count) - 1)) /
-        var(--_c--column-max-count)
-    );
-
-    /* 最終的に適用される列の幅。理想の幅と最小幅を比較し、大きい方を採用します。*/
-    --_c--column-width: min(
-      100%,
-      max(var(--_c--column-min-width), var(--_c--column-width-calculated))
-    );
-
-    display: block grid;
-    grid-template-columns: repeat(
-      var(--_c--mode),
-      minmax(var(--_c--column-width), 1fr)
-    );
-    gap: var(--_c--row-gap) var(--_c--column-gap);
+      display: block grid;
+      grid-template-columns: repeat(
+        var(--_c--mode),
+        minmax(var(--_c--column-width), 1fr)
+      );
+      gap: var(--_c--row-gap) var(--_c--column-gap);
+    }
   }
 
-  .cluster {
-    --_c--row-gap: var(--cluster--row-gap, 1rem);
-    --_c--column-gap: var(--cluster--column-gap, 1rem);
-    --_c--main-alignment: var(--cluster--main-alignment, normal);
-    --_c--cross-alignment: var(--cluster--cross-alignment, normal);
+  @scope (.cluster) {
+    :scope {
+      --_c--row-gap: var(--cluster--row-gap, 1rem);
+      --_c--column-gap: var(--cluster--column-gap, 1rem);
+      --_c--main-alignment: var(--cluster--main-alignment, normal);
+      --_c--cross-alignment: var(--cluster--cross-alignment, normal);
 
-    display: block flex;
-    flex-wrap: wrap;
-    gap: var(--_c--row-gap) var(--_c--column-gap);
-    justify-content: var(--_c--main-alignment);
-    align-items: var(--_c--cross-alignment);
+      display: block flex;
+      flex-wrap: wrap;
+      gap: var(--_c--row-gap) var(--_c--column-gap);
+      justify-content: var(--_c--main-alignment);
+      align-items: var(--_c--cross-alignment);
+    }
   }
 
-  .full-bleed {
-    --_c--content-max-width: var(--full-bleed--content-max-width, 64rem);
-    --_c--breakout-max-width: var(
-      --full-bleed--breakout-max-width,
-      calc(var(--_c--content-max-width) + 10rem * 2)
-    );
-    --_c--gutter: var(--full-bleed--gutter, max(16px, 5%));
-    --_c--row-gap: var(--full-bleed--row-gap, 0px);
-    --_c--breakout-area-width: calc(
-      (var(--_c--breakout-max-width) - var(--_c--content-max-width)) / 2
-    );
-    --_c--content-area-width: min(
-      var(--_c--content-max-width),
-      100% - var(--_c--gutter) * 2
-    );
+  @scope (.sidebar) {
+    :scope {
+      --_c--main-min-width: var(--sidebar--main-min-width, 30rem);
+      --_c--side-width: var(--sidebar--side-width, 20rem);
+      --_c--row-gap: var(--sidebar--row-gap, 32px);
+      --_c--column-gap: var(--sidebar--column-gap, 32px);
 
-    display: block grid;
-    grid-template-columns:
-      [--full-start]
-      minmax(var(--_c--gutter), 1fr)
-      [--breakout-start]
-      minmax(0, var(--_c--breakout-area-width))
-      [--content-start]
-      var(--_c--content-area-width)
-      [--content-end]
-      minmax(0, var(--_c--breakout-area-width))
-      [--breakout-end]
-      minmax(var(--_c--gutter), 1fr)
-      [--full-end];
-    row-gap: var(--_c--row-gap);
-    align-content: start;
+      display: block flex;
+      flex-wrap: wrap;
+      gap: var(--_c--row-gap) var(--_c--column-gap);
 
-    & > * {
-      grid-column: var(--full-bleed--column, --content);
+      & > ._main-column {
+        flex-grow: 9999;
+        flex-basis: calc(
+          var(--_c--main-min-width) *
+            sign(100% - (var(--_c--side-width) + var(--_c--column-gap)))
+        );
+      }
+
+      & > ._side-column {
+        flex-grow: 1;
+        flex-basis: var(--_c--side-width);
+      }
+    }
+  }
+
+  @scope (.full-bleed) {
+    :scope {
+      --_c--content-max-width: var(--full-bleed--content-max-width, 64rem);
+      --_c--breakout-max-width: var(
+        --full-bleed--breakout-max-width,
+        calc(var(--_c--content-max-width) + 10rem * 2)
+      );
+      --_c--gutter: var(--full-bleed--gutter, max(16px, 5%));
+      --_c--row-gap: var(--full-bleed--row-gap, 0px);
+      --_c--breakout-area-width: calc(
+        (var(--_c--breakout-max-width) - var(--_c--content-max-width)) / 2
+      );
+      --_c--content-area-width: min(
+        var(--_c--content-max-width),
+        100% - var(--_c--gutter) * 2
+      );
+
+      display: block grid;
+      grid-template-columns:
+        [--full-start]
+        minmax(var(--_c--gutter), 1fr)
+        [--breakout-start]
+        minmax(0, var(--_c--breakout-area-width))
+        [--content-start]
+        var(--_c--content-area-width)
+        [--content-end]
+        minmax(0, var(--_c--breakout-area-width))
+        [--breakout-end]
+        minmax(var(--_c--gutter), 1fr)
+        [--full-end];
+      row-gap: var(--_c--row-gap);
+      align-content: start;
+
+      & > * {
+        grid-column: --content;
+      }
+
+      & > ._breakout-column {
+        grid-column: --breakout;
+      }
+
+      & > ._full-column {
+        grid-column: --full;
+      }
     }
   }
 }
 
 @layer affordance {
-  @scope (.ui-button) {
+  @scope (.button) {
     :scope {
       --_accent--primary: #8474fe;
       --_accent--secondary: #4d36d0;
       --_hocus--on: ;
       --_hocus--off: initial;
-
       --gradient-alpha: var(--_hocus--on, 0%) var(--_hocus--off, 100%);
 
       display: inline flow-root;
@@ -266,7 +303,7 @@
     }
   }
 
-  @scope (.ui-heading) {
+  @scope (.heading) {
     :scope {
       &::after {
         content: "";
@@ -279,7 +316,7 @@
     }
   }
 
-  @scope (.ui-code) {
+  @scope (.code) {
     :scope {
       display: block grid;
       padding-block: 1rlh;
@@ -295,7 +332,7 @@
     }
   }
 
-  @scope (.ui-github-button) {
+  @scope (.github-button) {
     :scope {
       --_background--default: var(--color--darkest);
       --_background--hocus: oklch(from var(--_background--default) 30% c h);
@@ -341,22 +378,27 @@
     }
   }
 
-  @scope (.ui-inline-link) {
+  @scope (.inline-link) {
     :scope {
       --_foreground: var(--inline-link--foreground, var(--foreground--primary));
+      --_hocus--on: ;
+      --_hocus--off: initial;
 
       color: var(--_foreground);
       text-decoration-line: revert;
+      text-decoration-color: var(--_hocus--on, transparent);
       transition-duration: 300ms;
       transition-property: text-decoration-color;
 
       &:focus-visible {
-        text-decoration-color: transparent;
+        --_hocus--on: initial;
+        --_hocus--off: ;
       }
 
       &:any-link:hover {
         @media (any-hover) {
-          text-decoration-color: transparent;
+          --_hocus--on: initial;
+          --_hocus--off: ;
         }
       }
     }
