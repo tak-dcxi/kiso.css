@@ -186,8 +186,9 @@
   * Set a monospace font family referencing Tailwind.
   * @see https://tailwindcss.com/docs/font-family
   */
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 
   /* Font feature settings can have adverse effects on monospaced fonts, so their values are explicitly set to `initial` to prevent inheritance. */
   font-feature-settings: initial;
@@ -246,13 +247,15 @@
 /* ======================================================
 //  MARK: Links
 // ====================================================== */
-:where(a) {
-  /*
-  * The default `color` from the UA stylesheet is rarely used as is, so it's reset to allow inheritance.
-  * In Firefox on iOS, the user agent stylesheet’s text color is applied even when the text is not a link.
-  * @see https://github.com/darkreader/darkreader/issues/9836
-  */
-  color: unset;
+@media (forced-colors: none) {
+  :where(a) {
+    /*
+    * The default `color` from the UA stylesheet is rarely used as is, so it's reset to allow inheritance.
+    * In Firefox on iOS, the user agent stylesheet’s text color is applied even when the text is not a link.
+    * @see https://github.com/darkreader/darkreader/issues/9836
+    */
+    color: unset;
+  }
 }
 
 :where(a:any-link) {
@@ -329,10 +332,16 @@
   /* These styles specified in the UA stylesheet are often unnecessary, so they are reset to allow for inheritance. */
   border-color: unset;
   border-radius: unset;
-  color: unset;
   font: unset;
   letter-spacing: unset;
   text-align: unset;
+}
+
+@media (forced-colors: none) {
+  :where(button, input, select, textarea),
+  ::file-selector-button {
+    color: unset;
+  }
 }
 
 :where(input:is([type="radio" i], [type="checkbox" i])) {
@@ -358,13 +367,13 @@
 }
 
 :where(
-    input:is(
-        [type="tel" i],
-        [type="url" i],
-        [type="email" i],
-        [type="number" i]
-      ):not(:placeholder-shown)
-  ) {
+  input:is(
+      [type="tel" i],
+      [type="url" i],
+      [type="email" i],
+      [type="number" i]
+    ):not(:placeholder-shown)
+) {
   /*
   * Certain input types need to maintain left alignment even in right-to-left (RTL) languages.
   * However, this only applies when the value is not empty, as the placeholder should be right-aligned.
@@ -382,30 +391,30 @@
 }
 
 :where(
-    input:not([type="button" i], [type="submit" i], [type="reset" i]),
-    textarea,
-    [contenteditable]
-  ) {
+  input:not([type="button" i], [type="submit" i], [type="reset" i]),
+  textarea,
+  [contenteditable]
+) {
   /* Set to `no-autospace` because `text-autospace` can insert spaces during input, potentially causing erratic behavior. */
   text-autospace: no-autospace;
 }
 
 :where(
-    button,
-    input:is([type="button" i], [type="submit" i], [type="reset" i])
-  ),
+  button,
+  input:is([type="button" i], [type="submit" i], [type="reset" i])
+),
 ::file-selector-button {
   /* The `background-color` specified in the User Agent (UA) stylesheet is often unnecessary, so it is reset here. */
   background-color: unset;
 }
 
 :where(
-    button,
-    input:is([type="button" i], [type="submit" i], [type="reset" i]),
-    [role="tab" i],
-    [role="button" i],
-    [role="option" i]
-  ),
+  button,
+  input:is([type="button" i], [type="submit" i], [type="reset" i]),
+  [role="tab" i],
+  [role="button" i],
+  [role="option" i]
+),
 ::file-selector-button {
   /*
   * On iOS, double-tapping a button can cause zooming, which harms usability.
@@ -416,20 +425,20 @@
 }
 
 :where(
-    button:enabled,
-    label[for],
-    select:enabled,
-    input:is(
-        [type="button" i],
-        [type="submit" i],
-        [type="reset" i],
-        [type="radio" i],
-        [type="checkbox" i]
-      ):enabled,
-    [role="tab" i],
-    [role="button" i],
-    [role="option" i]
-  ),
+  button:enabled,
+  label[for],
+  select:enabled,
+  input:is(
+      [type="button" i],
+      [type="submit" i],
+      [type="reset" i],
+      [type="radio" i],
+      [type="checkbox" i]
+    ):enabled,
+  [role="tab" i],
+  [role="button" i],
+  [role="option" i]
+),
 :where(:enabled)::file-selector-button {
   /* Indicate clickable elements with a pointer cursor. */
   cursor: pointer;
